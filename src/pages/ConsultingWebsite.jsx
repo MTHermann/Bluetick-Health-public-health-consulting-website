@@ -5,7 +5,7 @@ import { Mail, Phone, BarChart3, Database, ClipboardList, FlaskConical, Linkedin
 
 export default function ConsultingWebsite() {
   const whatsappLink = "https://wa.me/27785518486";
-  const linkedinLink = "https://linkedin.com";
+  const linkedinLink = "https://www.linkedin.com/in/mitiku-t-437bb0163/";
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
