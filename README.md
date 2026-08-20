@@ -1,4 +1,4 @@
-# Mitiku Tamre - Statistical & Public Health Consulting Website
+# Bluetick Health - Statistical & Public Health Consulting Website
 
 A modern, responsive consulting website built with React, Vite, and Tailwind CSS.
 
@@ -70,14 +70,15 @@ npm run preview
 ## Services Offered
 
 - **Statistical Analysis** - Regression, survival, longitudinal and time-series analysis
-- **Data Management** - REDCap design, cleaning, validation
+- **Data Management** - REDCap design, cleaning, validation, Training and capacity building
 - **Research Support** - Study design, M&E, reporting, publications
 - **Clinical Trials Support** - Design, randomization, interim analysis
+- **Project Management** - SOP/Protocol development, Regulatory compliance, coordination and operational leadership
 
 ## Contact Information
 
 - **Email:** mitikuhermanng@gmail.com
-- **Phone:** +27 78 551 8486
+- **Phone:** +27 611170478
 - **WhatsApp:** https://wa.me/27785518486
 
 ## Technologies Used
@@ -93,4 +94,4 @@ MIT
 
 ## Author
 
-Mitiku Tamre - Independent Statistical & Public Health Research Consultant
+Bluetick Health - Independent Statistical & Public Health Research Consultant
