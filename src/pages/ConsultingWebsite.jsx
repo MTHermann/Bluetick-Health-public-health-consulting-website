@@ -32,7 +32,7 @@ export default function ConsultingWebsite() {
 
       {/* Hero */}
       <section className="bg-white py-20 px-6 text-center shadow-sm">
-        <h1 className="text-4xl font-bold mb-2">Mitiku Tamre</h1>
+        <h1 className="text-4xl font-bold mb-2">Bluetick Health</h1>
         <h2 className="text-xl font-semibold text-gray-600 mb-4">
           Independent Statistical & Public Health Research Consultant
         </h2>
@@ -71,10 +71,10 @@ export default function ConsultingWebsite() {
           <h2 className="text-2xl font-semibold mb-8">Services</h2>
           <div className="grid md:grid-cols-3 gap-6">
 
-            <Card><CardContent className="p-6"><BarChart3 /><h3 className="font-semibold">Statistical Analysis</h3><p className="text-sm text-gray-600">Regression, survival, longitudinal and time-series analysis using R.</p></CardContent></Card>
-            <Card><CardContent className="p-6"><Database /><h3 className="font-semibold">Data Management</h3><p className="text-sm text-gray-600">REDCap design, cleaning, validation, and dataset management.</p></CardContent></Card>
-            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Research Support</h3><p className="text-sm text-gray-600">Study design, M&E, reporting, and publications.</p></CardContent></Card>
-            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Project Management</h3><p className="text-sm text-gray-600">SOP/Protocol development, Regulatory compliance, coordination, and operational leadership.</p></CardContent></Card>
+            <Card><CardContent className="p-6"><BarChart3 /><h3 className="font-semibold">Statistical Analysis</h3><p className="text-sm text-gray-600">Regression, survival, longitudinal and time-[...]
+            <Card><CardContent className="p-6"><Database /><h3 className="font-semibold">Data Management</h3><p className="text-sm text-gray-600">REDCap design, cleaning, validation, and dataset m[...]
+            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Research Support</h3><p className="text-sm text-gray-600">Study design, M&E, reporting, and publicatio[...]
+            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Project Management</h3><p className="text-sm text-gray-600">SOP/Protocol development, Regulatory compl[...]
 
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function ConsultingWebsite() {
       <section className="py-16 px-6 max-w-5xl mx-auto">
         <h2 className="text-2xl font-semibold flex items-center gap-2"><FlaskConical /> Clinical Trials Support</h2>
         <p className="text-gray-700 mt-2">
-          Statistical and data support for clinical trials, including design, protocol development, Ethics submissions, randomization, site selection and oversight, patient recruitment strategy, interim analysis, and reporting, ensuring compliance and data integrity.
+          Statistical and data support for clinical trials, including design, protocol development, Ethics submissions, randomization, site selection and oversight, patient recruitment strategy, i[...]
         </p>
       </section>
 
@@ -93,8 +93,8 @@ export default function ConsultingWebsite() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-semibold mb-6">Projects & Publications</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card><CardContent className="p-6"><h3 className="font-semibold">Healthcare Data Analysis</h3><p className="text-sm text-gray-600">Regression and survival modelling for hospital datasets.</p></CardContent></Card>
-            <Card><CardContent className="p-6"><h3 className="font-semibold">Public Health Evaluation</h3><p className="text-sm text-gray-600">Monitoring and evaluation of health interventions using longitudinal data.</p></CardContent></Card>
+            <Card><CardContent className="p-6"><h3 className="font-semibold">Healthcare Data Analysis</h3><p className="text-sm text-gray-600">Regression and survival modelling for hospital datase[...]
+            <Card><CardContent className="p-6"><h3 className="font-semibold">Public Health Evaluation</h3><p className="text-sm text-gray-600">Monitoring and evaluation of health interventions usi[...]
           </div>
         </div>
       </section>
