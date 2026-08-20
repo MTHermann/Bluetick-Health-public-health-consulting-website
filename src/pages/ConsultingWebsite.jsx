@@ -10,7 +10,7 @@ export default function ConsultingWebsite() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   useEffect(() => {
-    document.title = "Mitiku Tamre | Statistical & Public Health Consultant";
+    document.title = "Bluetick Health | Statistical & Public Health Consultant";
     const meta = document.querySelector("meta[name='description']") || document.createElement("meta");
     meta.name = "description";
     meta.content = "Independent consultant in statistics, public health research, clinical trials, and healthcare analytics.";
@@ -60,7 +60,7 @@ export default function ConsultingWebsite() {
         <h2 className="text-2xl font-semibold mb-4">About</h2>
         <p className="text-gray-700 leading-relaxed">
           Independent consultant specializing in public health research, healthcare analytics, and statistical modelling.
-          I support evidence-based decision-making through analysis of large-scale health datasets, epidemiological studies,
+          We support evidence-based decision-making through analysis of large-scale health datasets, epidemiological studies,
           and advanced statistical methods.
         </p>
       </section>
