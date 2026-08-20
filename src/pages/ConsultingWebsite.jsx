@@ -28,7 +28,7 @@ export default function ConsultingWebsite() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 text-gray-800">
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 via-blue-50 via-red-900 to-white text-gray-800">
 
       {/* Hero */}
       <section className="bg-white py-20 px-6 text-center shadow-sm">
