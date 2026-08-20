@@ -74,6 +74,7 @@ export default function ConsultingWebsite() {
             <Card><CardContent className="p-6"><BarChart3 /><h3 className="font-semibold">Statistical Analysis</h3><p className="text-sm text-gray-600">Regression, survival, longitudinal and time-series analysis using R.</p></CardContent></Card>
             <Card><CardContent className="p-6"><Database /><h3 className="font-semibold">Data Management</h3><p className="text-sm text-gray-600">REDCap design, cleaning, validation, and dataset management.</p></CardContent></Card>
             <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Research Support</h3><p className="text-sm text-gray-600">Study design, M&E, reporting, and publications.</p></CardContent></Card>
+            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Project Management</h3><p className="text-sm text-gray-600">SOP/Protocol development, Regulatory compliance, coordination, and operational leadership.</p></CardContent></Card>
 
           </div>
         </div>
@@ -83,7 +84,7 @@ export default function ConsultingWebsite() {
       <section className="py-16 px-6 max-w-5xl mx-auto">
         <h2 className="text-2xl font-semibold flex items-center gap-2"><FlaskConical /> Clinical Trials Support</h2>
         <p className="text-gray-700 mt-2">
-          Statistical and data support for clinical trials including design, randomization, interim analysis, and reporting ensuring compliance and data integrity.
+          Statistical and data support for clinical trials, including design, protocol development, Ethics submissions, randomization, site selection and oversight, patient recruitment strategy, interim analysis, and reporting, ensuring compliance and data integrity.
         </p>
       </section>
 
@@ -104,7 +105,7 @@ export default function ConsultingWebsite() {
 
         <div className="flex flex-col items-center gap-2 mb-6">
           <div className="flex items-center gap-2"><Mail /> mitikuhermanng@gmail.com</div>
-          <div className="flex items-center gap-2"><Phone /> +27 78 551 8486</div>
+          <div className="flex items-center gap-2"><Phone /> +27 611170478</div>
         </div>
 
         {/* Contact Form */}
@@ -123,7 +124,7 @@ export default function ConsultingWebsite() {
 
       {/* Footer */}
       <footer className="py-6 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} Mitiku Tamre Consulting
+        © {new Date().getFullYear()} Bluetick Health Consulting
       </footer>
 
     </div>
