@@ -69,11 +69,25 @@ npm run preview
 
 ## Services Offered
 
-- **Statistical Analysis** - Regression, survival, longitudinal and time-series analysis
-- **Data Management** - REDCap design, cleaning, validation, Training and capacity building
-- **Research Support** - Study design, M&E, reporting, publications
-- **Clinical Trials Support** - Design, randomization, interim analysis
-- **Project Management** - SOP/Protocol development, Regulatory compliance, coordination and operational leadership
+- **Statistical Analysis** 
+  - Regression, survival, longitudinal and time-series analysis
+  - Population-wide Analysis of Real-World Health Data - We analyse large-scale, routinely collected and real-world health data to identify population trends, evaluate health outcomes, generate evidence, and support data-driven decision-making
+  
+- **Data Management** 
+  - REDCap design, cleaning, validation, Training and capacity building
+  - Data Governance - We provide guidance on data governance frameworks, including data quality, access, security, privacy, ethical use, data sharing, and responsible management of health data throughout the data lifecycle
+
+- **Research Support** 
+  - Study design, M&E, reporting, publications
+
+- **Clinical Trials Support** 
+  - Design, randomization, interim analysis
+
+- **Project Management** 
+  - SOP/Protocol development, Regulatory compliance, coordination and operational leadership
+
+- **Digital Health Platform Evaluation** 
+  - We support the evaluation and testing of data-linked and digital health platforms, assessing their usability, performance, data quality, interoperability, and potential impact on health outcomes and service delivery
 
 ## Contact Information
 
