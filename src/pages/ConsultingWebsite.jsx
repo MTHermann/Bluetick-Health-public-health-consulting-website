@@ -57,7 +57,7 @@ export default function ConsultingWebsite() {
                 </defs>
                 
                 {/* Globe sphere background */}
-                <circle cx="120" cy="120" r="110" fill="url(#globeGradient)" opacity="1"/>
+                <circle cx="120" cy="120" r="110" fill="url(#globeGradient)" opacity="0.96"/>
                 
                 {/* Globe wireframe - dots pattern */}
                 <g stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.6">
