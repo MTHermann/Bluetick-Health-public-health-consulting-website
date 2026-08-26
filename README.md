@@ -7,7 +7,7 @@ A modern, responsive consulting website built with React, Vite, and Tailwind CSS
 - ✨ Modern, responsive design
 - 📱 Mobile-friendly layout
 - 📧 Contact form with email integration
-- 🔗 Social media links (WhatsApp, LinkedIn)
+- 🔗 Social media links (LinkedIn)
 - 🎨 Clean UI with Tailwind CSS
 - ⚡ Fast development with Vite
 
