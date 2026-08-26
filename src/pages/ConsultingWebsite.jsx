@@ -46,11 +46,11 @@ export default function ConsultingWebsite() {
           </Button>
 
           <Button variant="outline" asChild>
-            <a href={whatsappLink} target="_blank">WhatsApp</a>
+            <a href={whatsappLink} target="_blank" rel="noreferrer">WhatsApp</a>
           </Button>
 
           <Button variant="outline" asChild>
-            <a href={linkedinLink} target="_blank">LinkedIn</a>
+            <a href={linkedinLink} target="_blank" rel="noreferrer">LinkedIn</a>
           </Button>
         </div>
       </section>
@@ -71,10 +71,42 @@ export default function ConsultingWebsite() {
           <h2 className="text-2xl font-semibold mb-8">Services</h2>
           <div className="grid md:grid-cols-3 gap-6">
 
-            <Card><CardContent className="p-6"><BarChart3 /><h3 className="font-semibold">Statistical Analysis</h3><p className="text-sm text-gray-600">Regression, survival, longitudinal and time-[...]
-            <Card><CardContent className="p-6"><Database /><h3 className="font-semibold">Data Management</h3><p className="text-sm text-gray-600">REDCap design, cleaning, validation, and dataset m[...]
-            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Research Support</h3><p className="text-sm text-gray-600">Study design, M&E, reporting, and publicatio[...]
-            <Card><CardContent className="p-6"><ClipboardList /><h3 className="font-semibold">Project Management</h3><p className="text-sm text-gray-600">SOP/Protocol development, Regulatory compl[...]
+            <Card>
+              <CardContent className="p-6">
+                <BarChart3 />
+                <h3 className="font-semibold">Statistical Analysis</h3>
+                <p className="text-sm text-gray-600">
+                  Regression, survival, longitudinal and time-series analysis.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <Database />
+                <h3 className="font-semibold">Data Management</h3>
+                <p className="text-sm text-gray-600">
+                  REDCap design, cleaning, validation, training, and data governance support.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <ClipboardList />
+                <h3 className="font-semibold">Research Support</h3>
+                <p className="text-sm text-gray-600">
+                  Study design, monitoring and evaluation, reporting, and publications.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <ClipboardList />
+                <h3 className="font-semibold">Project Management</h3>
+                <p className="text-sm text-gray-600">
+                  SOP and protocol development, regulatory compliance, and operational leadership.
+                </p>
+              </CardContent>
+            </Card>
 
           </div>
         </div>
@@ -84,7 +116,9 @@ export default function ConsultingWebsite() {
       <section className="py-16 px-6 max-w-5xl mx-auto">
         <h2 className="text-2xl font-semibold flex items-center gap-2"><FlaskConical /> Clinical Trials Support</h2>
         <p className="text-gray-700 mt-2">
-          Statistical and data support for clinical trials, including design, protocol development, Ethics submissions, randomization, site selection and oversight, patient recruitment strategy, i[...]
+          Statistical and data support for clinical trials, including design, protocol development,
+          ethics submissions, randomization, site selection and oversight, patient recruitment
+          strategy, and interim analysis.
         </p>
       </section>
 
@@ -93,8 +127,22 @@ export default function ConsultingWebsite() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-semibold mb-6">Projects & Publications</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card><CardContent className="p-6"><h3 className="font-semibold">Healthcare Data Analysis</h3><p className="text-sm text-gray-600">Regression and survival modelling for hospital datase[...]
-            <Card><CardContent className="p-6"><h3 className="font-semibold">Public Health Evaluation</h3><p className="text-sm text-gray-600">Monitoring and evaluation of health interventions usi[...]
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="font-semibold">Healthcare Data Analysis</h3>
+                <p className="text-sm text-gray-600">
+                  Regression and survival modelling for hospital datasets and routine health data.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="font-semibold">Public Health Evaluation</h3>
+                <p className="text-sm text-gray-600">
+                  Monitoring and evaluation of health interventions using population-level data.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -117,8 +165,8 @@ export default function ConsultingWebsite() {
         </form>
 
         <div className="flex justify-center gap-4 mt-6">
-          <a href={whatsappLink} target="_blank"><MessageCircle /></a>
-          <a href={linkedinLink} target="_blank"><Linkedin /></a>
+          <a href={whatsappLink} target="_blank" rel="noreferrer"><MessageCircle /></a>
+          <a href={linkedinLink} target="_blank" rel="noreferrer"><Linkedin /></a>
         </div>
       </section>
 
