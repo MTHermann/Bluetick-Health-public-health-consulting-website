@@ -47,15 +47,39 @@ export default function ConsultingWebsite() {
           <div className="bg-white rounded-2xl px-8 py-5 shadow-xl inline-flex flex-col items-center gap-2">
             {/* Logo mark + wordmark row */}
             <div className="flex items-center gap-3">
-              {/* Globe + Checkmark SVG icon */}
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Bluetick Health logo mark">
-                <circle cx="24" cy="24" r="22" fill="#1e3a8a" />
-                <ellipse cx="24" cy="24" rx="9" ry="22" fill="none" stroke="#38bdf8" strokeWidth="1.5" />
-                <ellipse cx="24" cy="24" rx="22" ry="9" fill="none" stroke="#38bdf8" strokeWidth="1.5" />
-                <line x1="2" y1="24" x2="46" y2="24" stroke="#38bdf8" strokeWidth="1.5" />
-                <line x1="24" y1="2" x2="24" y2="46" stroke="#38bdf8" strokeWidth="1.5" />
-                <polyline points="14,25 21,32 35,18" stroke="#22d3ee" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              {/* Your Bluetick Health Logo Globe with Checkmark - from your image */}
+              <svg width="48" height="48" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-md">
+                <defs>
+                  <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style={{stopColor: "#0369a1", stopOpacity: 1}} />
+                    <stop offset="100%" style={{stopColor: "#082f49", stopOpacity: 1}} />
+                  </linearGradient>
+                </defs>
+                
+                {/* Globe sphere background */}
+                <circle cx="120" cy="120" r="110" fill="url(#globeGradient)" opacity="0.95"/>
+                
+                {/* Globe wireframe - dots pattern */}
+                <g stroke="#06b6d4" strokeWidth="1.5" fill="none" opacity="0.6">
+                  {/* Latitude circles */}
+                  <ellipse cx="120" cy="70" rx="85" ry="15"/>
+                  <ellipse cx="120" cy="100" rx="95" ry="20"/>
+                  <ellipse cx="120" cy="120" rx="100" ry="22"/>
+                  <ellipse cx="120" cy="140" rx="95" ry="20"/>
+                  <ellipse cx="120" cy="170" rx="85" ry="15"/>
+                  
+                  {/* Longitude lines */}
+                  <ellipse cx="120" cy="120" rx="50" ry="105"/>
+                  <ellipse cx="120" cy="120" rx="80" ry="105"/>
+                  <ellipse cx="120" cy="120" rx="100" ry="105"/>
+                </g>
+                
+                {/* Large checkmark overlay - cyan/turquoise */}
+                <g stroke="#22d3ee" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="85,120 110,150 170,80"/>
+                </g>
               </svg>
+              
               {/* Wordmark */}
               <div className="flex flex-col leading-none">
                 <span className="text-blue-900 font-black text-2xl tracking-widest">BLUETICK</span>
@@ -210,7 +234,7 @@ export default function ConsultingWebsite() {
                   Bluetick Health Electronic Medical Record (EMR) in Development stage.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
-                  Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics, dashboards, and automated reporting. Funding and collaborative partnerships are welcomed to accelerate development and launch.
+                  Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics, dashboards, and automated reporting.
                 </p>
                 <p className="text-sm text-gray-600 leading-relaxed mt-2">
                   We welcome funding, technical partnerships, healthcare institutions, and research collaborations to accelerate platform development, testing, implementation, and launch.
