@@ -9,10 +9,10 @@ export default function ConsultingWebsite() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
 
   useEffect(() => {
-    document.title = "Bluetick Health | Statistical & Public Health Consultant";
+    document.title = "Bluetick Health | Statistical & Public Health Consultancy";
     const meta = document.querySelector("meta[name='description']") || document.createElement("meta");
     meta.name = "description";
-    meta.content = "Independent consultant in statistics, public health research, clinical trials, and healthcare analytics.";
+    meta.content = "Independent consultancy in statistics, public health research, clinical trials, and healthcare analytics.";
     document.head.appendChild(meta);
   }, []);
 
@@ -94,7 +94,7 @@ export default function ConsultingWebsite() {
         </div>
 
         <h2 className="text-xl font-medium text-blue-200 mb-5">
-          Independent Statistical & Public Health Research Consultant
+          Independent Statistical & Public Health Research Consultancy
         </h2>
         <p className="text-lg max-w-3xl mx-auto text-blue-100 leading-relaxed">
           Supporting healthcare systems, clinical research, NGOs, and academic institutions with advanced statistical analysis and epidemiological insights.
@@ -116,7 +116,7 @@ export default function ConsultingWebsite() {
       <section className="py-20 px-6 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-100 pb-3">About</h2>
         <p className="text-gray-700 leading-relaxed text-lg">
-          Independent consultant specializing in public health research, healthcare analytics, and statistical modelling.
+          Independent consultancy specializing in public health research, healthcare analytics, and statistical modelling.
           We support evidence-based decision-making through analysis of large-scale health datasets, epidemiological studies,
           and advanced statistical methods.
         </p>
