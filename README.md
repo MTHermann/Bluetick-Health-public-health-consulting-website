@@ -108,4 +108,4 @@ MIT
 
 ## Author
 
-Bluetick Health - Independent Statistical & Public Health Research Consultant
+Bluetick Health - Independent Statistical & Public Health Research Consultancy
