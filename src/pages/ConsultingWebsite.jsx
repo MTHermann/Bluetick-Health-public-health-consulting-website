@@ -30,15 +30,45 @@ export default function ConsultingWebsite() {
     <div className="min-h-screen bg-gray-50 text-gray-800">
 
       {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 py-24 px-6 text-center">
-        <div className="flex justify-center mb-6">
-          <div className="bg-white rounded-2xl px-8 py-4 shadow-lg inline-flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-lg">B</span>
+      <section
+        className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 py-24 px-6 text-center overflow-hidden"
+        style={{
+          backgroundImage: `
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='none'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Elibrary(tidyverse)%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Emodel %26lt;- lm(outcome ~ age + sex + exposure, data=df)%3C/text%3E%3Ctext x='10' y='70' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Esummary(model)%3C/text%3E%3Ctext x='10' y='90' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Ecoxph(Surv(time, event) ~ trt + strata(site), data=trial)%3C/text%3E%3Ctext x='10' y='110' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Eggplot(df, aes(x=time, y=rate, color=group)) + geom_line()%3C/text%3E%3Ctext x='10' y='130' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Eglm(cases ~ offset(log(pop)) + year, family=poisson)%3C/text%3E%3Ctext x='10' y='150' font-family='monospace' font-size='11' fill='%23ffffff' opacity='0.07'%3Econfint(model, level=0.95)%3C/text%3E%3Ccircle cx='520' cy='80' r='60' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3Ccircle cx='520' cy='80' r='40' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3Ccircle cx='520' cy='80' r='20' fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3Cline x1='460' y1='80' x2='580' y2='80' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3Cline x1='520' y1='20' x2='520' y2='140' stroke='%23ffffff' stroke-width='1' opacity='0.06'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #1e3a5f 0%, #1e40af 50%, #1d4ed8 100%)
+          `,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundBlendMode: "overlay",
+        }}
+      >
+        {/* Logo */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="bg-white rounded-2xl px-8 py-5 shadow-xl inline-flex flex-col items-center gap-2">
+            {/* Logo mark + wordmark row */}
+            <div className="flex items-center gap-3">
+              {/* Globe + Checkmark SVG icon */}
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Bluetick Health logo mark">
+                <circle cx="24" cy="24" r="22" fill="#1e3a8a" />
+                <ellipse cx="24" cy="24" rx="9" ry="22" fill="none" stroke="#38bdf8" strokeWidth="1.5" />
+                <ellipse cx="24" cy="24" rx="22" ry="9" fill="none" stroke="#38bdf8" strokeWidth="1.5" />
+                <line x1="2" y1="24" x2="46" y2="24" stroke="#38bdf8" strokeWidth="1.5" />
+                <line x1="24" y1="2" x2="24" y2="46" stroke="#38bdf8" strokeWidth="1.5" />
+                <polyline points="14,25 21,32 35,18" stroke="#22d3ee" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {/* Wordmark */}
+              <div className="flex flex-col leading-none">
+                <span className="text-blue-900 font-black text-2xl tracking-widest">BLUETICK</span>
+                <span className="text-cyan-500 font-black text-2xl tracking-widest">HEALTH</span>
+              </div>
             </div>
-            <span className="text-blue-900 font-bold text-2xl tracking-tight">Bluetick Health</span>
+            {/* Motto */}
+            <p className="text-blue-800 font-semibold text-xs tracking-[0.2em] mt-1">
+              GLOBAL EVIDENCE. LOCAL IMPACT.
+            </p>
           </div>
         </div>
+
         <h1 className="text-5xl font-bold text-white mb-3 tracking-tight">Bluetick Health</h1>
         <h2 className="text-xl font-medium text-blue-200 mb-5">
           Independent Statistical & Public Health Research Consultant
@@ -70,7 +100,16 @@ export default function ConsultingWebsite() {
       </section>
 
       {/* Services */}
-      <section className="py-20 px-6 bg-white border-y border-gray-100">
+      <section
+        className="py-20 px-6 border-y border-gray-100"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23f8fafc'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%23bfdbfe' stroke-width='2'/%3E%3Ccircle cx='100' cy='100' r='40' fill='none' stroke='%23bfdbfe' stroke-width='1.5'/%3E%3Ccircle cx='100' cy='100' r='20' fill='none' stroke='%23bfdbfe' stroke-width='1'/%3E%3Crect x='640' y='50' width='120' height='80' rx='8' fill='none' stroke='%23bfdbfe' stroke-width='1.5'/%3E%3Cline x1='660' y1='90' x2='740' y2='90' stroke='%23bfdbfe' stroke-width='1'/%3E%3Cline x1='660' y1='100' x2='720' y2='100' stroke='%23bfdbfe' stroke-width='1'/%3E%3Cline x1='660' y1='110' x2='730' y2='110' stroke='%23bfdbfe' stroke-width='1'/%3E%3Cpolyline points='50,400 150,350 250,370 350,300 450,320 550,260 650,280 750,220' fill='none' stroke='%23bfdbfe' stroke-width='2'/%3E%3Crect x='50' y='420' width='20' height='40' fill='%23dbeafe' rx='2'/%3E%3Crect x='100' y='400' width='20' height='60' fill='%23dbeafe' rx='2'/%3E%3Crect x='150' y='430' width='20' height='30' fill='%23dbeafe' rx='2'/%3E%3Crect x='200' y='390' width='20' height='70' fill='%23dbeafe' rx='2'/%3E%3Crect x='250' y='410' width='20' height='50' fill='%23dbeafe' rx='2'/%3E%3C/svg%3E")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundColor: "#ffffff",
+        }}
+      >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Services</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -152,7 +191,16 @@ export default function ConsultingWebsite() {
       </section>
 
       {/* Projects */}
-      <section className="py-20 px-6 bg-white border-y border-gray-100">
+      <section
+        className="py-20 px-6 border-y border-gray-100"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23f0f9ff'/%3E%3Ctext x='20' y='30' font-family='monospace' font-size='11' fill='%2393c5fd' opacity='0.7'%3Elibrary(survival)%3C/text%3E%3Ctext x='20' y='50' font-family='monospace' font-size='11' fill='%2393c5fd' opacity='0.7'%3Efit %26lt;- survfit(Surv(time, status) ~ group, data=lung)%3C/text%3E%3Ctext x='20' y='70' font-family='monospace' font-size='11' fill='%2393c5fd' opacity='0.7'%3Eplot(fit, col=c('blue','red'), lty=1:2)%3C/text%3E%3Ctext x='20' y='90' font-family='monospace' font-size='11' fill='%2393c5fd' opacity='0.7'%3Elegend('topright', c('Group A','Group B'))%3C/text%3E%3Cpolyline points='500,50 540,80 560,60 600,100 640,70 680,110 720,85 760,120' fill='none' stroke='%2393c5fd' stroke-width='2' opacity='0.6'/%3E%3Ccircle cx='500' cy='50' r='3' fill='%2393c5fd' opacity='0.6'/%3E%3Ccircle cx='540' cy='80' r='3' fill='%2393c5fd' opacity='0.6'/%3E%3Ccircle cx='600' cy='100' r='3' fill='%2393c5fd' opacity='0.6'/%3E%3Ccircle cx='680' cy='110' r='3' fill='%2393c5fd' opacity='0.6'/%3E%3Ccircle cx='760' cy='120' r='3' fill='%2393c5fd' opacity='0.6'/%3E%3C/svg%3E")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundColor: "#f0f9ff",
+        }}
+      >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Projects & Publications</h2>
           <div className="grid md:grid-cols-2 gap-6">
