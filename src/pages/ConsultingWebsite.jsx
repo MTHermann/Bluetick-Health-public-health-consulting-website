@@ -58,13 +58,13 @@ export default function ConsultingWebsite() {
               </svg>
               {/* Wordmark */}
               <div className="flex flex-col leading-none">
-                <span className="text-blue-900 font-black text-2xl tracking-widest uppercase">Bluetick</span>
-                <span className="text-cyan-500 font-black text-2xl tracking-widest uppercase">Health</span>
+                <span className="text-blue-900 font-black text-2xl tracking-widest">BLUETICK</span>
+                <span className="text-cyan-500 font-black text-2xl tracking-widest">HEALTH</span>
               </div>
             </div>
             {/* Motto */}
-            <p className="text-blue-800 font-semibold text-xs tracking-[0.2em] uppercase mt-1">
-              Global Evidence. Local Impact.
+            <p className="text-blue-800 font-semibold text-xs tracking-[0.2em] mt-1">
+              GLOBAL EVIDENCE. LOCAL IMPACT.
             </p>
           </div>
         </div>
