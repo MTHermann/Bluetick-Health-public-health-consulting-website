@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, BarChart3, Database, ClipboardList, FlaskConical, Linkedin } from "lucide-react";
+import { Mail, Phone, BarChart3, Database, ClipboardList, FlaskConical, Linkedin, TrendingUp } from "lucide-react";
 
 export default function ConsultingWebsite() {
   const linkedinLink = "https://www.linkedin.com/in/mitiku-t-437bb0163/";
@@ -31,6 +31,14 @@ export default function ConsultingWebsite() {
 
       {/* Hero */}
       <section className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 py-24 px-6 text-center">
+        <div className="flex justify-center mb-6">
+          <div className="bg-white rounded-2xl px-8 py-4 shadow-lg inline-flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-800 rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-lg">B</span>
+            </div>
+            <span className="text-blue-900 font-bold text-2xl tracking-tight">Bluetick Health</span>
+          </div>
+        </div>
         <h1 className="text-5xl font-bold text-white mb-3 tracking-tight">Bluetick Health</h1>
         <h2 className="text-xl font-medium text-blue-200 mb-5">
           Independent Statistical & Public Health Research Consultant
@@ -65,7 +73,7 @@ export default function ConsultingWebsite() {
       <section className="py-20 px-6 bg-white border-y border-gray-100">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Services</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
               <CardContent className="p-6">
@@ -115,6 +123,18 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
+              <CardContent className="p-6">
+                <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                  <TrendingUp className="text-blue-700 w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-blue-900 mb-2">Monitoring & Evaluating Public Health Programs</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to translate evidence into actionable insights that strengthen decision-making, improve programme delivery, and maximise impact.
+                </p>
+              </CardContent>
+            </Card>
+
           </div>
         </div>
       </section>
@@ -138,17 +158,15 @@ export default function ConsultingWebsite() {
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="hover:shadow-lg transition-shadow duration-200">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-blue-900 mb-2 text-lg">Healthcare Data Analysis</h3>
+                <h3 className="font-semibold text-blue-900 mb-2 text-lg">Bluetick Health EMR Platform</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  Regression and survival modelling for hospital datasets and routine health data.
+                  Bluetick Health Electronic Medical Record (EMR) in Development stage.
                 </p>
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-shadow duration-200">
-              <CardContent className="p-6">
-                <h3 className="font-semibold text-blue-900 mb-2 text-lg">Public Health Evaluation</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">
-                  Monitoring and evaluation of health interventions using population-level data.
+                <p className="text-sm text-gray-600 leading-relaxed mt-2">
+                  Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics, dashboards, and automated reporting. Funding and collaborative partnerships are welcomed to accelerate development and launch.
+                </p>
+                <p className="text-sm text-gray-600 leading-relaxed mt-2">
+                  We welcome funding, technical partnerships, healthcare institutions, and research collaborations to accelerate platform development, testing, implementation, and launch.
                 </p>
               </CardContent>
             </Card>
