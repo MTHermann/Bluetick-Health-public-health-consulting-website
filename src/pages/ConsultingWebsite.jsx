@@ -49,7 +49,7 @@ export default function ConsultingWebsite() {
             <div className="flex items-center gap-3">
               {/* Globe image on the side */}
               <img
-                src="/assets/bluetick-globe.png"
+                src="/assets/bluetick-globe.png.png"
                 alt="Bluetick Health globe logo"
                 width="80"
                 height="80"
@@ -168,7 +168,7 @@ export default function ConsultingWebsite() {
                 </div>
                 <h3 className="font-semibold text-blue-900 mb-2">Monitoring & Evaluating Public Health Programs</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and st[...]
+                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to develop sustainable M&E systems.
                 </p>
               </CardContent>
             </Card>
