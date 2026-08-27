@@ -26,20 +26,25 @@ export default function ConsultingWebsite() {
     window.location.href = mailto;
   };
 
-  // Background patterns for service cards
+  const svgToDataUri = (svg) => `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+
+  // Healthcare-themed backgrounds
   const serviceBackgrounds = {
-    stats: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Elm(y ~ x1 + x2)%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Esummary(glm_model)%3C/text%3E%3Cpolyline points='20,100 40,80 60,90 80,60 100,75' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='50' cy='150' r='20' fill='none' stroke='%230284c7' opacity='0.1'/%3E%3Cline x1='10' y1='180' x2='190' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3C/svg%3E")`,
-    
-    database: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Edata %3C-%3E read.csv()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Evalidate(data)%3C/text%3E%3Crect x='30' y='80' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='80' y='85' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='130' y='80' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Cline x1='50' y1='75' x2='150' y2='75' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3C/svg%3E")`,
-    
-    research: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Estudy_design()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Eanalysis_report()%3C/text%3E%3Ccircle cx='60' cy='100' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='140' cy='100' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Cline x1='85' y1='100' x2='115' y2='100' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cpolyline points='40,160 100,140 160,160' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`,
-    
-    project: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Egannt_chart()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3EtimelineProject()%3C/text%3E%3Crect x='30' y='70' width='140' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='90' width='100' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='110' width='120' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='130' width='90' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='150' width='110' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`,
-    
-    monitoring: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Emonitoring_frame()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3EevaluateProgram()%3C/text%3E%3Cpolyline points='20,130 50,90 80,110 110,70 140,95 170,60' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.25'/%3E%3Ccircle cx='20' cy='130' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='50' cy='90' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='80' cy='110' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='110' cy='70' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='140' cy='95' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='170' cy='60' r='3' fill='%230284c7' opacity='0.3'/%3E%3C/svg%3E")`
+    stats: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0f3b66'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='320' height='220' fill='url(#g)'/><rect x='24' y='24' width='132' height='80' rx='10' fill='#e0f2fe' opacity='.35'/><polyline points='34,86 58,66 80,72 106,48 132,60' fill='none' stroke='#67e8f9' stroke-width='4'/><rect x='176' y='24' width='120' height='172' rx='10' fill='#f0f9ff' opacity='.28'/><rect x='194' y='52' width='18' height='120' fill='#7dd3fc' opacity='.75'/><rect x='222' y='88' width='18' height='84' fill='#38bdf8' opacity='.78'/><rect x='250' y='36' width='18' height='136' fill='#0ea5e9' opacity='.82'/><circle cx='78' cy='154' r='30' fill='none' stroke='#67e8f9' stroke-width='4' opacity='.45'/></svg>`),
+    database: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#082f49'/><stop offset='1' stop-color='#155e75'/></linearGradient></defs><rect width='320' height='220' fill='url(#g)'/><ellipse cx='80' cy='68' rx='42' ry='14' fill='#a5f3fc' opacity='.45'/><rect x='38' y='68' width='84' height='82' fill='#a5f3fc' opacity='.35'/><ellipse cx='80' cy='150' rx='42' ry='14' fill='#a5f3fc' opacity='.45'/><ellipse cx='170' cy='84' rx='42' ry='14' fill='#7dd3fc' opacity='.45'/><rect x='128' y='84' width='84' height='66' fill='#7dd3fc' opacity='.3'/><ellipse cx='170' cy='150' rx='42' ry='14' fill='#7dd3fc' opacity='.45'/><rect x='222' y='34' width='70' height='130' rx='10' fill='#e0f2fe' opacity='.26'/><line x1='234' y1='58' x2='280' y2='58' stroke='#67e8f9' stroke-width='4'/><line x1='234' y1='82' x2='280' y2='82' stroke='#67e8f9' stroke-width='4'/><line x1='234' y1='106' x2='280' y2='106' stroke='#67e8f9' stroke-width='4'/><circle cx='257' cy='188' r='24' fill='none' stroke='#22d3ee' stroke-width='4' opacity='.5'/></svg>`),
+    research: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#1e3a8a'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='320' height='220' fill='url(#g)'/><rect x='26' y='30' width='132' height='152' rx='12' fill='#f0f9ff' opacity='.28'/><path d='M60 120c18-40 44-40 62 0' stroke='#67e8f9' stroke-width='5' fill='none'/><circle cx='72' cy='92' r='11' fill='#67e8f9' opacity='.85'/><circle cx='110' cy='92' r='11' fill='#22d3ee' opacity='.85'/><rect x='178' y='30' width='116' height='72' rx='10' fill='#e0f2fe' opacity='.28'/><polyline points='188,86 212,64 228,70 246,54 282,74' fill='none' stroke='#38bdf8' stroke-width='4'/><rect x='178' y='118' width='116' height='64' rx='10' fill='#e0f2fe' opacity='.22'/><path d='M214 150 l8 -16 l8 16 z' fill='#67e8f9' opacity='.85'/><rect x='242' y='138' width='18' height='24' rx='3' fill='#22d3ee' opacity='.85'/></svg>`),
+    project: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0b3b7a'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='320' height='220' fill='url(#g)'/><rect x='26' y='26' width='268' height='64' rx='12' fill='#e0f2fe' opacity='.22'/><circle cx='54' cy='58' r='14' fill='#67e8f9' opacity='.8'/><circle cx='92' cy='58' r='14' fill='#22d3ee' opacity='.8'/><circle cx='130' cy='58' r='14' fill='#38bdf8' opacity='.8'/><rect x='26' y='108' width='268' height='86' rx='12' fill='#f0f9ff' opacity='.2'/><rect x='42' y='124' width='102' height='14' rx='7' fill='#67e8f9' opacity='.88'/><rect x='42' y='148' width='74' height='14' rx='7' fill='#22d3ee' opacity='.88'/><rect x='164' y='124' width='112' height='14' rx='7' fill='#38bdf8' opacity='.88'/><rect x='164' y='148' width='84' height='14' rx='7' fill='#7dd3fc' opacity='.88'/></svg>`),
+    monitoring: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0c4a6e'/><stop offset='1' stop-color='#155e75'/></linearGradient></defs><rect width='320' height='220' fill='url(#g)'/><path d='M0 172 Q70 142 140 170 T320 166 V220 H0 Z' fill='#67e8f9' opacity='.26'/><path d='M0 188 Q64 158 132 184 T320 182 V220 H0 Z' fill='#22d3ee' opacity='.22'/><circle cx='66' cy='118' r='12' fill='#e0f2fe' opacity='.88'/><rect x='56' y='132' width='20' height='30' rx='8' fill='#e0f2fe' opacity='.88'/><circle cx='116' cy='104' r='12' fill='#bae6fd' opacity='.88'/><rect x='106' y='118' width='20' height='32' rx='8' fill='#bae6fd' opacity='.88'/><circle cx='166' cy='116' r='12' fill='#7dd3fc' opacity='.88'/><rect x='156' y='130' width='20' height='30' rx='8' fill='#7dd3fc' opacity='.88'/><rect x='212' y='42' width='82' height='58' rx='10' fill='#f0f9ff' opacity='.24'/><polyline points='220,86 236,70 252,78 270,58 286,66' fill='none' stroke='#67e8f9' stroke-width='4'/></svg>`)
   };
 
-  const emrBackground = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f0f9ff'/%3E%3Ctext x='15' y='35' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Eemr_database()%3C/text%3E%3Ctext x='15' y='60' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Eclinical_data %3C- collect()%3C/text%3E%3Ctext x='15' y='85' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Edashboard()%3C/text%3E%3Ctext x='15' y='110' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Egenerate_report()%3C/text%3E%3Crect x='50' y='140' width='200' height='120' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.15'/%3E%3Cline x1='50' y1='160' x2='250' y2='160' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cline x1='50' y1='180' x2='250' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cline x1='50' y1='200' x2='250' y2='200' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Ccircle cx='75' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='150' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='225' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`;
+  const sectionBackgrounds = {
+    about: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 520'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0f3b66'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='1280' height='520' fill='url(#g)'/><rect x='70' y='80' width='420' height='300' rx='24' fill='#e0f2fe' opacity='.18'/><circle cx='190' cy='210' r='46' fill='#67e8f9' opacity='.75'/><rect x='156' y='252' width='68' height='86' rx='26' fill='#67e8f9' opacity='.75'/><circle cx='316' cy='188' r='44' fill='#22d3ee' opacity='.75'/><rect x='284' y='230' width='64' height='98' rx='24' fill='#22d3ee' opacity='.75'/><rect x='570' y='110' width='620' height='290' rx='24' fill='#f0f9ff' opacity='.16'/><rect x='618' y='154' width='248' height='170' rx='12' fill='#bae6fd' opacity='.34'/><polyline points='636,290 692,242 734,258 790,214 846,226' fill='none' stroke='#22d3ee' stroke-width='8'/><rect x='906' y='154' width='236' height='72' rx='12' fill='#bae6fd' opacity='.34'/><line x1='930' y1='188' x2='1118' y2='188' stroke='#67e8f9' stroke-width='10'/><line x1='930' y1='210' x2='1062' y2='210' stroke='#67e8f9' stroke-width='10'/></svg>`),
+    services: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 700'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0e3a62'/><stop offset='1' stop-color='#0f766e'/></linearGradient></defs><rect width='1600' height='700' fill='url(#g)'/><rect x='80' y='96' width='440' height='250' rx='26' fill='#e0f2fe' opacity='.18'/><polyline points='120,290 190,228 252,244 320,194 398,214 468,170' fill='none' stroke='#67e8f9' stroke-width='10'/><rect x='620' y='104' width='392' height='260' rx='26' fill='#e0f2fe' opacity='.18'/><ellipse cx='742' cy='170' rx='64' ry='20' fill='#7dd3fc' opacity='.55'/><rect x='678' y='170' width='128' height='122' fill='#7dd3fc' opacity='.34'/><ellipse cx='742' cy='292' rx='64' ry='20' fill='#7dd3fc' opacity='.55'/><rect x='1064' y='88' width='452' height='280' rx='26' fill='#f0f9ff' opacity='.14'/><rect x='1112' y='142' width='92' height='188' rx='16' fill='#67e8f9' opacity='.5'/><rect x='1236' y='172' width='92' height='158' rx='16' fill='#22d3ee' opacity='.5'/><rect x='1360' y='132' width='92' height='198' rx='16' fill='#38bdf8' opacity='.5'/><path d='M0 610 Q190 540 356 588 T760 582 T1160 592 T1600 576 V700 H0 Z' fill='#67e8f9' opacity='.18'/></svg>`),
+    clinicalTrials: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 560'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0b3b72'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='1280' height='560' fill='url(#g)'/><rect x='90' y='90' width='510' height='360' rx='28' fill='#f0f9ff' opacity='.16'/><circle cx='210' cy='220' r='44' fill='#67e8f9' opacity='.78'/><rect x='178' y='262' width='64' height='108' rx='24' fill='#67e8f9' opacity='.78'/><circle cx='344' cy='220' r='44' fill='#22d3ee' opacity='.78'/><rect x='312' y='262' width='64' height='108' rx='24' fill='#22d3ee' opacity='.78'/><rect x='448' y='180' width='98' height='168' rx='14' fill='#bae6fd' opacity='.5'/><line x1='478' y1='220' x2='516' y2='220' stroke='#0f172a' stroke-width='8' opacity='.45'/><line x1='498' y1='200' x2='498' y2='240' stroke='#0f172a' stroke-width='8' opacity='.45'/><rect x='650' y='102' width='540' height='336' rx='28' fill='#e0f2fe' opacity='.15'/><rect x='700' y='154' width='210' height='90' rx='14' fill='#67e8f9' opacity='.42'/><polyline points='722,222 760,192 792,202 832,172 884,188' fill='none' stroke='#38bdf8' stroke-width='8'/><rect x='936' y='154' width='210' height='90' rx='14' fill='#67e8f9' opacity='.32'/><line x1='964' y1='186' x2='1118' y2='186' stroke='#67e8f9' stroke-width='9'/><line x1='964' y1='210' x2='1070' y2='210' stroke='#67e8f9' stroke-width='9'/><rect x='700' y='270' width='446' height='128' rx='16' fill='#67e8f9' opacity='.28'/></svg>`),
+    projects: svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 620'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0f3b66'/><stop offset='1' stop-color='#0369a1'/></linearGradient></defs><rect width='1600' height='620' fill='url(#g)'/><rect x='110' y='92' width='1380' height='434' rx='30' fill='#f0f9ff' opacity='.14'/><rect x='182' y='156' width='430' height='286' rx='20' fill='#e0f2fe' opacity='.26'/><rect x='218' y='198' width='350' height='18' rx='9' fill='#67e8f9' opacity='.86'/><rect x='218' y='230' width='296' height='18' rx='9' fill='#22d3ee' opacity='.86'/><rect x='218' y='262' width='328' height='18' rx='9' fill='#38bdf8' opacity='.86'/><rect x='662' y='156' width='354' height='286' rx='20' fill='#e0f2fe' opacity='.22'/><circle cx='748' cy='248' r='56' fill='none' stroke='#67e8f9' stroke-width='12' opacity='.7'/><line x1='788' y1='286' x2='856' y2='354' stroke='#67e8f9' stroke-width='14' stroke-linecap='round' opacity='.7'/><rect x='1056' y='156' width='354' height='286' rx='20' fill='#e0f2fe' opacity='.22'/><rect x='1100' y='206' width='266' height='170' rx='14' fill='#bae6fd' opacity='.42'/><line x1='1128' y1='246' x2='1338' y2='246' stroke='#0ea5e9' stroke-width='10' opacity='.75'/><line x1='1128' y1='278' x2='1280' y2='278' stroke='#0ea5e9' stroke-width='10' opacity='.75'/></svg>`)
+  };
+
+  const emrBackground = svgToDataUri(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 560 360'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop stop-color='#0b3b72'/><stop offset='1' stop-color='#0e7490'/></linearGradient></defs><rect width='560' height='360' fill='url(#g)'/><rect x='40' y='38' width='480' height='284' rx='20' fill='#f0f9ff' opacity='.16'/><rect x='76' y='82' width='206' height='124' rx='12' fill='#bae6fd' opacity='.38'/><polyline points='92,178 128,150 152,158 182,132 248,146' fill='none' stroke='#22d3ee' stroke-width='7'/><rect x='304' y='82' width='176' height='124' rx='12' fill='#bae6fd' opacity='.3'/><line x1='326' y1='118' x2='458' y2='118' stroke='#67e8f9' stroke-width='8'/><line x1='326' y1='146' x2='430' y2='146' stroke='#67e8f9' stroke-width='8'/><rect x='76' y='228' width='404' height='66' rx='12' fill='#67e8f9' opacity='.26'/><circle cx='132' cy='262' r='18' fill='#67e8f9' opacity='.8'/><circle cx='188' cy='262' r='18' fill='#22d3ee' opacity='.8'/><circle cx='244' cy='262' r='18' fill='#38bdf8' opacity='.8'/></svg>`);
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
@@ -107,10 +112,10 @@ export default function ConsultingWebsite() {
       <section 
         className="py-20 px-6 max-w-5xl mx-auto"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23ffffff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3E# Public Health Research%3C/text%3E%3Ctext x='20' y='60' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Elibrary(epidemiological)%3C/text%3E%3Ctext x='20' y='80' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eanalyze_health_data()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eevidence_based %3C- TRUE%3C/text%3E%3Ctext x='20' y='120' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Estatistical_methods()%3C/text%3E%3Ctext x='20' y='140' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Elarge_scale_datasets%3C/text%3E%3Cpolyline points='50,180 100,160 150,170 200,140 250,155 300,130' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='100' cy='250' r='30' fill='none' stroke='%230284c7' opacity='0.08'/%3E%3C/svg%3E")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "repeat",
-          backgroundPosition: "top",
+          backgroundImage: `linear-gradient(rgba(239, 246, 255, 0.68), rgba(236, 254, 255, 0.64)), ${sectionBackgrounds.about}`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundPosition: "center, center",
         }}
       >
         <h2 className="text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-100 pb-3">About</h2>
@@ -125,10 +130,10 @@ export default function ConsultingWebsite() {
       <section
         className="py-20 px-6 border-y border-gray-100"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23f8fafc'/%3E%3Ctext x='30' y='50' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3E# Statistical Services%3C/text%3E%3Ctext x='30' y='80' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Eservice_catalog()%3C/text%3E%3Ctext x='30' y='110' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Eregression %3C- lm(y ~ x)%3C/text%3E%3Ctext x='30' y='140' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Esurvival %3C- survfit()%3C/text%3E%3Ccircle cx='100' cy='300' r='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cline x1='50' y1='150' x2='150' y2='150' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cline x1='80' y1='120' x2='120' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='300' y='100' width='80' height='120' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cpolyline points='400,300 450,250 500,280 550,200' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cpath d='M 600 400 L 650 350 L 700 380' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='350' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='385' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='420' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
+          backgroundImage: `linear-gradient(rgba(239, 246, 255, 0.68), rgba(236, 254, 255, 0.64)), ${sectionBackgrounds.services}`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundPosition: "center, center",
           backgroundColor: "#ffffff",
         }}
       >
@@ -136,8 +141,8 @@ export default function ConsultingWebsite() {
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Services</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.stats, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${serviceBackgrounds.stats}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <BarChart3 className="text-blue-700 w-5 h-5" />
                 </div>
@@ -148,8 +153,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.database, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${serviceBackgrounds.database}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <Database className="text-blue-700 w-5 h-5" />
                 </div>
@@ -160,8 +165,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.research, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${serviceBackgrounds.research}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <ClipboardList className="text-blue-700 w-5 h-5" />
                 </div>
@@ -172,8 +177,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.project, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${serviceBackgrounds.project}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <ClipboardList className="text-blue-700 w-5 h-5" />
                 </div>
@@ -184,8 +189,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.monitoring, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${serviceBackgrounds.monitoring}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <TrendingUp className="text-blue-700 w-5 h-5" />
                 </div>
@@ -204,10 +209,10 @@ export default function ConsultingWebsite() {
       <section 
         className="py-20 px-6 max-w-5xl mx-auto"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='350' viewBox='0 0 400 350'%3E%3Crect width='400' height='350' fill='%23ffffff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3E# Clinical Trial Support%3C/text%3E%3Ctext x='20' y='60' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eclinical_trial()%3C/text%3E%3Ctext x='20' y='80' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Erandomization()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Einterim_analysis()%3C/text%3E%3Ctext x='20' y='120' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eethics_submission()%3C/text%3E%3Ccircle cx='100' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='200' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='300' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cline x1='125' y1='180' x2='175' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cline x1='225' y1='180' x2='275' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cpolyline points='40,280 100,250 160,280 220,240 280,270' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "repeat",
-          backgroundPosition: "top",
+          backgroundImage: `linear-gradient(rgba(239, 246, 255, 0.68), rgba(236, 254, 255, 0.64)), ${sectionBackgrounds.clinicalTrials}`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundPosition: "center, center",
         }}
       >
         <h2 className="text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-100 pb-3 flex items-center gap-3">
@@ -224,18 +229,18 @@ export default function ConsultingWebsite() {
       <section
         className="py-20 px-6 border-y border-gray-100"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23f0f9ff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3E# Projects %26 Publications%3C/text%3E%3Ctext x='20' y='70' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3Eproject_list %3C- getProjects()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3Epublicate(research_findings)%3C/text%3E%3Cpolyline points='100,300 200,250 300,280 400,200 500,240' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.08'/%3E%3Crect x='600' y='200' width='150' height='150' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E")`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
+          backgroundImage: `linear-gradient(rgba(239, 246, 255, 0.68), rgba(236, 254, 255, 0.64)), ${sectionBackgrounds.projects}`,
+          backgroundSize: "cover, cover",
+          backgroundRepeat: "no-repeat, no-repeat",
+          backgroundPosition: "center, center",
           backgroundColor: "#f0f9ff",
         }}
       >
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Projects & Publications</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="hover:shadow-lg transition-shadow duration-200 overflow-hidden" style={{backgroundImage: emrBackground, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
-              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
+            <Card className="hover:shadow-lg transition-shadow duration-200 overflow-hidden" style={{backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.67), rgba(255, 255, 255, 0.63)), ${emrBackground}`, backgroundSize: "cover, cover"}}>
+              <CardContent className="p-6 bg-white/70 backdrop-blur-sm">
                 <h3 className="font-semibold text-blue-900 mb-2 text-lg">Bluetick Health EMR Platform</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
                   Bluetick Health Electronic Medical Record (EMR) in Development stage.
