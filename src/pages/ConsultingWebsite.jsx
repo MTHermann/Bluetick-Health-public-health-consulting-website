@@ -45,8 +45,9 @@ export default function ConsultingWebsite() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <div className="bg-white rounded-2xl px-8 py-5 shadow-xl inline-flex flex-col items-center gap-2">
-            {/* Logo mark */}
+            {/* Logo mark + wordmark row */}
             <div className="flex items-center gap-3">
+              {/* Globe image on the side */}
               <img
                 src="/assets/bluetick-globe.svg"
                 alt="Bluetick Health globe logo"
@@ -54,6 +55,12 @@ export default function ConsultingWebsite() {
                 height="80"
                 className="drop-shadow-md"
               />
+              
+              {/* Wordmark */}
+              <div className="flex flex-col leading-none">
+                <span className="text-blue-900 font-black text-2xl tracking-widest">BLUETICK</span>
+                <span className="text-cyan-500 font-black text-2xl tracking-widest">HEALTH</span>
+              </div>
             </div>
             {/* Motto */}
             <p className="text-blue-800 font-semibold text-xs tracking-[0.2em] mt-1">
@@ -161,7 +168,7 @@ export default function ConsultingWebsite() {
                 </div>
                 <h3 className="font-semibold text-blue-900 mb-2">Monitoring & Evaluating Public Health Programs</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to translate evidence into actionable insights that strengthen decision-making, improve programme delivery, and maximise impact.
+                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and st[...]
                 </p>
               </CardContent>
             </Card>
