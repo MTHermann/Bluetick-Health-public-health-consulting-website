@@ -45,84 +45,15 @@ export default function ConsultingWebsite() {
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
           <div className="bg-white rounded-2xl px-8 py-5 shadow-xl inline-flex flex-col items-center gap-2">
-            {/* Logo mark + wordmark row */}
+            {/* Logo mark */}
             <div className="flex items-center gap-3">
-              {/* Your Bluetick Health Logo Globe with Checkmark - from your image */}
-              <svg width="48" height="48" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-md">
-                <defs>
-                  <linearGradient id="globeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style={{stopColor: "#0369a1", stopOpacity: 1}} />
-                    <stop offset="100%" style={{stopColor: "#082f49", stopOpacity: 1}} />
-                  </linearGradient>
-                </defs>
-                
-                {/* Globe sphere background */}
-                <circle cx="120" cy="120" r="110" fill="url(#globeGradient)" opacity="0.96"/>
-                
-                {/* Globe dotted landmass pattern */}
-                <g fill="#67e8f9" opacity="0.75">
-                  {/* North America */}
-                  <circle cx="62" cy="80" r="3"/><circle cx="70" cy="75" r="2.5"/><circle cx="78" cy="72" r="2.5"/>
-                  <circle cx="58" cy="90" r="2.5"/><circle cx="66" cy="86" r="3"/><circle cx="74" cy="83" r="2.5"/>
-                  <circle cx="54" cy="100" r="2"/><circle cx="62" cy="97" r="2.5"/><circle cx="70" cy="94" r="3"/>
-                  <circle cx="78" cy="91" r="2.5"/><circle cx="60" cy="107" r="2"/><circle cx="68" cy="104" r="2.5"/>
-                  <circle cx="76" cy="101" r="2"/><circle cx="56" cy="115" r="2"/><circle cx="64" cy="112" r="2.5"/>
-                  <circle cx="72" cy="109" r="2"/><circle cx="66" cy="120" r="2"/><circle cx="74" cy="117" r="2"/>
-
-                  {/* Greenland */}
-                  <circle cx="95" cy="55" r="2.5"/><circle cx="103" cy="52" r="2"/><circle cx="99" cy="60" r="2"/>
-                  <circle cx="107" cy="57" r="2"/><circle cx="101" cy="65" r="2"/>
-
-                  {/* Europe */}
-                  <circle cx="117" cy="68" r="2.5"/><circle cx="125" cy="65" r="2.5"/><circle cx="133" cy="63" r="2"/>
-                  <circle cx="119" cy="77" r="2.5"/><circle cx="127" cy="74" r="2.5"/><circle cx="135" cy="72" r="2"/>
-                  <circle cx="121" cy="85" r="2"/><circle cx="129" cy="82" r="2.5"/><circle cx="137" cy="80" r="2"/>
-                  <circle cx="123" cy="93" r="2"/><circle cx="131" cy="90" r="2"/><circle cx="139" cy="87" r="2"/>
-
-                  {/* Africa */}
-                  <circle cx="124" cy="102" r="2.5"/><circle cx="132" cy="99" r="2.5"/><circle cx="140" cy="97" r="2"/>
-                  <circle cx="122" cy="112" r="2.5"/><circle cx="130" cy="109" r="3"/><circle cx="138" cy="107" r="2.5"/>
-                  <circle cx="120" cy="122" r="2.5"/><circle cx="128" cy="119" r="3"/><circle cx="136" cy="117" r="2.5"/>
-                  <circle cx="118" cy="132" r="2"/><circle cx="126" cy="129" r="2.5"/><circle cx="134" cy="127" r="2.5"/>
-                  <circle cx="116" cy="142" r="2"/><circle cx="124" cy="139" r="2.5"/><circle cx="132" cy="137" r="2"/>
-                  <circle cx="122" cy="149" r="2"/><circle cx="130" cy="147" r="2"/><circle cx="128" cy="157" r="2"/>
-
-                  {/* Asia */}
-                  <circle cx="148" cy="68" r="2.5"/><circle cx="157" cy="65" r="2.5"/><circle cx="166" cy="63" r="2"/>
-                  <circle cx="144" cy="78" r="2.5"/><circle cx="153" cy="75" r="3"/><circle cx="162" cy="73" r="2.5"/>
-                  <circle cx="171" cy="71" r="2"/><circle cx="140" cy="88" r="2.5"/><circle cx="149" cy="85" r="3"/>
-                  <circle cx="158" cy="83" r="2.5"/><circle cx="167" cy="81" r="2.5"/><circle cx="176" cy="79" r="2"/>
-                  <circle cx="145" cy="97" r="2.5"/><circle cx="154" cy="95" r="2.5"/><circle cx="163" cy="93" r="2.5"/>
-                  <circle cx="172" cy="91" r="2"/><circle cx="180" cy="90" r="2"/><circle cx="150" cy="105" r="2.5"/>
-                  <circle cx="159" cy="103" r="2.5"/><circle cx="168" cy="101" r="2"/><circle cx="176" cy="100" r="2"/>
-
-                  {/* Australia */}
-                  <circle cx="168" cy="140" r="2.5"/><circle cx="177" cy="137" r="2.5"/><circle cx="175" cy="147" r="2.5"/>
-                  <circle cx="164" cy="150" r="2"/><circle cx="173" cy="155" r="2"/><circle cx="180" cy="148" r="2"/>
-                  <circle cx="166" cy="158" r="2"/><circle cx="175" cy="160" r="2"/>
-
-                  {/* South America */}
-                  <circle cx="78" cy="128" r="2.5"/><circle cx="86" cy="125" r="2.5"/><circle cx="82" cy="138" r="2.5"/>
-                  <circle cx="90" cy="135" r="2.5"/><circle cx="80" cy="148" r="2.5"/><circle cx="88" cy="145" r="2.5"/>
-                  <circle cx="78" cy="158" r="2"/><circle cx="86" cy="155" r="2.5"/><circle cx="82" cy="167" r="2"/>
-                  <circle cx="84" cy="175" r="2"/><circle cx="80" cy="165" r="2"/>
-
-                  {/* Scattered small dots to add texture */}
-                  <circle cx="110" cy="115" r="1.5"/><circle cx="145" cy="115" r="1.5"/><circle cx="100" cy="90" r="1.5"/>
-                  <circle cx="185" cy="105" r="1.5"/><circle cx="95" cy="130" r="1.5"/><circle cx="155" cy="130" r="1.5"/>
-                </g>
-                
-                {/* Large checkmark overlay - cyan/turquoise */}
-                <g stroke="#22d3ee" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="85,120 110,150 170,80"/>
-                </g>
-              </svg>
-              
-              {/* Wordmark */}
-              <div className="flex flex-col leading-none">
-                <span className="text-blue-900 font-black text-2xl tracking-widest">BLUETICK</span>
-                <span className="text-cyan-500 font-black text-2xl tracking-widest">HEALTH</span>
-              </div>
+              <img
+                src="/assets/bluetick-globe.svg"
+                alt="Bluetick Health globe logo"
+                width="80"
+                height="80"
+                className="drop-shadow-md"
+              />
             </div>
             {/* Motto */}
             <p className="text-blue-800 font-semibold text-xs tracking-[0.2em] mt-1">
