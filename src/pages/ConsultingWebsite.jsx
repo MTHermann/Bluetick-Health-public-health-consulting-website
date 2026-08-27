@@ -26,6 +26,21 @@ export default function ConsultingWebsite() {
     window.location.href = mailto;
   };
 
+  // Background patterns for service cards
+  const serviceBackgrounds = {
+    stats: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Elm(y ~ x1 + x2)%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Esummary(glm_model)%3C/text%3E%3Cpolyline points='20,100 40,80 60,90 80,60 100,75' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='50' cy='150' r='20' fill='none' stroke='%230284c7' opacity='0.1'/%3E%3Cline x1='10' y1='180' x2='190' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3C/svg%3E")`,
+    
+    database: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Edata %3C-%3E read.csv()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Evalidate(data)%3C/text%3E%3Crect x='30' y='80' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='80' y='85' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='130' y='80' width='40' height='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Cline x1='50' y1='75' x2='150' y2='75' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3C/svg%3E")`,
+    
+    research: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Estudy_design()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Eanalysis_report()%3C/text%3E%3Ccircle cx='60' cy='100' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='140' cy='100' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Cline x1='85' y1='100' x2='115' y2='100' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cpolyline points='40,160 100,140 160,160' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`,
+    
+    project: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Egannt_chart()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3EtimelineProject()%3C/text%3E%3Crect x='30' y='70' width='140' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='90' width='100' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='110' width='120' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='130' width='90' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Crect x='30' y='150' width='110' height='12' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`,
+    
+    monitoring: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23f0f9ff'/%3E%3Ctext x='10' y='30' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3Emonitoring_frame()%3C/text%3E%3Ctext x='10' y='50' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.15'%3EevaluateProgram()%3C/text%3E%3Cpolyline points='20,130 50,90 80,110 110,70 140,95 170,60' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.25'/%3E%3Ccircle cx='20' cy='130' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='50' cy='90' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='80' cy='110' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='110' cy='70' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='140' cy='95' r='3' fill='%230284c7' opacity='0.3'/%3E%3Ccircle cx='170' cy='60' r='3' fill='%230284c7' opacity='0.3'/%3E%3C/svg%3E")`
+  };
+
+  const emrBackground = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23f0f9ff'/%3E%3Ctext x='15' y='35' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Eemr_database()%3C/text%3E%3Ctext x='15' y='60' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Eclinical_data %3C- collect()%3C/text%3E%3Ctext x='15' y='85' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Edashboard()%3C/text%3E%3Ctext x='15' y='110' font-family='monospace' font-size='9' fill='%230284c7' opacity='0.12'%3Egenerate_report()%3C/text%3E%3Crect x='50' y='140' width='200' height='120' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.15'/%3E%3Cline x1='50' y1='160' x2='250' y2='160' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cline x1='50' y1='180' x2='250' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Cline x1='50' y1='200' x2='250' y2='200' stroke='%230284c7' stroke-width='1' opacity='0.15'/%3E%3Ccircle cx='75' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='150' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3Ccircle cx='225' cy='230' r='8' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.2'/%3E%3C/svg%3E")`;
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
 
@@ -89,7 +104,15 @@ export default function ConsultingWebsite() {
       </section>
 
       {/* About */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
+      <section 
+        className="py-20 px-6 max-w-5xl mx-auto"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23ffffff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3E# Public Health Research%3C/text%3E%3Ctext x='20' y='60' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Elibrary(epidemiological)%3C/text%3E%3Ctext x='20' y='80' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eanalyze_health_data()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eevidence_based %3C- TRUE%3C/text%3E%3Ctext x='20' y='120' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Estatistical_methods()%3C/text%3E%3Ctext x='20' y='140' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Elarge_scale_datasets%3C/text%3E%3Cpolyline points='50,180 100,160 150,170 200,140 250,155 300,130' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='100' cy='250' r='30' fill='none' stroke='%230284c7' opacity='0.08'/%3E%3C/svg%3E")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "top",
+        }}
+      >
         <h2 className="text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-100 pb-3">About</h2>
         <p className="text-gray-700 leading-relaxed text-lg">
           Independent consultancy specializing in public health research, healthcare analytics, and statistical modelling.
@@ -102,7 +125,7 @@ export default function ConsultingWebsite() {
       <section
         className="py-20 px-6 border-y border-gray-100"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23f8fafc'/%3E%3Ccircle cx='100' cy='80' r='60' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Cline x1='50' y1='150' x2='150' y2='150' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Cline x1='80' y1='120' x2='120' y2='180' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Crect x='300' y='100' width='80' height='120' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Cpolyline points='400,300 450,250 500,280 550,200' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Cpath d='M 600 400 L 650 350 L 700 380' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='350' width='100' height='20' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='385' width='100' height='20' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='420' width='100' height='20' fill='none' stroke='%230369a1' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='500' viewBox='0 0 800 500'%3E%3Crect width='800' height='500' fill='%23f8fafc'/%3E%3Ctext x='30' y='50' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3E# Statistical Services%3C/text%3E%3Ctext x='30' y='80' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Eservice_catalog()%3C/text%3E%3Ctext x='30' y='110' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Eregression %3C- lm(y ~ x)%3C/text%3E%3Ctext x='30' y='140' font-family='monospace' font-size='10' fill='%230284c7' opacity='0.08'%3Esurvival %3C- survfit()%3C/text%3E%3Ccircle cx='100' cy='300' r='60' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cline x1='50' y1='150' x2='150' y2='150' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cline x1='80' y1='120' x2='120' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='300' y='100' width='80' height='120' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cpolyline points='400,300 450,250 500,280 550,200' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Cpath d='M 600 400 L 650 350 L 700 380' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='350' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='385' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3Crect x='50' y='420' width='100' height='20' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -113,8 +136,8 @@ export default function ConsultingWebsite() {
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Services</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.stats, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <BarChart3 className="text-blue-700 w-5 h-5" />
                 </div>
@@ -125,8 +148,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.database, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <Database className="text-blue-700 w-5 h-5" />
                 </div>
@@ -137,8 +160,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.research, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <ClipboardList className="text-blue-700 w-5 h-5" />
                 </div>
@@ -149,8 +172,8 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.project, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <ClipboardList className="text-blue-700 w-5 h-5" />
                 </div>
@@ -161,14 +184,14 @@ export default function ConsultingWebsite() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 border-blue-50 overflow-hidden" style={{backgroundImage: serviceBackgrounds.monitoring, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                   <TrendingUp className="text-blue-700 w-5 h-5" />
                 </div>
                 <h3 className="font-semibold text-blue-900 mb-2">Monitoring & Evaluating Public Health Programs</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
-                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to develop sustainable M&E systems.
+                  We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact.
                 </p>
               </CardContent>
             </Card>
@@ -178,7 +201,15 @@ export default function ConsultingWebsite() {
       </section>
 
       {/* Clinical Trials */}
-      <section className="py-20 px-6 max-w-5xl mx-auto">
+      <section 
+        className="py-20 px-6 max-w-5xl mx-auto"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='350' viewBox='0 0 400 350'%3E%3Crect width='400' height='350' fill='%23ffffff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3E# Clinical Trial Support%3C/text%3E%3Ctext x='20' y='60' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eclinical_trial()%3C/text%3E%3Ctext x='20' y='80' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Erandomization()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Einterim_analysis()%3C/text%3E%3Ctext x='20' y='120' font-family='monospace' font-size='8' fill='%230284c7' opacity='0.08'%3Eethics_submission()%3C/text%3E%3Ccircle cx='100' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='200' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Ccircle cx='300' cy='180' r='25' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cline x1='125' y1='180' x2='175' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cline x1='225' y1='180' x2='275' y2='180' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3Cpolyline points='40,280 100,250 160,280 220,240 280,270' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.1'/%3E%3C/svg%3E")`,
+          backgroundSize: "cover",
+          backgroundRepeat: "repeat",
+          backgroundPosition: "top",
+        }}
+      >
         <h2 className="text-3xl font-bold text-blue-900 mb-5 border-b-2 border-blue-100 pb-3 flex items-center gap-3">
           <FlaskConical className="w-7 h-7 text-blue-700" /> Clinical Trials Support
         </h2>
@@ -193,7 +224,7 @@ export default function ConsultingWebsite() {
       <section
         className="py-20 px-6 border-y border-gray-100"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23f0f9ff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.06'%3Esurvfit(Surv(time, status) ~ group)%3C/text%3E%3Ctext x='30' y='80' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.06'%3Ecoxph(Surv(time, status) ~ covariate)%3C/text%3E%3Ctext x='40' y='120' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.06'%3Eplot(km_fit, main='KM Curve')%3C/text%3E%3Cpolyline points='100,300 200,250 300,280 400,200 500,240' fill='none' stroke='%2306b6d4' stroke-width='2' opacity='0.08'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'%3E%3Crect width='800' height='400' fill='%23f0f9ff'/%3E%3Ctext x='20' y='40' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3E# Projects %26 Publications%3C/text%3E%3Ctext x='20' y='70' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3Eproject_list %3C- getProjects()%3C/text%3E%3Ctext x='20' y='100' font-family='monospace' font-size='11' fill='%230284c7' opacity='0.08'%3Epublicate(research_findings)%3C/text%3E%3Cpolyline points='100,300 200,250 300,280 400,200 500,240' fill='none' stroke='%230284c7' stroke-width='2' opacity='0.08'/%3E%3Crect x='600' y='200' width='150' height='150' fill='none' stroke='%230284c7' stroke-width='1' opacity='0.08'/%3E%3C/svg%3E")`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
@@ -203,8 +234,8 @@ export default function ConsultingWebsite() {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-blue-900 mb-10 border-b-2 border-blue-100 pb-3">Projects & Publications</h2>
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="hover:shadow-lg transition-shadow duration-200">
-              <CardContent className="p-6">
+            <Card className="hover:shadow-lg transition-shadow duration-200 overflow-hidden" style={{backgroundImage: emrBackground, backgroundSize: "cover", backgroundAttachment: "fixed"}}>
+              <CardContent className="p-6 bg-white/95 backdrop-blur-sm">
                 <h3 className="font-semibold text-blue-900 mb-2 text-lg">Bluetick Health EMR Platform</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">
                   Bluetick Health Electronic Medical Record (EMR) in Development stage.
