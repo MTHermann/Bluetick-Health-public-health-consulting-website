@@ -49,7 +49,7 @@ export default function ConsultingWebsite() {
             <div className="flex items-center gap-3">
               {/* Globe image on the side */}
               <img
-                src="/assets/bluetick-globe.svg"
+                src="/assets/bluetick-globe.png"
                 alt="Bluetick Health globe logo"
                 width="80"
                 height="80"
