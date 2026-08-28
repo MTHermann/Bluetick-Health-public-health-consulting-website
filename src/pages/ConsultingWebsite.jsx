@@ -37,17 +37,18 @@ const services = [
   {
     icon: TrendingUp,
     title: 'Monitoring & Evaluating Public Health Programs',
-    body: 'Design and implementation of practical M&E frameworks to measure performance, outcomes, and impact.',
+    body: 'We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to translate evidence into actionable insights that strengthen decision-making, improve programme delivery, and maximise impact.',
   },
   {
     icon: FlaskConical,
     title: 'Clinical Trials Support',
-    body: 'Statistical and data support for protocol development, ethics, randomization, oversight, and interim analysis.',
+    body: 'Statistical and data support for clinical trials, including design, protocol development, ethics submissions, randomization, site selection and oversight, patient recruitment strategy, and interim analysis.',
   },
 ]
 
 export default function ConsultingWebsite() {
   const linkedinLink = 'https://www.linkedin.com/in/mitiku-t-437bb0163/'
+  const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
   const [form, setForm] = useState({ name: '', email: '', message: '' })
 
   useEffect(() => {
@@ -81,10 +82,11 @@ export default function ConsultingWebsite() {
           <div className="inline-flex flex-col items-center gap-2 rounded-2xl bg-white px-8 py-5 shadow-lg">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/bluetick-globe.png"
+                src={globeLogoSrc}
                 alt="Bluetick Health globe logo"
                 width="72"
                 height="72"
+                className="h-[72px] w-[72px] shrink-0 object-contain"
               />
               <div className="flex flex-col leading-none">
                 <span className="text-3xl font-black tracking-widest text-blue-900">BLUETICK</span>
@@ -162,6 +164,10 @@ export default function ConsultingWebsite() {
                   dashboards, and automated reporting. Funding and collaborative partnerships are welcomed to accelerate
                   development and launch.
                 </p>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  We welcome funding, technical partnerships, healthcare institutions, and research collaborations to
+                  accelerate platform development, testing, implementation, and launch.
+                </p>
               </CardContent>
             </Card>
           </div>
@@ -171,6 +177,7 @@ export default function ConsultingWebsite() {
       <section id="contact" className="bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center text-2xl font-semibold text-blue-900">Contact</h2>
+          <p className="mb-8 text-center text-gray-500">Reach out to discuss your project or request a consultation.</p>
 
           <div className="mb-8 flex flex-col items-center justify-center gap-4 text-gray-700 sm:flex-row sm:gap-8">
             <a href="mailto:mitikuhermanng@gmail.com" className="inline-flex items-center gap-2">
