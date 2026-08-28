@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
   BarChart3,
+  Briefcase,
   ClipboardList,
   Database,
   FlaskConical,
@@ -29,7 +30,7 @@ const services = [
     body: 'Study design, monitoring and evaluation, reporting, and publications.',
   },
   {
-    icon: ClipboardList,
+    icon: Briefcase,
     title: 'Project Management',
     body: 'SOP and protocol development, regulatory compliance, and operational leadership.',
   },
@@ -51,20 +52,25 @@ export default function ConsultingWebsite() {
 
   useEffect(() => {
     document.title = 'Bluetick Health | Statistical & Public Health Research Consultancy'
-    const meta = document.querySelector("meta[name='description']") || document.createElement('meta')
+    const existingMeta = document.querySelector("meta[name='description']")
+    const meta = existingMeta || document.createElement('meta')
     meta.name = 'description'
     meta.content =
       'Independent statistical and public health research consultancy supporting health systems, clinical research, NGOs, and academic institutions.'
-    document.head.appendChild(meta)
+    if (!existingMeta) {
+      document.head.appendChild(meta)
+    }
   }, [])
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const mailto = `mailto:mitikuhermanng@gmail.com?subject=Consulting Inquiry from ${form.name}&body=Name: ${form.name}%0AEmail: ${form.email}%0A%0A${form.message}`
+    const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
+    const mailto = `mailto:mitikuhermanng@gmail.com?subject=${subject}&body=${body}`
     window.location.href = mailto
   }
 
@@ -178,14 +184,21 @@ export default function ConsultingWebsite() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <input
               name="name"
+              type="text"
+              autoComplete="name"
               placeholder="Your Name"
+              value={form.name}
+              required
               className="rounded border border-gray-200 bg-white p-3"
               onChange={handleChange}
             />
             <input
               name="email"
               type="email"
+              autoComplete="email"
               placeholder="Your Email"
+              value={form.email}
+              required
               className="rounded border border-gray-200 bg-white p-3"
               onChange={handleChange}
             />
@@ -193,6 +206,8 @@ export default function ConsultingWebsite() {
               name="message"
               rows={5}
               placeholder="Your Message"
+              value={form.message}
+              required
               className="resize-none rounded border border-gray-200 bg-white p-3"
               onChange={handleChange}
             />
@@ -202,7 +217,7 @@ export default function ConsultingWebsite() {
       </section>
 
       <footer className="bg-blue-900 py-8 text-center text-sm text-blue-200">
-        © {new Date().getFullYear()} Bluetick Health Consultancy. All rights reserved
+        © {new Date().getFullYear()} Bluetick Health Consultancy. All rights reserved.
       </footer>
     </div>
   )
