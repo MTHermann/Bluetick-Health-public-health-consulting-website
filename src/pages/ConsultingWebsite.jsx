@@ -123,9 +123,12 @@ export default function ConsultingWebsite() {
         <div className="mx-auto max-w-5xl rounded-xl bg-[#dff0ff] p-8 md:p-10">
           <h2 className="mb-4 text-2xl font-semibold text-blue-900">About</h2>
           <p className="leading-relaxed text-gray-700">
-            Independent consultant specializing in public health research, healthcare analytics, and statistical modelling.
+            Independent Consultancy specializing in public health research, healthcare analytics, and statistical modelling.
             We support evidence-based decision-making through analysis of large-scale health datasets, epidemiological
-            studies, and advanced statistical methods.
+            studies, and advanced statistical methods. Our multidisciplinary team brings together clinicians,
+            epidemiologists, biostatisticians, health economists, and programme specialists to deliver solutions that
+            are both scientifically sound and practically relevant, combining global best practice with deep local
+            knowledge.
           </p>
         </div>
       </section>
