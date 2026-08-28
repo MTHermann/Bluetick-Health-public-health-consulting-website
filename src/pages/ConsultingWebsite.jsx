@@ -161,12 +161,9 @@ export default function ConsultingWebsite() {
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
                   Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics,
-                  dashboards, and automated reporting. Funding and collaborative partnerships are welcomed to accelerate
-                  development and launch.
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  We welcome funding, technical partnerships, healthcare institutions, and research collaborations to
-                  accelerate platform development, testing, implementation, and launch.
+                  dashboards, and automated reporting. We welcome funding, technical partnerships, healthcare
+                  institutions, and research collaborations to accelerate platform development, testing, implementation,
+                  and launch.
                 </p>
               </CardContent>
             </Card>
