@@ -1,5 +1,3 @@
-import { Button } from '../components/ui/button'
-
 export default function ConsultingWebsite() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-950 via-blue-900 to-cyan-900 font-sans">
