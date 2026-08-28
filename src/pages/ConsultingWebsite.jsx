@@ -44,6 +44,11 @@ const services = [
     title: 'Clinical Trials Support',
     body: 'Statistical and data support for clinical trials, including design, protocol development, ethics submissions, randomization, site selection and oversight, patient recruitment strategy, and interim analysis.',
   },
+  {
+    icon: TrendingUp,
+    title: 'Health Economics & Economic Evaluation',
+    body: 'We help clients demonstrate the clinical and economic value of healthcare technologies and develop evidence strategies to support pricing, reimbursement, and market access. Cost-effectiveness and cost-utility analysis, budget impact assessment, healthcare resource utilisation and outcomes research, economic modelling, and Health Technology Assessment (HTA).',
+  },
 ]
 
 export default function ConsultingWebsite() {
