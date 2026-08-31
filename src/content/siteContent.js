@@ -296,9 +296,6 @@ export const faqs = [
 ]
 
 export const vacanciesContent = {
-  heading: 'Vacancies',
-  intro:
-    "Explore public health jobs and biostatistician positions at Bluetick Health. We currently have no open roles, but we're always interested in connecting with strong talent for future careers.",
   placeholder:
     "Currently, we have no open positions. We're always looking for talented individuals. Check back soon or contact us to express interest.",
   contactEmail: 'mitikuhermanng@gmail.com',

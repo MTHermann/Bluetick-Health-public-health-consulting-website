@@ -460,6 +460,7 @@ function FAQPage() {
 
 function VacanciesPage() {
   const vacanciesInfo = pageContent['/vacancies/']
+  const contactPhoneHref = `tel:${vacanciesContent.contactPhone.replace(/\s+/g, '')}`
 
   return (
     <>
@@ -489,11 +490,11 @@ function VacanciesPage() {
                 Interested in future public health jobs, biostatistician positions, or research careers? Contact us and
                 share your profile so we can reach out when vacancies open.
               </p>
-              <div className="mt-5 space-y-3 text-sm">
+              <div className="mt-5 flex flex-col gap-3 text-sm">
                 <a href={`mailto:${vacanciesContent.contactEmail}`} className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900">
                   <Mail className="h-4 w-4" /> {vacanciesContent.contactEmail}
                 </a>
-                <a href="tel:+27611170478" className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900">
+                <a href={contactPhoneHref} className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900">
                   <Phone className="h-4 w-4" /> {vacanciesContent.contactPhone}
                 </a>
               </div>
@@ -530,8 +531,8 @@ function NewsPage() {
                       {item.source} • {item.category}
                     </p>
                     <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.summary}</p>
-                    <a href={item.link} className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900">
-                      Read update <ExternalLink className="h-4 w-4" />
+                    <a href={item.link} className="mt-4 inline-flex items-center text-sm font-medium text-blue-700 hover:text-blue-900">
+                      Read update
                     </a>
                   </CardContent>
                 </Card>
