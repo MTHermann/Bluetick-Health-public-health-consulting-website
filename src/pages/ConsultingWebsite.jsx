@@ -116,7 +116,7 @@ function SiteHeader({ pathname }) {
               ? pathname === '/'
               : href.endsWith('/')
                 ? pathname === href
-                : pathname === '/' && href.startsWith('/#')
+                : false
 
             return (
               <a
@@ -380,8 +380,8 @@ function BlogPostPage({ post }) {
               </div>
               <KeywordList items={post.keywords} />
               <div className="mt-8 space-y-5 text-base leading-8 text-gray-700">
-                {post.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                {post.paragraphs.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
                 ))}
               </div>
               <div className="mt-8 rounded-xl bg-blue-950 p-6 text-sm text-blue-100 shadow-inner">
