@@ -20,6 +20,7 @@ export default defineConfig({
         resources: resolve(__dirname, 'resources/index.html'),
         faq: resolve(__dirname, 'faq/index.html'),
         news: resolve(__dirname, 'news/index.html'),
+        products: resolve(__dirname, 'products/index.html'),
         vacancies: resolve(__dirname, 'vacancies/index.html'),
       },
     },
