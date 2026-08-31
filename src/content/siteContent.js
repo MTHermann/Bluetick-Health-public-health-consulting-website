@@ -246,11 +246,6 @@ export const resources = [
         description: 'Methods and process guidance for economic evaluation, evidence submissions, and decision-making.',
         href: 'https://www.nice.org.uk/about/what-we-do/our-programmes/nice-guidance/nice-health-technology-evaluations',
       },
-      {
-        title: 'iDSI Reference Case',
-        description: 'A widely used framework for high-quality economic evaluation in global health and donor-funded programmes.',
-        href: 'https://www.idsihealth.org/resource-items/reference-case-for-economic-evaluation/',
-      },
     ],
   },
 ]
@@ -329,11 +324,6 @@ export const pageContent = {
     intro:
       'Answers to common questions about public health statistical consulting, research support, timelines, data preparation, and secure collaboration.',
   },
-}
-
-export const linkedInStrategyDownload = {
-  label: 'Download LinkedIn content strategy',
-  href: '/linkedin-content-strategy.txt',
 }
 
 export function getPostPath(slug) {

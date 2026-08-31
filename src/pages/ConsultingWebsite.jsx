@@ -19,7 +19,6 @@ import {
   faqs,
   getPageMeta,
   getPostPath,
-  linkedInStrategyDownload,
   navigationLinks,
   pageContent,
   resources,
@@ -403,22 +402,6 @@ function ResourcesPage() {
       <PageIntro title={resourcesInfo.heading} intro={resourcesInfo.intro} eyebrow="Backlink-ready references" />
       <section className="section-code-bg section-bg-about px-6 py-16">
         <div className="mx-auto max-w-6xl space-y-8">
-          <Card>
-            <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h2 className="text-xl font-semibold text-blue-900">LinkedIn content strategy</h2>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  Download a ready-to-share text file with LinkedIn post templates for blog promotion, partnership outreach, industry insights, statistical tips, and public health updates.
-                </p>
-              </div>
-              <Button asChild>
-                <a href={linkedInStrategyDownload.href} target="_blank" rel="noreferrer">
-                  {linkedInStrategyDownload.label}
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-
           {resources.map((resourceGroup) => (
             <div key={resourceGroup.category}>
               <h2 className="mb-4 text-2xl font-semibold text-blue-900">{resourceGroup.category}</h2>
