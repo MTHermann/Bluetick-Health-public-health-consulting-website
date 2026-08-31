@@ -1,31 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R time series and South Africa outcomes background">
-  <g fill="#1d4ed8" fill-opacity="0.22" font-family="monospace" font-size="23">
-    <text x="70" y="110"># R time-series analysis</text>
-    <text x="70" y="155">library(forecast)</text>
-    <text x="70" y="200">ts_cases &lt;- ts(monthly_cases, start = c(2020,1), frequency = 12)</text>
-    <text x="70" y="245">fit_arima &lt;- auto.arima(ts_cases, seasonal = TRUE)</text>
-    <text x="70" y="290">forecast_12m &lt;- forecast(fit_arima, h = 12)</text>
-    <text x="70" y="335">autoplot(forecast_12m) + ggtitle("Projected Incidence")</text>
-    <text x="70" y="380"># Outcome distribution by province</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed R time-series, bar chart, and South Africa outcome map background">
+  <rect width="1600" height="900" fill="transparent" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill-opacity="0.9">
+    <text x="60" y="92" fill="#1d4ed8"># R time-series forecasting + provincial outcome distribution</text>
+    <text x="60" y="136"><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"forecast"</tspan><tspan fill="#334155">); </tspan><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"ggplot2"</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="60" y="180"><tspan fill="#334155">cases_ts &lt;- </tspan><tspan fill="#2563eb">ts</tspan><tspan fill="#334155">(monthly_cases, start = </tspan><tspan fill="#2563eb">c</tspan><tspan fill="#334155">(</tspan><tspan fill="#f59e0b">2020</tspan><tspan fill="#334155">, </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">), frequency = </tspan><tspan fill="#f59e0b">12</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="60" y="224"><tspan fill="#334155">fit_arima &lt;- </tspan><tspan fill="#2563eb">auto.arima</tspan><tspan fill="#334155">(cases_ts, seasonal = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, stepwise = </tspan><tspan fill="#f59e0b">FALSE</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="60" y="268"><tspan fill="#334155">fc_12 &lt;- </tspan><tspan fill="#2563eb">forecast</tspan><tspan fill="#334155">(fit_arima, h = </tspan><tspan fill="#f59e0b">12</tspan><tspan fill="#334155">); acc &lt;- </tspan><tspan fill="#2563eb">accuracy</tspan><tspan fill="#334155">(fc_12)</tspan></text>
+    <text x="60" y="312"><tspan fill="#2563eb">autoplot</tspan><tspan fill="#334155">(fc_12) + </tspan><tspan fill="#2563eb">labs</tspan><tspan fill="#334155">(title = </tspan><tspan fill="#16a34a">"Projected incidence (12 months)"</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="60" y="356"><tspan fill="#334155">prov_summary &lt;- </tspan><tspan fill="#2563eb">aggregate</tspan><tspan fill="#334155">(outcome ~ province, data = outcomes, FUN = mean)</tspan></text>
+    <text x="60" y="400"><tspan fill="#2563eb">ggplot</tspan><tspan fill="#334155">(prov_summary, </tspan><tspan fill="#2563eb">aes</tspan><tspan fill="#334155">(province, outcome, fill = outcome)) + </tspan><tspan fill="#2563eb">geom_col</tspan><tspan fill="#334155">(alpha = </tspan><tspan fill="#f59e0b">0.5</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="60" y="444" fill="#1d4ed8"># map_data("world") subset for South Africa; join provincial outcomes for choropleth mapping</text>
   </g>
-  <g fill="none" stroke="#1d4ed8" stroke-opacity="0.25" stroke-width="8">
-    <polyline points="880,560 940,520 1000,540 1060,480 1120,500 1180,455 1240,470" />
-    <line x1="860" y1="595" x2="1260" y2="595" />
+
+  <g fill="none" stroke="#1d4ed8" stroke-opacity="0.35" stroke-width="7">
+    <polyline points="905,546 962,520 1018,534 1075,488 1132,502 1188,464 1246,476" />
+    <line x1="886" y1="582" x2="1268" y2="582" />
   </g>
-  <g fill="#1d4ed8" fill-opacity="0.2">
-    <rect x="900" y="635" width="55" height="95" />
-    <rect x="985" y="600" width="55" height="130" />
-    <rect x="1070" y="620" width="55" height="110" />
-    <rect x="1155" y="580" width="55" height="150" />
+
+  <g fill="#1d4ed8" fill-opacity="0.3">
+    <rect x="915" y="620" width="52" height="104" rx="5" />
+    <rect x="995" y="590" width="52" height="134" rx="5" />
+    <rect x="1075" y="610" width="52" height="114" rx="5" />
+    <rect x="1155" y="570" width="52" height="154" rx="5" />
   </g>
+
   <path
-    d="M1120 220 L1190 200 L1265 230 L1320 290 L1300 360 L1260 420 L1200 450 L1130 430 L1085 365 L1085 300 Z"
+    d="M1110 212 L1185 192 L1262 226 L1322 290 L1302 365 L1260 425 L1198 454 L1128 430 L1082 362 L1084 294 Z"
     fill="none"
     stroke="#1d4ed8"
-    stroke-opacity="0.26"
+    stroke-opacity="0.38"
     stroke-width="7"
   />
-  <circle cx="1160" cy="305" r="10" fill="#1d4ed8" fill-opacity="0.3" />
-  <circle cx="1220" cy="330" r="10" fill="#1d4ed8" fill-opacity="0.3" />
-  <circle cx="1270" cy="355" r="10" fill="#1d4ed8" fill-opacity="0.3" />
+  <circle cx="1156" cy="305" r="9" fill="#1d4ed8" fill-opacity="0.34" />
+  <circle cx="1218" cy="332" r="9" fill="#1d4ed8" fill-opacity="0.34" />
+  <circle cx="1266" cy="355" r="9" fill="#1d4ed8" fill-opacity="0.34" />
 </svg>

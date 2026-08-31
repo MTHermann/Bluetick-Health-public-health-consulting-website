@@ -1,16 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R regression and bar graph background">
-  <g fill="#93c5fd" fill-opacity="0.35" font-family="monospace" font-size="22">
-    <text x="60" y="115"># R regression and bar chart summary</text>
-    <text x="60" y="160">model &lt;- lm(outcome ~ intervention + age + sex + province, data = df)</text>
-    <text x="60" y="205">summary(model)</text>
-    <text x="60" y="250">library(ggplot2)</text>
-    <text x="60" y="295">ggplot(df, aes(province, outcome_rate, fill = outcome_band)) +</text>
-    <text x="60" y="340">  geom_col(alpha = 0.45) + theme_minimal()</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed R regression and ggplot background for footer">
+  <rect width="1600" height="900" fill="transparent" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill-opacity="0.9">
+    <text x="56" y="96" fill="#93c5fd"># R: footer summary of regression and visualization pipeline</text>
+    <text x="56" y="140"><tspan fill="#60a5fa">library</tspan><tspan fill="#dbeafe">(</tspan><tspan fill="#86efac">"ggplot2"</tspan><tspan fill="#dbeafe">); </tspan><tspan fill="#60a5fa">library</tspan><tspan fill="#dbeafe">(</tspan><tspan fill="#86efac">"broom"</tspan><tspan fill="#dbeafe">)</tspan></text>
+    <text x="56" y="184"><tspan fill="#dbeafe">lm_fit &lt;- </tspan><tspan fill="#60a5fa">lm</tspan><tspan fill="#dbeafe">(outcome_rate ~ intervention + age + sex + province + year, data = report_df)</tspan></text>
+    <text x="56" y="228"><tspan fill="#dbeafe">logit_fit &lt;- </tspan><tspan fill="#60a5fa">glm</tspan><tspan fill="#dbeafe">(poor_outcome ~ intervention + baseline_risk, family = </tspan><tspan fill="#60a5fa">binomial</tspan><tspan fill="#dbeafe">(), data = report_df)</tspan></text>
+    <text x="56" y="272"><tspan fill="#dbeafe">coef_tbl &lt;- </tspan><tspan fill="#60a5fa">tidy</tspan><tspan fill="#dbeafe">(lm_fit, conf.int = </tspan><tspan fill="#fbbf24">TRUE</tspan><tspan fill="#dbeafe">)</tspan></text>
+    <text x="56" y="316"><tspan fill="#60a5fa">ggplot</tspan><tspan fill="#dbeafe">(report_df, </tspan><tspan fill="#60a5fa">aes</tspan><tspan fill="#dbeafe">(province, outcome_rate, fill = intervention)) +</tspan></text>
+    <text x="56" y="360"><tspan fill="#dbeafe">  </tspan><tspan fill="#60a5fa">geom_col</tspan><tspan fill="#dbeafe">(position = </tspan><tspan fill="#60a5fa">position_dodge</tspan><tspan fill="#dbeafe">(</tspan><tspan fill="#fbbf24">0.75</tspan><tspan fill="#dbeafe">), alpha = </tspan><tspan fill="#fbbf24">0.48</tspan><tspan fill="#dbeafe">) +</tspan></text>
+    <text x="56" y="404"><tspan fill="#dbeafe">  </tspan><tspan fill="#60a5fa">theme_minimal</tspan><tspan fill="#dbeafe">() + </tspan><tspan fill="#60a5fa">labs</tspan><tspan fill="#dbeafe">(title = </tspan><tspan fill="#86efac">"Outcome distribution by province"</tspan><tspan fill="#dbeafe">)</tspan></text>
   </g>
   <g fill="#93c5fd" fill-opacity="0.28">
-    <rect x="920" y="540" width="56" height="170" />
-    <rect x="1005" y="595" width="56" height="115" />
-    <rect x="1090" y="560" width="56" height="150" />
-    <rect x="1175" y="620" width="56" height="90" />
+    <rect x="940" y="544" width="55" height="176" rx="5" />
+    <rect x="1024" y="594" width="55" height="126" rx="5" />
+    <rect x="1108" y="560" width="55" height="160" rx="5" />
+    <rect x="1192" y="618" width="55" height="102" rx="5" />
   </g>
 </svg>
