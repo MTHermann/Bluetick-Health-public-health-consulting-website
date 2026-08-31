@@ -16,7 +16,6 @@ import {
 } from 'lucide-react'
 import {
   blogPosts,
-  caseStudies,
   faqs,
   getPageMeta,
   getPostPath,
@@ -396,37 +395,6 @@ function BlogPostPage({ post }) {
   )
 }
 
-function CaseStudiesPage() {
-  const caseStudiesInfo = pageContent['/case-studies/']
-
-  return (
-    <>
-      <PageIntro title={caseStudiesInfo.heading} intro={caseStudiesInfo.intro} eyebrow="Evidence in practice" />
-      <section className="section-code-bg section-bg-services bg-[#f3f9ff] px-6 py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-6 md:grid-cols-2">
-            {caseStudies.map((study) => (
-              <Card key={study.slug}>
-                <CardContent className="p-6">
-                  <h2 className="text-xl font-semibold text-blue-900">{study.title}</h2>
-                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{study.description}</p>
-                  <div className="mt-5 space-y-3 text-sm text-gray-600">
-                    <p><span className="font-semibold text-blue-900">Statistical methods used:</span> {study.methods.join(', ')}.</p>
-                    <p><span className="font-semibold text-blue-900">Outcomes:</span> {study.outcomes}</p>
-                    <p><span className="font-semibold text-blue-900">Impact:</span> {study.impact}</p>
-                    <p className="rounded-lg bg-blue-50 p-4 italic text-blue-900">{study.testimonial}</p>
-                  </div>
-                  <KeywordList items={study.keywords} />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
-
 function ResourcesPage() {
   const resourcesInfo = pageContent['/resources/']
 
@@ -440,7 +408,7 @@ function ResourcesPage() {
               <div>
                 <h2 className="text-xl font-semibold text-blue-900">LinkedIn content strategy</h2>
                 <p className="mt-2 text-sm leading-relaxed text-gray-600">
-                  Download a ready-to-share text file with LinkedIn post templates for blog promotion, case study highlights, industry insights, statistical tips, and public health updates.
+                  Download a ready-to-share text file with LinkedIn post templates for blog promotion, partnership outreach, industry insights, statistical tips, and public health updates.
                 </p>
               </div>
               <Button asChild>
@@ -589,8 +557,6 @@ export default function ConsultingWebsite() {
     content = <BlogPage />
   } else if (currentPost) {
     content = <BlogPostPage post={currentPost} />
-  } else if (pathname === '/case-studies/') {
-    content = <CaseStudiesPage />
   } else if (pathname === '/resources/') {
     content = <ResourcesPage />
   } else if (pathname === '/faq/') {

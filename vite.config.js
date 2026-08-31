@@ -17,7 +17,6 @@ export default defineConfig({
         blogDataManagement: resolve(__dirname, 'blog/data-management-best-practices/index.html'),
         blogEpidemiology: resolve(__dirname, 'blog/epidemiological-study-design/index.html'),
         blogRedcap: resolve(__dirname, 'blog/redcap-implementation-guide/index.html'),
-        caseStudies: resolve(__dirname, 'case-studies/index.html'),
         resources: resolve(__dirname, 'resources/index.html'),
         faq: resolve(__dirname, 'faq/index.html'),
       },
