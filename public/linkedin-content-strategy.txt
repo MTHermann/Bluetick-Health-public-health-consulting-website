@@ -6,57 +6,52 @@ Headline: New on the Bluetick Health blog: [Article Title]
 Body: We’ve published a practical guide on [topic] for researchers, NGOs, and clinical teams. It covers [key takeaway 1], [key takeaway 2], and a reproducible [R/Stata] workflow. Read more: [link]
 CTA: Which challenge do you face most often in this area?
 
-2. Case Study Highlight
-Headline: How evidence changed programme decisions
-Body: In a recent project, we used [method] to help a client understand [problem]. The result was [impact/outcome]. Evidence becomes more valuable when teams can act on it.
-CTA: If your team needs similar support, let’s connect.
-
-3. Survival Analysis Insight
+2. Survival Analysis Insight
 Headline: Why timing matters in clinical research
 Body: Average outcomes can hide critical differences in when events happen. Survival analysis helps teams understand censoring, retention, and hazard over time.
 CTA: We shared a practical article with code examples here: [link]
 
-4. Regression Tip Post
+3. Regression Tip Post
 Headline: Match the model to the question
 Body: Logistic regression, Poisson regression, and mixed-effects models answer different health questions. Strong analysis starts with choosing the right structure for the outcome.
 CTA: What modelling challenge is your team currently working through?
 
-5. Time Series Monitoring Post
+4. Time Series Monitoring Post
 Headline: Routine data can do more than report totals
 Body: Time series analysis can detect seasonality, service disruptions, and emerging operational pressure before they become major problems.
 CTA: Read the blog article or contact Bluetick Health for support on surveillance analytics.
 
-6. Clinical Trial Design Post
+5. Clinical Trial Design Post
 Headline: Trial quality starts before recruitment opens
 Body: Good trial statistics begin with clear endpoints, defensible sample size assumptions, and a prespecified statistical analysis plan.
 CTA: We’ve outlined a practical framework here: [link]
 
-7. Health Economics Post
+6. Health Economics Post
 Headline: Making value visible in healthcare decisions
 Body: Cost-effectiveness analysis and budget impact modelling help decision-makers evaluate both value and affordability.
 CTA: Explore our resource page and blog for economic evaluation references.
 
-8. Data Management Post
+7. Data Management Post
 Headline: Clean data protects timelines and credibility
 Body: Better naming conventions, validation rules, and audit trails reduce rework and strengthen reporting confidence.
 CTA: Our REDCap and data management guidance is available here: [link]
 
-9. Epidemiology Post
+8. Epidemiology Post
 Headline: Study design is a strategic decision
 Body: Cohort, case-control, cross-sectional, and quasi-experimental designs each solve different public health problems. The right design improves both analysis and interpretation.
 CTA: Which design questions come up most in your work?
 
-10. Resource Roundup Post
+9. Resource Roundup Post
 Headline: Practical tools for health researchers
 Body: We curated trusted R packages, Stata references, clinical trial guides, and public health databases for teams who need reliable starting points.
 CTA: Browse the resources page and share it with your network.
 
-11. Partnership Outreach Post
+10. Partnership Outreach Post
 Headline: Open to research and university partnerships
 Body: Bluetick Health supports universities, NGOs, and health systems with statistical analysis, epidemiology, REDCap implementation, and health economics.
 CTA: If your institution is building evidence-driven partnerships, let’s talk.
 
-12. Public Health Update Template
+11. Public Health Update Template
 Headline: Public health trend to watch: [topic]
 Body: Recent developments in [topic] highlight why strong analysis, monitoring, and implementation support matter. Teams need data that are timely, interpretable, and decision-ready.
 CTA: What implications do you see for programmes or researchers in your context?

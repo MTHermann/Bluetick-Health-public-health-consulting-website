@@ -7,7 +7,6 @@ export const navigationLinks = [
   { label: 'Services', href: '/#services' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Blog', href: '/blog/' },
-  { label: 'Case Studies', href: '/case-studies/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'FAQ', href: '/faq/' },
   { label: 'Contact', href: '/#contact' },
@@ -168,65 +167,6 @@ export const blogPosts = [
   },
 ]
 
-export const caseStudies = [
-  {
-    slug: 'hiv-retention-survival-analysis',
-    title: 'HIV Treatment Retention and Survival Analysis Support',
-    description:
-      'A multi-site HIV programme required survival analysis and epidemiological reporting to understand loss to follow-up and mortality among adults initiating antiretroviral therapy.',
-    methods: ['survival analysis', 'Kaplan-Meier estimation', 'Cox regression', 'data management', 'epidemiology'],
-    outcomes:
-      'Developed site-level risk stratification, identified time windows with the highest attrition, and supported programme redesign for differentiated service delivery.',
-    impact:
-      'The client used the analysis to prioritise tracing resources and improve early retention monitoring across facilities.',
-    testimonial:
-      '“Bluetick Health translated complex survival analysis into programme actions our teams could implement immediately.”',
-    keywords: ['survival analysis', 'HIV epidemiology', 'retention in care', 'public health consulting'],
-  },
-  {
-    slug: 'maternal-health-regression-dashboard',
-    title: 'Maternal Health Regression Analysis and Performance Dashboard',
-    description:
-      'A provincial maternal health initiative needed regression analysis to identify predictors of delayed antenatal booking and poor continuity of care across districts.',
-    methods: ['regression analysis', 'mixed-effects models', 'dashboard indicators', 'public health monitoring'],
-    outcomes:
-      'Produced adjusted district comparisons, a facility clustering analysis, and a management dashboard that highlighted modifiable service bottlenecks.',
-    impact:
-      'District managers used the results to target supervision and improve outreach in high-risk catchment areas.',
-    testimonial:
-      '“The modelling work gave us evidence we could use in planning meetings, not just in technical reports.”',
-    keywords: ['regression analysis', 'maternal health', 'mixed models', 'health systems analytics'],
-  },
-  {
-    slug: 'cost-effectiveness-screening-programme',
-    title: 'Cost-Effectiveness Analysis for a Screening Programme',
-    description:
-      'A health financing partner requested health economics support to compare two screening pathways and estimate budget implications under phased rollout.',
-    methods: ['health economics', 'cost-effectiveness analysis', 'budget impact modelling', 'scenario analysis'],
-    outcomes:
-      'Generated incremental cost-effectiveness estimates, affordability scenarios, and evidence summaries tailored for a technical advisory committee.',
-    impact:
-      'The outputs strengthened the client’s investment case and informed staged implementation planning.',
-    testimonial:
-      '“Bluetick Health made economic evaluation understandable for both technical reviewers and budget holders.”',
-    keywords: ['health economics', 'cost-effectiveness analysis', 'budget impact', 'HTA support'],
-  },
-  {
-    slug: 'redcap-rollout-clinical-study',
-    title: 'REDCap Rollout for a Multi-Site Clinical Study',
-    description:
-      'A research consortium needed REDCap implementation, data validation, and training support for a multi-country observational study with complex follow-up schedules.',
-    methods: ['REDCap implementation', 'data management', 'clinical research operations', 'quality assurance'],
-    outcomes:
-      'Built standardised instruments, validation rules, role-based permissions, and export checks aligned to the statistical analysis plan.',
-    impact:
-      'The study launched with fewer data entry errors and shorter turnaround for interim reporting.',
-    testimonial:
-      '“The REDCap build was practical, secure, and tailored to the realities of busy research sites.”',
-    keywords: ['REDCap implementation', 'clinical trials support', 'data quality', 'research data systems'],
-  },
-]
-
 export const resources = [
   {
     category: 'R packages for statistical analysis',
@@ -368,16 +308,6 @@ export const pageContent = {
     heading: 'Blog',
     intro:
       'SEO-focused articles designed for researchers, clinical teams, and public health programmes seeking practical guidance in statistical analysis, epidemiology, health economics, and data management.',
-  },
-  '/case-studies/': {
-    title: 'Case Studies | Statistical Analysis, Epidemiology, and REDCap Projects',
-    description:
-      'Review Bluetick Health case studies covering survival analysis, regression analysis, health economics, epidemiology, and REDCap implementation for public health and clinical research.',
-    keywords:
-      'case studies, survival analysis, regression analysis, epidemiology consulting, REDCap implementation, health economics',
-    heading: 'Case Studies',
-    intro:
-      'Illustrative projects that show how rigorous statistical methods, epidemiological thinking, and practical data systems create measurable value for health programmes and research teams.',
   },
   '/resources/': {
     title: 'Resources and Tools | R Packages, Stata Guides, Clinical Trial Resources',
