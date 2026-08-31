@@ -7,8 +7,10 @@ export const navigationLinks = [
   { label: 'Services', href: '/#services' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Blog', href: '/blog/' },
+  { label: 'News', href: '/news/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'FAQ', href: '/faq/' },
+  { label: 'Vacancies', href: '/vacancies/' },
   { label: 'Contact', href: '/#contact' },
 ]
 
@@ -293,6 +295,107 @@ export const faqs = [
   },
 ]
 
+export const vacanciesContent = {
+  placeholder:
+    "Currently, we have no open positions. We're always looking for talented individuals. Check back soon or contact us to express interest.",
+  contactEmail: 'mitikuhermanng@gmail.com',
+  contactPhone: '+27 611170478',
+  jobs: [],
+}
+
+export const bluetickNewsItems = [
+  {
+    date: '2026-08-31',
+    title: 'Bluetick Health launches expanded research blog library',
+    summary:
+      'Bluetick Health published a new set of practical articles covering survival analysis, regression modelling, time series analytics, REDCap implementation, and health economics.',
+    link: '/blog/',
+    source: 'Bluetick Health',
+    category: 'Company update',
+  },
+  {
+    date: '2026-08-31',
+    title: 'New FAQ and resources pages released for client support',
+    summary:
+      'The website now includes an expanded FAQ and curated resources page to help research teams quickly access methods guidance and reference tools.',
+    link: '/faq/',
+    source: 'Bluetick Health',
+    category: 'Website update',
+  },
+  {
+    date: '2026-08-31',
+    title: 'Clinical trial statistics article featured in latest blog updates',
+    summary:
+      'The latest featured article explains how robust trial design, sample size assumptions, and statistical analysis plans improve evidence quality and decision-making.',
+    link: '/blog/clinical-trial-design-and-statistics/',
+    source: 'Bluetick Health',
+    category: 'Blog highlight',
+  },
+]
+
+export const globalHealthNewsItems = [
+  {
+    date: '2026-08-28',
+    title: 'WHO and UNICEF report progress and gaps in global immunization coverage',
+    summary:
+      'Latest WHO/UNICEF estimates show continuing recovery in childhood immunization coverage, while highlighting persistent zero-dose and equity gaps across regions.',
+    link: 'https://www.who.int/news-room',
+    source: 'WHO / UNICEF',
+    category: 'Public health trends',
+    relevance: 'Supports consulting on vaccination programme monitoring, equity targeting, and service recovery planning.',
+  },
+  {
+    date: '2026-08-22',
+    title: 'Africa CDC updates priorities on mpox and integrated outbreak response',
+    summary:
+      'Africa CDC communications emphasize coordinated surveillance, lab capacity, and emergency response support for mpox and other cross-border threats.',
+    link: 'https://africacdc.org/news/',
+    source: 'Africa CDC',
+    category: 'Health policy update',
+    relevance: 'Relevant for outbreak analytics, preparedness advisory work, and cross-country public health programme design.',
+  },
+  {
+    date: '2026-08-20',
+    title: 'The Lancet highlights new evidence on hypertension care models in Africa',
+    summary:
+      'Recent publications discuss scalable service delivery approaches for hypertension diagnosis, treatment retention, and outcomes improvement in African settings.',
+    link: 'https://www.thelancet.com/global-health',
+    source: 'The Lancet Global Health',
+    category: 'Research breakthrough',
+    relevance: 'Informs evaluation frameworks and statistical planning for non-communicable disease programmes.',
+  },
+  {
+    date: '2026-08-18',
+    title: 'WHO updates guidance on digital health and data use for stronger systems',
+    summary:
+      'New WHO guidance and updates continue to strengthen the case for interoperable digital health architecture, data quality, and governance.',
+    link: 'https://www.who.int/teams/digital-health-and-innovation',
+    source: 'World Health Organization',
+    category: 'Health systems',
+    relevance: 'Directly relevant to data governance consulting, routine data quality improvement, and digital reporting strategy.',
+  },
+  {
+    date: '2026-08-15',
+    title: 'NIH reports clinical trial advances in HIV prevention and long-acting options',
+    summary:
+      'NIH research updates continue to expand evidence on prevention efficacy, implementation barriers, and programme readiness for long-acting interventions.',
+    link: 'https://www.nih.gov/news-events/news-releases',
+    source: 'U.S. National Institutes of Health',
+    category: 'Clinical trial news',
+    relevance: 'Useful for protocol development, endpoint strategy, and translation of trial evidence into implementation plans.',
+  },
+  {
+    date: '2026-08-12',
+    title: 'World Bank data updates track health financing and service coverage indicators',
+    summary:
+      'Recent updates to country indicators provide new comparative data on health spending, service access, and system performance in low- and middle-income settings.',
+    link: 'https://data.worldbank.org/topic/health',
+    source: 'World Bank',
+    category: 'Statistics release',
+    relevance: 'Supports benchmarking, context analysis, and evidence framing for grant applications and policy briefs.',
+  },
+]
+
 export const pageContent = {
   '/blog/': {
     title: 'Bluetick Health Blog | Public Health Statistics, Clinical Research, and Health Economics',
@@ -323,6 +426,24 @@ export const pageContent = {
     heading: 'Frequently Asked Questions',
     intro:
       'Answers to common questions about public health statistical consulting, research support, timelines, data preparation, and secure collaboration.',
+  },
+  '/vacancies/': {
+    title: 'Vacancies | Bluetick Health',
+    description:
+      'Explore future careers at Bluetick Health across public health jobs, biostatistician positions, and research careers. We currently have no open positions.',
+    keywords: 'public health jobs, biostatistician positions, research careers, careers at Bluetick Health',
+    heading: 'Vacancies',
+    intro:
+      'Careers at Bluetick Health for public health jobs, biostatistician positions, and research careers. No roles are currently open, but we welcome interest for future opportunities.',
+  },
+  '/news/': {
+    title: 'News | Bluetick Health',
+    description:
+      'Read Bluetick Health company updates and curated global and African public health updates, research news, and policy developments.',
+    keywords: 'health news Africa, public health updates, research news, global health trends',
+    heading: 'News',
+    intro:
+      'Stay current with Bluetick Health updates alongside curated global and African health news relevant to research, consulting, and programme delivery.',
   },
 }
 

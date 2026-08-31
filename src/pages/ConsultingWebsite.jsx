@@ -16,11 +16,14 @@ import {
 } from 'lucide-react'
 import {
   blogPosts,
+  bluetickNewsItems,
+  globalHealthNewsItems,
   faqs,
   getPageMeta,
   getPostPath,
   navigationLinks,
   pageContent,
+  vacanciesContent,
   resources,
   siteName,
   siteUrl,
@@ -455,6 +458,121 @@ function FAQPage() {
   )
 }
 
+function VacanciesPage() {
+  const vacanciesInfo = pageContent['/vacancies/']
+  const contactPhoneHref = `tel:${vacanciesContent.contactPhone.replace(/\s+/g, '')}`
+
+  return (
+    <>
+      <PageIntro title={vacanciesInfo.heading} intro={vacanciesInfo.intro} eyebrow="Careers" />
+      <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+          <Card>
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold text-blue-900">Current openings</h2>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600">{vacanciesContent.placeholder}</p>
+              {vacanciesContent.jobs.length > 0 && (
+                <div className="mt-5 space-y-3">
+                  {vacanciesContent.jobs.map((job) => (
+                    <div key={job.title} className="rounded-lg border border-blue-100 bg-white p-4">
+                      <h3 className="font-semibold text-blue-900">{job.title}</h3>
+                      <p className="mt-1 text-sm text-gray-600">{job.summary}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <h2 className="text-xl font-semibold text-blue-900">Express interest</h2>
+              <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                Interested in future public health jobs, biostatistician positions, or research careers? Contact us and
+                share your profile so we can reach out when vacancies open.
+              </p>
+              <div className="mt-5 flex flex-col gap-3 text-sm">
+                <a href={`mailto:${vacanciesContent.contactEmail}`} className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900">
+                  <Mail className="h-4 w-4" /> {vacanciesContent.contactEmail}
+                </a>
+                <a href={contactPhoneHref} className="inline-flex items-center gap-2 text-blue-700 hover:text-blue-900">
+                  <Phone className="h-4 w-4" /> {vacanciesContent.contactPhone}
+                </a>
+              </div>
+              <div className="mt-6">
+                <Button asChild>
+                  <a href="/#contact">Contact Bluetick Health</a>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function NewsPage() {
+  const newsInfo = pageContent['/news/']
+
+  return (
+    <>
+      <PageIntro title={newsInfo.heading} intro={newsInfo.intro} eyebrow="Latest updates" />
+      <section className="section-code-bg section-bg-about px-6 py-16">
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+          <div>
+            <h2 className="mb-5 text-2xl font-semibold text-blue-900">Bluetick Health News</h2>
+            <div className="space-y-5">
+              {bluetickNewsItems.map((item) => (
+                <Card key={`${item.date}-${item.title}`}>
+                  <CardContent className="p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(item.date)}</p>
+                    <h3 className="mt-3 text-lg font-semibold text-blue-900">{item.title}</h3>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {item.source} • {item.category}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.summary}</p>
+                    <a href={item.link} className="mt-4 inline-flex items-center text-sm font-medium text-blue-700 hover:text-blue-900">
+                      Read update
+                    </a>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h2 className="mb-5 text-2xl font-semibold text-blue-900">Global &amp; African Health News</h2>
+            <div className="space-y-5">
+              {globalHealthNewsItems.map((item) => (
+                <Card key={`${item.date}-${item.title}`}>
+                  <CardContent className="p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(item.date)}</p>
+                    <h3 className="mt-3 text-lg font-semibold text-blue-900">{item.title}</h3>
+                    <p className="mt-2 text-sm text-gray-500">
+                      {item.source} • {item.category}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.summary}</p>
+                    <p className="mt-3 text-sm text-gray-600">
+                      <span className="font-medium text-blue-900">Consulting relevance:</span> {item.relevance}
+                    </p>
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900"
+                    >
+                      View source <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
 export default function ConsultingWebsite() {
   const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
   const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
@@ -540,10 +658,14 @@ export default function ConsultingWebsite() {
     content = <BlogPage />
   } else if (currentPost) {
     content = <BlogPostPage post={currentPost} />
+  } else if (pathname === '/news/') {
+    content = <NewsPage />
   } else if (pathname === '/resources/') {
     content = <ResourcesPage />
   } else if (pathname === '/faq/') {
     content = <FAQPage />
+  } else if (pathname === '/vacancies/') {
+    content = <VacanciesPage />
   }
 
   return (
