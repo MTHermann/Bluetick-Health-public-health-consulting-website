@@ -37,17 +37,17 @@ const services = [
   {
     icon: TrendingUp,
     title: 'Monitoring & Evaluating Public Health Programs',
-    body: 'We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholde[...]
+    body: 'We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact.',
   },
   {
     icon: FlaskConical,
     title: 'Clinical Trials Support',
-    body: 'Statistical and data support for clinical trials, including design, protocol development, ethics submissions, randomization, site selection and oversight, patient recruitment strategy, [...]
+    body: 'Statistical and data support for clinical trials, including design, protocol development, ethics submissions, and randomization.',
   },
   {
     icon: TrendingUp,
     title: 'Health Economics & Economic Evaluation',
-    body: 'We help clients demonstrate the clinical and economic value of healthcare technologies and develop evidence strategies to support pricing, reimbursement, and market access. Cost-effecti[...]
+    body: 'We help clients demonstrate the clinical and economic value of healthcare technologies and develop evidence strategies for pricing and reimbursement.',
   },
 ]
 
