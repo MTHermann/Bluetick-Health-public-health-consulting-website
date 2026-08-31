@@ -1,19 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Stata survival and graph background">
-  <g fill="#0369a1" fill-opacity="0.23" font-family="monospace" font-size="24">
-    <text x="70" y="120">* Stata survival and time trend checks</text>
-    <text x="70" y="170">stset follow_up_time, failure(event == 1)</text>
-    <text x="70" y="220">sts graph, by(treatment) ci title("Kaplan-Meier Curves")</text>
-    <text x="70" y="270">stcox age i.gender i.province comorbidity_index, vce(cluster site)</text>
-    <text x="70" y="320">predict hr, hr</text>
-    <text x="70" y="370">twoway (bar outcomes province_id, color(navy%35))</text>
-    <text x="70" y="420">tsset month</text>
-    <text x="70" y="470">arima admissions, arima(1,1,1)</text>
-    <text x="70" y="520">predict fitted_adm, xb</text>
-  </g>
-  <g fill="#0369a1" fill-opacity="0.18">
-    <rect x="1060" y="610" width="46" height="125" />
-    <rect x="1130" y="575" width="46" height="160" />
-    <rect x="1200" y="640" width="46" height="95" />
-    <rect x="1270" y="595" width="46" height="140" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed Stata and R contact analysis background">
+  <rect width="1600" height="900" fill="transparent" />
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill-opacity="0.9">
+    <text x="54" y="82" fill="#0c4a6e"># Contact analytics workflow (detailed R + Stata snippets)</text>
+
+    <text x="54" y="122" fill="#1e3a8a"># R: survival + regression + forecasting + epi summaries</text>
+    <text x="54" y="156"><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"survival"</tspan><tspan fill="#334155">); </tspan><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"lme4"</tspan><tspan fill="#334155">); </tspan><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"forecast"</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="190"><tspan fill="#334155">km_contact &lt;- </tspan><tspan fill="#2563eb">survfit</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">Surv</tspan><tspan fill="#334155">(days_to_resolution, resolved) ~ referral_arm, data = consult_df)</tspan></text>
+    <text x="54" y="224"><tspan fill="#334155">cox_contact &lt;- </tspan><tspan fill="#2563eb">coxph</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">Surv</tspan><tspan fill="#334155">(days_to_resolution, resolved) ~ age + sex + district + referral_arm, data = consult_df)</tspan></text>
+    <text x="54" y="258"><tspan fill="#334155">glm_contact &lt;- </tspan><tspan fill="#2563eb">glm</tspan><tspan fill="#334155">(adverse_event ~ referral_arm + hiv_status + baseline_risk, family = </tspan><tspan fill="#2563eb">binomial</tspan><tspan fill="#334155">(), data = consult_df)</tspan></text>
+    <text x="54" y="292"><tspan fill="#334155">lmm_contact &lt;- </tspan><tspan fill="#2563eb">lmer</tspan><tspan fill="#334155">(adherence_score ~ month + referral_arm + (</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155"> + month | facility_id), data = consult_df)</tspan></text>
+    <text x="54" y="326"><tspan fill="#334155">arima_contact &lt;- </tspan><tspan fill="#2563eb">auto.arima</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">ts</tspan><tspan fill="#334155">(monthly_referrals, frequency = </tspan><tspan fill="#f59e0b">12</tspan><tspan fill="#334155">)); fc_contact &lt;- </tspan><tspan fill="#2563eb">forecast</tspan><tspan fill="#334155">(arima_contact, h = </tspan><tspan fill="#f59e0b">6</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="360"><tspan fill="#334155">epi_contact &lt;- (</tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(consult_df$adverse_event) / </tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(consult_df$person_time)) * </tspan><tspan fill="#f59e0b">1000</tspan></text>
+    <text x="54" y="394"><tspan fill="#2563eb">ggsurvplot</tspan><tspan fill="#334155">(km_contact, conf.int = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, risk.table = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, pval = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="428"><tspan fill="#2563eb">ggplot</tspan><tspan fill="#334155">(consult_df, </tspan><tspan fill="#2563eb">aes</tspan><tspan fill="#334155">(district, outcome_rate, fill = outcome_rate)) + </tspan><tspan fill="#2563eb">geom_col</tspan><tspan fill="#334155">(alpha = </tspan><tspan fill="#f59e0b">0.5</tspan><tspan fill="#334155">)</tspan></text>
+
+    <text x="54" y="478" fill="#0c4a6e">* Stata: survival + mixed model + time series diagnostics</text>
+    <text x="54" y="512"><tspan fill="#0f766e">stset</tspan><tspan fill="#334155"> follow_days, failure(resolved == </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="546"><tspan fill="#0f766e">sts graph</tspan><tspan fill="#334155">, by(referral_arm) ci title("Kaplan-Meier by referral pathway")</tspan></text>
+    <text x="54" y="580"><tspan fill="#0f766e">stcox</tspan><tspan fill="#334155"> age i.sex i.district i.referral_arm baseline_risk, vce(cluster facility_id)</tspan></text>
+    <text x="54" y="614"><tspan fill="#0f766e">melogit</tspan><tspan fill="#334155"> adverse_event i.referral_arm c.month || facility_id:, covariance(exchangeable)</tspan></text>
+    <text x="54" y="648"><tspan fill="#0f766e">* monthly consultation volume</tspan></text>
+    <text x="54" y="682"><tspan fill="#0f766e">tsset</tspan><tspan fill="#334155"> month</tspan></text>
+    <text x="54" y="716"><tspan fill="#0f766e">arima</tspan><tspan fill="#334155"> consult_count, arima(</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="750"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> consult_fit, xb</tspan></text>
+    <text x="54" y="784"><tspan fill="#0f766e">twoway</tspan><tspan fill="#334155"> (bar outcome_rate district_id, color(navy%35)) (line consult_fit month, lcolor(teal))</tspan></text>
   </g>
 </svg>

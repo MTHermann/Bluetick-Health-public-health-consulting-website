@@ -1,13 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R survival analysis background">
-  <g fill="#1e3a8a" fill-opacity="0.28" font-family="monospace" font-size="25">
-    <text x="70" y="120"># R survival analysis</text>
-    <text x="70" y="170">library(survival)</text>
-    <text x="70" y="220">fit &lt;- survfit(Surv(time, status) ~ treatment, data = cohort)</text>
-    <text x="70" y="270">cox &lt;- coxph(Surv(time, status) ~ age + sex + treatment, data = cohort)</text>
-    <text x="70" y="320">summary(cox)</text>
-    <text x="70" y="370">plot(fit, col = c("steelblue", "darkorange"), lwd = 2)</text>
-    <text x="70" y="420">legend("topright", legend = c("Control", "Intervention"), lty = 1)</text>
-    <text x="70" y="470">ggsurvplot(fit, conf.int = TRUE, pval = TRUE)</text>
-    <text x="70" y="520"># hazard ratio reporting and model diagnostics</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed R survival and epidemiology background">
+  <rect width="1600" height="900" fill="transparent" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill-opacity="0.92">
+    <text x="64" y="100" fill="#1e3a8a"># R survival workflow: Kaplan-Meier, Cox PH, incidence metrics</text>
+    <text x="64" y="145"><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"survival"</tspan><tspan fill="#334155">); </tspan><tspan fill="#2563eb">library</tspan><tspan fill="#334155">(</tspan><tspan fill="#16a34a">"survminer"</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="190"><tspan fill="#334155">cohort &lt;- </tspan><tspan fill="#2563eb">transform</tspan><tspan fill="#334155">(cohort, event = status == </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="235"><tspan fill="#334155">km_fit &lt;- </tspan><tspan fill="#2563eb">survfit</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">Surv</tspan><tspan fill="#334155">(time_days, event) ~ arm, data = cohort)</tspan></text>
+    <text x="64" y="280"><tspan fill="#334155">cox_fit &lt;- </tspan><tspan fill="#2563eb">coxph</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">Surv</tspan><tspan fill="#334155">(time_days, event) ~ age + sex + hiv_status + arm + strata(site), data = cohort)</tspan></text>
+    <text x="64" y="325"><tspan fill="#334155">adj_hr &lt;- </tspan><tspan fill="#2563eb">exp</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">coef</tspan><tspan fill="#334155">(cox_fit)); ci95 &lt;- </tspan><tspan fill="#2563eb">exp</tspan><tspan fill="#334155">(</tspan><tspan fill="#2563eb">confint</tspan><tspan fill="#334155">(cox_fit))</tspan></text>
+    <text x="64" y="370"><tspan fill="#2563eb">ggsurvplot</tspan><tspan fill="#334155">(km_fit, conf.int = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, pval = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, risk.table = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="415"><tspan fill="#334155">ph_test &lt;- </tspan><tspan fill="#2563eb">cox.zph</tspan><tspan fill="#334155">(cox_fit); </tspan><tspan fill="#2563eb">print</tspan><tspan fill="#334155">(ph_test)</tspan></text>
+    <text x="64" y="460"><tspan fill="#334155">inc_rate &lt;- (</tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(cohort$event) / </tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(cohort$person_years)) * </tspan><tspan fill="#f59e0b">1000</tspan></text>
+    <text x="64" y="505"><tspan fill="#334155">epi_tab &lt;- </tspan><tspan fill="#2563eb">with</tspan><tspan fill="#334155">(cohort, </tspan><tspan fill="#2563eb">table</tspan><tspan fill="#334155">(arm, event)); row_props &lt;- </tspan><tspan fill="#2563eb">prop.table</tspan><tspan fill="#334155">(epi_tab, </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="550" fill="#1e3a8a"># Reporting: adjusted hazard ratios and incidence per 1,000 person-years</text>
+    <text x="64" y="590" fill="#1e3a8a"># Also include log-rank p-values and proportional hazards diagnostics</text>
   </g>
 </svg>

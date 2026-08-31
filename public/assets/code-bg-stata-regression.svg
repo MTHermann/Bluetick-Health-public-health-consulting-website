@@ -1,14 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Stata regression background">
-  <g fill="#0f766e" fill-opacity="0.24" font-family="monospace" font-size="24">
-    <text x="80" y="120">* Stata regression workflow</text>
-    <text x="80" y="170">use "health_outcomes.dta", clear</text>
-    <text x="80" y="220">gen ln_cost = ln(total_cost)</text>
-    <text x="80" y="270">reg mortality_rate i.province c.age c.income i.gender, vce(robust)</text>
-    <text x="80" y="320">estat vif</text>
-    <text x="80" y="370">predict resid, resid</text>
-    <text x="80" y="420">rvfplot, yline(0)</text>
-    <text x="80" y="470">margins province</text>
-    <text x="80" y="520">marginsplot, recast(bar) title("Adjusted outcomes by province")</text>
-    <text x="80" y="570">outreg2 using "model_results.doc", replace dec(3)</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed Stata regression and mixed-model background">
+  <rect width="1600" height="900" fill="transparent" />
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill-opacity="0.9">
+    <text x="64" y="98" fill="#0f766e">* Stata: linear, logistic, and mixed-effects regression workflow</text>
+    <text x="64" y="144"><tspan fill="#0f766e">use</tspan><tspan fill="#334155"> "analysis_panel.dta", clear</tspan></text>
+    <text x="64" y="190"><tspan fill="#0f766e">gen</tspan><tspan fill="#334155"> ln_cost = ln(total_cost + </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="236"><tspan fill="#0f766e">regress</tspan><tspan fill="#334155"> outcome_score i.treatment c.age##c.age i.sex i.province, vce(robust)</tspan></text>
+    <text x="64" y="282"><tspan fill="#0f766e">logit</tspan><tspan fill="#334155"> poor_outcome i.treatment c.baseline_cd4 c.adherence i.site, vce(cluster site)</tspan></text>
+    <text x="64" y="328"><tspan fill="#0f766e">margins</tspan><tspan fill="#334155"> treatment, at(age=(</tspan><tspan fill="#f59e0b">20</tspan><tspan fill="#334155">(</tspan><tspan fill="#f59e0b">10</tspan><tspan fill="#334155">)</tspan><tspan fill="#f59e0b">70</tspan><tspan fill="#334155">)) post</tspan></text>
+    <text x="64" y="374"><tspan fill="#0f766e">marginsplot</tspan><tspan fill="#334155">, recast(line) ciopts(color(teal%35)) title("Adjusted risk by age")</tspan></text>
+    <text x="64" y="420"><tspan fill="#0f766e">mixed</tspan><tspan fill="#334155"> hb_change i.treatment c.week##i.treatment || facility: week, covariance(unstructured)</tspan></text>
+    <text x="64" y="466"><tspan fill="#0f766e">* compare model fit statistics</tspan></text>
+    <text x="64" y="500"><tspan fill="#0f766e">estat</tspan><tspan fill="#334155"> ic</tspan></text>
+    <text x="64" y="546"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> re_facility, reffects</tspan></text>
+    <text x="64" y="592"><tspan fill="#0f766e">* ready for panel time-series checks</tspan></text>
+    <text x="64" y="638"><tspan fill="#0f766e">xtset</tspan><tspan fill="#334155"> facility month</tspan></text>
+    <text x="64" y="684"><tspan fill="#0f766e">outreg2</tspan><tspan fill="#334155"> using "services_models.doc", replace dec(</tspan><tspan fill="#f59e0b">3</tspan><tspan fill="#334155">) ctitle("Primary models")</tspan></text>
   </g>
 </svg>

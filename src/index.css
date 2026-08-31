@@ -23,7 +23,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  opacity: var(--section-code-opacity, 0.08);
+  opacity: var(--section-code-opacity, 0.12);
 }
 
 .section-code-bg--shine::after {
@@ -39,25 +39,25 @@
 
 .section-bg-about {
   --section-code-image: url('/assets/code-bg-r-survival.svg');
-  --section-code-opacity: 0.1;
+  --section-code-opacity: 0.14;
 }
 
 .section-bg-services {
   --section-code-image: url('/assets/code-bg-stata-regression.svg');
-  --section-code-opacity: 0.09;
+  --section-code-opacity: 0.14;
 }
 
 .section-bg-projects {
   --section-code-image: url('/assets/code-bg-r-timeseries-map.svg');
-  --section-code-opacity: 0.1;
+  --section-code-opacity: 0.15;
 }
 
 .section-bg-contact {
   --section-code-image: url('/assets/code-bg-stata-survival.svg');
-  --section-code-opacity: 0.08;
+  --section-code-opacity: 0.17;
 }
 
 .section-bg-footer {
   --section-code-image: url('/assets/code-bg-r-bar.svg');
-  --section-code-opacity: 0.11;
+  --section-code-opacity: 0.16;
 }
