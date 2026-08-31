@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R regression and bar graph background">
+  <g fill="#93c5fd" fill-opacity="0.35" font-family="monospace" font-size="22">
+    <text x="60" y="115"># R regression and bar chart summary</text>
+    <text x="60" y="160">model &lt;- lm(outcome ~ intervention + age + sex + province, data = df)</text>
+    <text x="60" y="205">summary(model)</text>
+    <text x="60" y="250">library(ggplot2)</text>
+    <text x="60" y="295">ggplot(df, aes(province, outcome_rate, fill = outcome_band)) +</text>
+    <text x="60" y="340">  geom_col(alpha = 0.45) + theme_minimal()</text>
+  </g>
+  <g fill="#93c5fd" fill-opacity="0.28">
+    <rect x="920" y="540" width="56" height="170" />
+    <rect x="1005" y="595" width="56" height="115" />
+    <rect x="1090" y="560" width="56" height="150" />
+    <rect x="1175" y="620" width="56" height="90" />
+  </g>
+</svg>
