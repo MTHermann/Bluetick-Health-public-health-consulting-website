@@ -10,7 +10,8 @@
     <text x="64" y="370"><tspan fill="#2563eb">ggsurvplot</tspan><tspan fill="#334155">(km_fit, conf.int = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, pval = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">, risk.table = </tspan><tspan fill="#f59e0b">TRUE</tspan><tspan fill="#334155">)</tspan></text>
     <text x="64" y="415"><tspan fill="#334155">ph_test &lt;- </tspan><tspan fill="#2563eb">cox.zph</tspan><tspan fill="#334155">(cox_fit); </tspan><tspan fill="#2563eb">print</tspan><tspan fill="#334155">(ph_test)</tspan></text>
     <text x="64" y="460"><tspan fill="#334155">inc_rate &lt;- (</tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(cohort$event) / </tspan><tspan fill="#2563eb">sum</tspan><tspan fill="#334155">(cohort$person_years)) * </tspan><tspan fill="#f59e0b">1000</tspan></text>
-    <text x="64" y="505"><tspan fill="#334155">epi_tab &lt;- </tspan><tspan fill="#2563eb">with</tspan><tspan fill="#334155">(cohort, </tspan><tspan fill="#2563eb">table</tspan><tspan fill="#334155">(arm, event)); rr &lt;- </tspan><tspan fill="#2563eb">prop.table</tspan><tspan fill="#334155">(epi_tab, </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
-    <text x="64" y="550" fill="#1e3a8a"># Reporting: adjusted hazard ratios, incidence per 1,000 person-years, log-rank p-values</text>
+    <text x="64" y="505"><tspan fill="#334155">epi_tab &lt;- </tspan><tspan fill="#2563eb">with</tspan><tspan fill="#334155">(cohort, </tspan><tspan fill="#2563eb">table</tspan><tspan fill="#334155">(arm, event)); row_props &lt;- </tspan><tspan fill="#2563eb">prop.table</tspan><tspan fill="#334155">(epi_tab, </tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="64" y="550" fill="#1e3a8a"># Reporting: adjusted hazard ratios and incidence per 1,000 person-years</text>
+    <text x="64" y="590" fill="#1e3a8a"># Also include log-rank p-values and proportional hazards diagnostics</text>
   </g>
 </svg>

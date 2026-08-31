@@ -9,9 +9,11 @@
     <text x="64" y="328"><tspan fill="#0f766e">margins</tspan><tspan fill="#334155"> treatment, at(age=(</tspan><tspan fill="#f59e0b">20</tspan><tspan fill="#334155">(</tspan><tspan fill="#f59e0b">10</tspan><tspan fill="#334155">)</tspan><tspan fill="#f59e0b">70</tspan><tspan fill="#334155">)) post</tspan></text>
     <text x="64" y="374"><tspan fill="#0f766e">marginsplot</tspan><tspan fill="#334155">, recast(line) ciopts(color(teal%35)) title("Adjusted risk by age")</tspan></text>
     <text x="64" y="420"><tspan fill="#0f766e">mixed</tspan><tspan fill="#334155"> hb_change i.treatment c.week##i.treatment || facility: week, covariance(unstructured)</tspan></text>
-    <text x="64" y="466"><tspan fill="#0f766e">estat</tspan><tspan fill="#334155"> ic</tspan><tspan fill="#0f766e">  // compare model fit</tspan></text>
-    <text x="64" y="512"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> re_facility, reffects</tspan></text>
-    <text x="64" y="558"><tspan fill="#0f766e">xtset</tspan><tspan fill="#334155"> facility month</tspan><tspan fill="#0f766e">  // ready for panel time-series checks</tspan></text>
-    <text x="64" y="604"><tspan fill="#0f766e">outreg2</tspan><tspan fill="#334155"> using "services_models.doc", replace dec(</tspan><tspan fill="#f59e0b">3</tspan><tspan fill="#334155">) ctitle("Primary models")</tspan></text>
+    <text x="64" y="466"><tspan fill="#0f766e">* compare model fit statistics</tspan></text>
+    <text x="64" y="500"><tspan fill="#0f766e">estat</tspan><tspan fill="#334155"> ic</tspan></text>
+    <text x="64" y="546"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> re_facility, reffects</tspan></text>
+    <text x="64" y="592"><tspan fill="#0f766e">* ready for panel time-series checks</tspan></text>
+    <text x="64" y="638"><tspan fill="#0f766e">xtset</tspan><tspan fill="#334155"> facility month</tspan></text>
+    <text x="64" y="684"><tspan fill="#0f766e">outreg2</tspan><tspan fill="#334155"> using "services_models.doc", replace dec(</tspan><tspan fill="#f59e0b">3</tspan><tspan fill="#334155">) ctitle("Primary models")</tspan></text>
   </g>
 </svg>

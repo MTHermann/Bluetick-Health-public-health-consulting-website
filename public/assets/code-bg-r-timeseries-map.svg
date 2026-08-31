@@ -9,7 +9,8 @@
     <text x="60" y="312"><tspan fill="#2563eb">autoplot</tspan><tspan fill="#334155">(fc_12) + </tspan><tspan fill="#2563eb">labs</tspan><tspan fill="#334155">(title = </tspan><tspan fill="#16a34a">"Projected incidence (12 months)"</tspan><tspan fill="#334155">)</tspan></text>
     <text x="60" y="356"><tspan fill="#334155">prov_summary &lt;- </tspan><tspan fill="#2563eb">aggregate</tspan><tspan fill="#334155">(outcome ~ province, data = outcomes, FUN = mean)</tspan></text>
     <text x="60" y="400"><tspan fill="#2563eb">ggplot</tspan><tspan fill="#334155">(prov_summary, </tspan><tspan fill="#2563eb">aes</tspan><tspan fill="#334155">(province, outcome, fill = outcome)) + </tspan><tspan fill="#2563eb">geom_col</tspan><tspan fill="#334155">(alpha = </tspan><tspan fill="#f59e0b">0.5</tspan><tspan fill="#334155">)</tspan></text>
-    <text x="60" y="444" fill="#1d4ed8"># map_data("world") subset for South Africa; join provincial outcomes for choropleth mapping</text>
+    <text x="60" y="444" fill="#1d4ed8"># map_data("world") subset for South Africa</text>
+    <text x="60" y="476" fill="#1d4ed8"># join provincial outcomes for choropleth-style distribution mapping</text>
   </g>
 
   <g fill="none" stroke="#1d4ed8" stroke-opacity="0.35" stroke-width="7">

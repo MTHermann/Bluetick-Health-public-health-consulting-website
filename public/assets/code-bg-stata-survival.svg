@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed R and Stata contact analysis background">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Detailed Stata and R contact analysis background">
   <rect width="1600" height="900" fill="transparent" />
 
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill-opacity="0.93">
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill-opacity="0.9">
     <text x="54" y="82" fill="#0c4a6e"># Contact analytics workflow (detailed R + Stata snippets)</text>
 
     <text x="54" y="122" fill="#1e3a8a"># R: survival + regression + forecasting + epi summaries</text>
@@ -20,9 +20,10 @@
     <text x="54" y="546"><tspan fill="#0f766e">sts graph</tspan><tspan fill="#334155">, by(referral_arm) ci title("Kaplan-Meier by referral pathway")</tspan></text>
     <text x="54" y="580"><tspan fill="#0f766e">stcox</tspan><tspan fill="#334155"> age i.sex i.district i.referral_arm baseline_risk, vce(cluster facility_id)</tspan></text>
     <text x="54" y="614"><tspan fill="#0f766e">melogit</tspan><tspan fill="#334155"> adverse_event i.referral_arm c.month || facility_id:, covariance(exchangeable)</tspan></text>
-    <text x="54" y="648"><tspan fill="#0f766e">tsset</tspan><tspan fill="#334155"> month</tspan><tspan fill="#0f766e">  // monthly consultation volume</tspan></text>
-    <text x="54" y="682"><tspan fill="#0f766e">arima</tspan><tspan fill="#334155"> consult_count, arima(</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
-    <text x="54" y="716"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> consult_fit, xb</tspan></text>
-    <text x="54" y="750"><tspan fill="#0f766e">twoway</tspan><tspan fill="#334155"> (bar outcome_rate district_id, color(navy%35)) (line consult_fit month, lcolor(teal))</tspan></text>
+    <text x="54" y="648"><tspan fill="#0f766e">* monthly consultation volume</tspan></text>
+    <text x="54" y="682"><tspan fill="#0f766e">tsset</tspan><tspan fill="#334155"> month</tspan></text>
+    <text x="54" y="716"><tspan fill="#0f766e">arima</tspan><tspan fill="#334155"> consult_count, arima(</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">,</tspan><tspan fill="#f59e0b">1</tspan><tspan fill="#334155">)</tspan></text>
+    <text x="54" y="750"><tspan fill="#0f766e">predict</tspan><tspan fill="#334155"> consult_fit, xb</tspan></text>
+    <text x="54" y="784"><tspan fill="#0f766e">twoway</tspan><tspan fill="#334155"> (bar outcome_rate district_id, color(navy%35)) (line consult_fit month, lcolor(teal))</tspan></text>
   </g>
 </svg>
