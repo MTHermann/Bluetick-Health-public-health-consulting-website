@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Stata survival and graph background">
+  <g fill="#0369a1" fill-opacity="0.23" font-family="monospace" font-size="24">
+    <text x="70" y="120">* Stata survival and time trend checks</text>
+    <text x="70" y="170">stset follow_up_time, failure(event == 1)</text>
+    <text x="70" y="220">sts graph, by(treatment) ci title("Kaplan-Meier Curves")</text>
+    <text x="70" y="270">stcox age i.gender i.province comorbidity_index, vce(cluster site)</text>
+    <text x="70" y="320">predict hr, hr</text>
+    <text x="70" y="370">twoway (bar outcomes province_id, color(navy%35))</text>
+    <text x="70" y="420">tsset month</text>
+    <text x="70" y="470">arima admissions, arima(1,1,1)</text>
+    <text x="70" y="520">predict fitted_adm, xb</text>
+  </g>
+  <g fill="#0369a1" fill-opacity="0.18">
+    <rect x="1060" y="610" width="46" height="125" />
+    <rect x="1130" y="575" width="46" height="160" />
+    <rect x="1200" y="640" width="46" height="95" />
+    <rect x="1270" y="595" width="46" height="140" />
+  </g>
+</svg>

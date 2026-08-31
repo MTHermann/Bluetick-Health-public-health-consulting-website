@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Stata regression background">
+  <g fill="#0f766e" fill-opacity="0.24" font-family="monospace" font-size="24">
+    <text x="80" y="120">* Stata regression workflow</text>
+    <text x="80" y="170">use "health_outcomes.dta", clear</text>
+    <text x="80" y="220">gen ln_cost = ln(total_cost)</text>
+    <text x="80" y="270">reg mortality_rate i.province c.age c.income i.gender, vce(robust)</text>
+    <text x="80" y="320">estat vif</text>
+    <text x="80" y="370">predict resid, resid</text>
+    <text x="80" y="420">rvfplot, yline(0)</text>
+    <text x="80" y="470">margins province</text>
+    <text x="80" y="520">marginsplot, recast(bar) title("Adjusted outcomes by province")</text>
+    <text x="80" y="570">outreg2 using "model_results.doc", replace dec(3)</text>
+  </g>
+</svg>

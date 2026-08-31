@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R time series and South Africa outcomes background">
+  <g fill="#1d4ed8" fill-opacity="0.22" font-family="monospace" font-size="23">
+    <text x="70" y="110"># R time-series analysis</text>
+    <text x="70" y="155">library(forecast)</text>
+    <text x="70" y="200">ts_cases &lt;- ts(monthly_cases, start = c(2020,1), frequency = 12)</text>
+    <text x="70" y="245">fit_arima &lt;- auto.arima(ts_cases, seasonal = TRUE)</text>
+    <text x="70" y="290">forecast_12m &lt;- forecast(fit_arima, h = 12)</text>
+    <text x="70" y="335">autoplot(forecast_12m) + ggtitle("Projected Incidence")</text>
+    <text x="70" y="380"># Outcome distribution by province</text>
+  </g>
+  <g fill="none" stroke="#1d4ed8" stroke-opacity="0.25" stroke-width="8">
+    <polyline points="880,560 940,520 1000,540 1060,480 1120,500 1180,455 1240,470" />
+    <line x1="860" y1="595" x2="1260" y2="595" />
+  </g>
+  <g fill="#1d4ed8" fill-opacity="0.2">
+    <rect x="900" y="635" width="55" height="95" />
+    <rect x="985" y="600" width="55" height="130" />
+    <rect x="1070" y="620" width="55" height="110" />
+    <rect x="1155" y="580" width="55" height="150" />
+  </g>
+  <path
+    d="M1120 220 L1190 200 L1265 230 L1320 290 L1300 360 L1260 420 L1200 450 L1130 430 L1085 365 L1085 300 Z"
+    fill="none"
+    stroke="#1d4ed8"
+    stroke-opacity="0.26"
+    stroke-width="7"
+  />
+  <circle cx="1160" cy="305" r="10" fill="#1d4ed8" fill-opacity="0.3" />
+  <circle cx="1220" cy="330" r="10" fill="#1d4ed8" fill-opacity="0.3" />
+  <circle cx="1270" cy="355" r="10" fill="#1d4ed8" fill-opacity="0.3" />
+</svg>

@@ -124,7 +124,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <section className="px-6 py-16">
+      <section className="section-code-bg section-bg-about px-6 py-16">
         <div className="mx-auto max-w-5xl rounded-xl bg-[#dff0ff] p-8 md:p-10">
           <h2 className="mb-4 text-2xl font-semibold text-blue-900">About</h2>
           <p className="leading-relaxed text-gray-700">
@@ -138,7 +138,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <section id="services" className="bg-[#f3f9ff] px-6 py-16">
+      <section id="services" className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-8 text-2xl font-semibold text-blue-900">Services</h2>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -157,7 +157,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <section className="px-6 py-16">
+      <section className="section-code-bg section-bg-projects section-code-bg--shine px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl font-semibold text-blue-900">Projects & Publications</h2>
           <div className="grid gap-6 md:grid-cols-2">
@@ -179,7 +179,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <section id="contact" className="bg-[#f3f9ff] px-6 py-16">
+      <section id="contact" className="section-code-bg section-bg-contact bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center text-2xl font-semibold text-blue-900">Contact</h2>
           <p className="mb-8 text-center text-gray-500">Reach out to discuss your project or request a consultation.</p>
@@ -228,7 +228,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <footer className="bg-blue-900 py-8 text-center text-sm text-blue-200">
+      <footer className="section-code-bg section-bg-footer bg-blue-900 py-8 text-center text-sm text-blue-200">
         © {new Date().getFullYear()} Bluetick Health Consultancy. All rights reserved.
       </footer>
     </div>

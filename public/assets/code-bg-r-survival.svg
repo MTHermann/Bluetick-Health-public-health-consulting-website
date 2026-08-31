@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="R survival analysis background">
+  <g fill="#1e3a8a" fill-opacity="0.28" font-family="monospace" font-size="25">
+    <text x="70" y="120"># R survival analysis</text>
+    <text x="70" y="170">library(survival)</text>
+    <text x="70" y="220">fit &lt;- survfit(Surv(time, status) ~ treatment, data = cohort)</text>
+    <text x="70" y="270">cox &lt;- coxph(Surv(time, status) ~ age + sex + treatment, data = cohort)</text>
+    <text x="70" y="320">summary(cox)</text>
+    <text x="70" y="370">plot(fit, col = c("steelblue", "darkorange"), lwd = 2)</text>
+    <text x="70" y="420">legend("topright", legend = c("Control", "Intervention"), lty = 1)</text>
+    <text x="70" y="470">ggsurvplot(fit, conf.int = TRUE, pval = TRUE)</text>
+    <text x="70" y="520"># hazard ratio reporting and model diagnostics</text>
+  </g>
+</svg>
