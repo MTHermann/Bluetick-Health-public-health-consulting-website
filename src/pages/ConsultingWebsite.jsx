@@ -1,17 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
+  ArrowLeft,
   BarChart3,
   Briefcase,
   ClipboardList,
   Database,
+  ExternalLink,
   FlaskConical,
   Linkedin,
   Mail,
   Phone,
   TrendingUp,
 } from 'lucide-react'
+import {
+  blogPosts,
+  caseStudies,
+  faqs,
+  getPageMeta,
+  getPostPath,
+  linkedInStrategyDownload,
+  navigationLinks,
+  pageContent,
+  resources,
+  siteName,
+  siteUrl,
+} from '@/content/siteContent'
 
 const services = [
   {
@@ -51,37 +66,102 @@ const services = [
   },
 ]
 
-export default function ConsultingWebsite() {
-  const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
-  const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
-
-  useEffect(() => {
-    document.title = 'Bluetick Health | Statistical & Public Health Research Consultancy'
-    const existingMeta = document.querySelector("meta[name='description']")
-    const meta = existingMeta || document.createElement('meta')
-    meta.name = 'description'
-    meta.content =
-      'Independent statistical and public health research consultancy supporting health systems, clinical research, NGOs, and academic institutions.'
-    if (!existingMeta) {
-      document.head.appendChild(meta)
-    }
-  }, [])
-
-  const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+function normalizePath(pathname) {
+  if (!pathname || pathname === '/') {
+    return '/'
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
-    const mailto = `mailto:mitikuhermanng@gmail.com?subject=${subject}&body=${body}`
-    window.location.href = mailto
+  let normalized = pathname.replace(/index\.html$/, '')
+  if (!normalized.endsWith('/')) {
+    normalized = `${normalized}/`
   }
 
+  return normalized
+}
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString('en-ZA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+function setMetaTag(selector, attributes) {
+  let tag = document.head.querySelector(selector)
+  if (!tag) {
+    tag = document.createElement('meta')
+    document.head.appendChild(tag)
+  }
+
+  Object.entries(attributes).forEach(([key, value]) => {
+    tag.setAttribute(key, value)
+  })
+}
+
+function PageContainer({ children }) {
+  return <div className="min-h-screen bg-[#eaf4ff] text-gray-800">{children}</div>
+}
+
+function SiteHeader({ pathname }) {
   return (
-    <div className="min-h-screen bg-[#eaf4ff] text-gray-800">
+    <header className="sticky top-0 z-20 border-b border-blue-100 bg-[#eaf4ff]/95 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
+        <a href="/" className="text-sm font-bold tracking-[0.2em] text-blue-900">
+          BLUETICK HEALTH
+        </a>
+        <nav className="flex flex-wrap items-center justify-end gap-3 text-sm text-blue-900">
+          {navigationLinks.map(({ label, href }) => {
+            const isActive = href === '/'
+              ? pathname === '/'
+              : href.endsWith('/')
+                ? pathname === href
+                : pathname === '/' && href.startsWith('/#')
+
+            return (
+              <a
+                key={href}
+                href={href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`rounded px-2 py-1 transition-colors hover:bg-blue-100 ${isActive ? 'bg-blue-100 font-semibold' : ''}`}
+              >
+                {label}
+              </a>
+            )
+          })}
+        </nav>
+      </div>
+    </header>
+  )
+}
+
+function KeywordList({ items }) {
+  return (
+    <div className="mt-4 flex flex-wrap gap-2">
+      {items.map((item) => (
+        <span key={item} className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+          {item}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function PageIntro({ title, intro, eyebrow = 'Bluetick Health' }) {
+  return (
+    <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-16 text-center text-white">
+      <div className="mx-auto max-w-4xl">
+        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200">{eyebrow}</p>
+        <h1 className="mt-4 text-3xl font-bold md:text-4xl">{title}</h1>
+        <p className="mx-auto mt-4 max-w-3xl text-lg text-blue-100">{intro}</p>
+      </div>
+    </section>
+  )
+}
+
+function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink }) {
+  return (
+    <>
       <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-20 text-center">
         <div className="mb-8 flex justify-center">
           <div className="inline-flex flex-col items-center gap-2 rounded-2xl bg-white px-8 py-5 shadow-lg">
@@ -111,7 +191,7 @@ export default function ConsultingWebsite() {
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <Button asChild>
-            <a href="#contact">Get in Touch</a>
+            <a href="/#contact">Get in Touch</a>
           </Button>
           <a
             href={linkedinLink}
@@ -157,7 +237,7 @@ export default function ConsultingWebsite() {
         </div>
       </section>
 
-      <section className="section-code-bg section-bg-projects section-code-bg--shine px-6 py-16">
+      <section id="projects" className="section-code-bg section-bg-projects section-code-bg--shine px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-6 text-2xl font-semibold text-blue-900">Projects & Publications</h2>
           <div className="grid gap-6 md:grid-cols-2">
@@ -227,10 +307,303 @@ export default function ConsultingWebsite() {
           </form>
         </div>
       </section>
+    </>
+  )
+}
 
+function BlogPage() {
+  const blogInfo = pageContent['/blog/']
+
+  return (
+    <>
+      <PageIntro title={blogInfo.heading} intro={blogInfo.intro} eyebrow="Research insights" />
+      <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-6 md:grid-cols-2">
+            {blogPosts.map((post) => (
+              <Card key={post.slug}>
+                <CardContent className="p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(post.datePublished)}</p>
+                  <h2 className="mt-3 text-xl font-semibold text-blue-900">{post.title}</h2>
+                  <p className="mt-2 text-sm text-gray-500">By {post.author}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{post.excerpt}</p>
+                  <KeywordList items={post.keywords} />
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Button asChild>
+                      <a href={getPostPath(post.slug)}>Read article</a>
+                    </Button>
+                    <a
+                      href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${siteUrl}${getPostPath(post.slug)}`)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded border border-blue-200 px-4 py-2 text-sm font-medium text-blue-900 transition-colors hover:bg-blue-50"
+                    >
+                      <Linkedin className="h-4 w-4" /> Share
+                    </a>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function BlogPostPage({ post }) {
+  return (
+    <>
+      <PageIntro title={post.title} intro={post.summary} eyebrow="Bluetick Health Blog" />
+      <section className="section-code-bg section-bg-projects section-code-bg--shine px-6 py-16">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+            <a href="/blog/" className="inline-flex items-center gap-2 text-sm font-medium text-blue-900 hover:text-blue-700">
+              <ArrowLeft className="h-4 w-4" /> Back to Blog
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`${siteUrl}${getPostPath(post.slug)}`)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded border border-blue-200 px-4 py-2 text-sm font-medium text-blue-900 transition-colors hover:bg-blue-50"
+            >
+              <Linkedin className="h-4 w-4" /> Share article
+            </a>
+          </div>
+
+          <Card>
+            <CardContent className="p-8">
+              <div className="flex flex-wrap gap-4 text-sm text-gray-500">
+                <span>{formatDate(post.datePublished)}</span>
+                <span>•</span>
+                <span>{post.author}</span>
+              </div>
+              <KeywordList items={post.keywords} />
+              <div className="mt-8 space-y-5 text-base leading-8 text-gray-700">
+                {post.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+              <div className="mt-8 rounded-xl bg-blue-950 p-6 text-sm text-blue-100 shadow-inner">
+                <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">{post.codeLanguage} example</div>
+                <pre className="overflow-x-auto whitespace-pre-wrap font-mono leading-7 text-blue-50">{post.code}</pre>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function CaseStudiesPage() {
+  const caseStudiesInfo = pageContent['/case-studies/']
+
+  return (
+    <>
+      <PageIntro title={caseStudiesInfo.heading} intro={caseStudiesInfo.intro} eyebrow="Evidence in practice" />
+      <section className="section-code-bg section-bg-services bg-[#f3f9ff] px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-6 md:grid-cols-2">
+            {caseStudies.map((study) => (
+              <Card key={study.slug}>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold text-blue-900">{study.title}</h2>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{study.description}</p>
+                  <div className="mt-5 space-y-3 text-sm text-gray-600">
+                    <p><span className="font-semibold text-blue-900">Statistical methods used:</span> {study.methods.join(', ')}.</p>
+                    <p><span className="font-semibold text-blue-900">Outcomes:</span> {study.outcomes}</p>
+                    <p><span className="font-semibold text-blue-900">Impact:</span> {study.impact}</p>
+                    <p className="rounded-lg bg-blue-50 p-4 italic text-blue-900">{study.testimonial}</p>
+                  </div>
+                  <KeywordList items={study.keywords} />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function ResourcesPage() {
+  const resourcesInfo = pageContent['/resources/']
+
+  return (
+    <>
+      <PageIntro title={resourcesInfo.heading} intro={resourcesInfo.intro} eyebrow="Backlink-ready references" />
+      <section className="section-code-bg section-bg-about px-6 py-16">
+        <div className="mx-auto max-w-6xl space-y-8">
+          <Card>
+            <CardContent className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-blue-900">LinkedIn content strategy</h2>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                  Download a ready-to-share text file with LinkedIn post templates for blog promotion, case study highlights, industry insights, statistical tips, and public health updates.
+                </p>
+              </div>
+              <Button asChild>
+                <a href={linkedInStrategyDownload.href} target="_blank" rel="noreferrer">
+                  {linkedInStrategyDownload.label}
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+
+          {resources.map((resourceGroup) => (
+            <div key={resourceGroup.category}>
+              <h2 className="mb-4 text-2xl font-semibold text-blue-900">{resourceGroup.category}</h2>
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {resourceGroup.items.map((item) => (
+                  <Card key={item.href}>
+                    <CardContent className="p-6">
+                      <h3 className="text-lg font-semibold text-blue-900">{item.title}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.description}</p>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-blue-700 hover:text-blue-900"
+                      >
+                        Visit resource <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
+  )
+}
+
+function FAQPage() {
+  const faqInfo = pageContent['/faq/']
+
+  return (
+    <>
+      <PageIntro title={faqInfo.heading} intro={faqInfo.intro} eyebrow="Client questions" />
+      <section className="section-code-bg section-bg-contact bg-[#f3f9ff] px-6 py-16">
+        <div className="mx-auto max-w-5xl">
+          <div className="grid gap-6 md:grid-cols-2">
+            {faqs.map((faq) => (
+              <Card key={faq.question}>
+                <CardContent className="p-6">
+                  <h2 className="text-lg font-semibold text-blue-900">{faq.question}</h2>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+export default function ConsultingWebsite() {
+  const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
+  const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const pathname = normalizePath(window.location.pathname)
+  const currentPost = useMemo(() => blogPosts.find((post) => getPostPath(post.slug) === pathname), [pathname])
+
+  useEffect(() => {
+    const pageMeta = getPageMeta(pathname)
+
+    document.title = pageMeta.title
+    setMetaTag("meta[name='description']", { name: 'description', content: pageMeta.description })
+    setMetaTag("meta[name='keywords']", { name: 'keywords', content: pageMeta.keywords })
+    setMetaTag("meta[name='author']", { name: 'author', content: siteName })
+    setMetaTag("meta[property='og:type']", { property: 'og:type', content: pageMeta.type })
+    setMetaTag("meta[property='og:url']", { property: 'og:url', content: `${siteUrl}${pathname}` })
+    setMetaTag("meta[property='og:title']", { property: 'og:title', content: pageMeta.title })
+    setMetaTag("meta[property='og:description']", { property: 'og:description', content: pageMeta.description })
+    setMetaTag("meta[property='og:image']", { property: 'og:image', content: `${siteUrl}/assets/bluetick-globe.png` })
+    setMetaTag("meta[property='og:site_name']", { property: 'og:site_name', content: siteName })
+    setMetaTag("meta[name='twitter:card']", { name: 'twitter:card', content: 'summary_large_image' })
+    setMetaTag("meta[name='twitter:url']", { name: 'twitter:url', content: `${siteUrl}${pathname}` })
+    setMetaTag("meta[name='twitter:title']", { name: 'twitter:title', content: pageMeta.title })
+    setMetaTag("meta[name='twitter:description']", { name: 'twitter:description', content: pageMeta.description })
+    setMetaTag("meta[name='twitter:image']", { name: 'twitter:image', content: `${siteUrl}/assets/bluetick-globe.png` })
+
+    let canonical = document.head.querySelector("link[rel='canonical']")
+    if (!canonical) {
+      canonical = document.createElement('link')
+      canonical.rel = 'canonical'
+      document.head.appendChild(canonical)
+    }
+    canonical.href = `${siteUrl}${pathname}`
+
+    let structuredData = document.getElementById('bluetick-structured-data')
+    if (!structuredData) {
+      structuredData = document.createElement('script')
+      structuredData.id = 'bluetick-structured-data'
+      structuredData.type = 'application/ld+json'
+      document.head.appendChild(structuredData)
+    }
+    structuredData.textContent = JSON.stringify(pageMeta.structuredData)
+  }, [pathname])
+
+  useEffect(() => {
+    if (pathname !== '/') {
+      return
+    }
+
+    if (window.location.hash) {
+      const target = document.querySelector(window.location.hash)
+      if (target) {
+        window.requestAnimationFrame(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        })
+      }
+    }
+  }, [pathname])
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
+    const mailto = `mailto:mitikuhermanng@gmail.com?subject=${subject}&body=${body}`
+    window.location.href = mailto
+  }
+
+  let content = (
+    <HomePage
+      form={form}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      globeLogoSrc={globeLogoSrc}
+      linkedinLink={linkedinLink}
+    />
+  )
+
+  if (pathname === '/blog/') {
+    content = <BlogPage />
+  } else if (currentPost) {
+    content = <BlogPostPage post={currentPost} />
+  } else if (pathname === '/case-studies/') {
+    content = <CaseStudiesPage />
+  } else if (pathname === '/resources/') {
+    content = <ResourcesPage />
+  } else if (pathname === '/faq/') {
+    content = <FAQPage />
+  }
+
+  return (
+    <PageContainer>
+      <SiteHeader pathname={pathname} />
+      {content}
       <footer className="section-code-bg section-bg-footer bg-blue-900 py-8 text-center text-sm text-blue-200">
         © {new Date().getFullYear()} Bluetick Health Consultancy. All rights reserved.
       </footer>
-    </div>
+    </PageContainer>
   )
 }
