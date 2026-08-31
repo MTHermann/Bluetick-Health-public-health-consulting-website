@@ -23,6 +23,7 @@ import {
   getPostPath,
   navigationLinks,
   pageContent,
+  productsContent,
   vacanciesContent,
   resources,
   siteName,
@@ -573,6 +574,46 @@ function NewsPage() {
   )
 }
 
+function ProductsPage() {
+  const productsInfo = pageContent['/products/']
+
+  return (
+    <>
+      <PageIntro title={productsInfo.heading} intro={productsInfo.intro} eyebrow="Digital health solutions" />
+      <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 rounded-xl bg-[#eaf4ff] p-6 md:p-8">
+            <p className="text-sm leading-relaxed text-gray-700">{productsContent.partnershipMessage}</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {productsContent.products.map((product) => (
+              <Card key={product.name}>
+                <CardContent className="p-6">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-blue-100">
+                    <img
+                      src={`${import.meta.env.BASE_URL}${product.logo.replace(/^\//, '')}`}
+                      alt={`${product.name} logo`}
+                      width="40"
+                      height="40"
+                      className="h-10 w-10 object-contain"
+                    />
+                  </div>
+                  <h2 className="text-lg font-semibold text-blue-900">{product.name}</h2>
+                  <p className="mt-2 text-sm text-gray-500">{product.category}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{product.description}</p>
+                  <span className="mt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+                    {product.status}
+                  </span>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
+
 export default function ConsultingWebsite() {
   const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
   const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
@@ -660,6 +701,8 @@ export default function ConsultingWebsite() {
     content = <BlogPostPage post={currentPost} />
   } else if (pathname === '/news/') {
     content = <NewsPage />
+  } else if (pathname === '/products/') {
+    content = <ProductsPage />
   } else if (pathname === '/resources/') {
     content = <ResourcesPage />
   } else if (pathname === '/faq/') {

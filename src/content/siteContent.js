@@ -8,6 +8,7 @@ export const navigationLinks = [
   { label: 'Projects', href: '/#projects' },
   { label: 'Blog', href: '/blog/' },
   { label: 'News', href: '/news/' },
+  { label: 'Products', href: '/products/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'FAQ', href: '/faq/' },
   { label: 'Vacancies', href: '/vacancies/' },
@@ -303,6 +304,23 @@ export const vacanciesContent = {
   jobs: [],
 }
 
+export const productsContent = {
+  heading: 'Products & Digital Solutions',
+  intro:
+    'Bluetick Health is expanding into healthcare digital solutions development to support stronger clinical workflows, data quality, and evidence-driven decision-making.',
+  partnershipMessage: 'We will be developing healthcare digital solutions through partnership in the coming years.',
+  products: [
+    {
+      name: 'Bluetick Health EMR',
+      description:
+        'A comprehensive Digital Health Solution for electronic medical records management, supporting secure patient data capture, clinical workflows, and reporting.',
+      status: 'Coming Soon',
+      category: 'Electronic Medical Records',
+      logo: '/assets/bluetick-globe.png',
+    },
+  ],
+}
+
 export const bluetickNewsItems = [
   {
     date: '2026-08-31',
@@ -444,6 +462,16 @@ export const pageContent = {
     heading: 'News',
     intro:
       'Stay current with Bluetick Health updates alongside curated global and African health news relevant to research, consulting, and programme delivery.',
+  },
+  '/products/': {
+    title: 'Products & Digital Health Solutions | Bluetick Health',
+    description:
+      'Explore Bluetick Health healthcare digital solutions and upcoming EMR software plans, including future digital health products and health apps developed through strategic partnerships.',
+    keywords:
+      'healthcare digital solutions, electronic medical records, EMR software, digital health, health apps, healthcare technology',
+    heading: 'Products & Digital Solutions',
+    intro:
+      'Explore upcoming Bluetick Health products and Digital Health Solutions designed to strengthen healthcare delivery and data-driven care.',
   },
 }
 
