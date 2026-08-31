@@ -19,6 +19,8 @@ export default defineConfig({
         blogRedcap: resolve(__dirname, 'blog/redcap-implementation-guide/index.html'),
         resources: resolve(__dirname, 'resources/index.html'),
         faq: resolve(__dirname, 'faq/index.html'),
+        news: resolve(__dirname, 'news/index.html'),
+        vacancies: resolve(__dirname, 'vacancies/index.html'),
       },
     },
   },
