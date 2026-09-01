@@ -386,10 +386,24 @@ function BlogPostPage({ post }) {
                   <p key={index}>{paragraph}</p>
                 ))}
               </div>
-              <div className="mt-8 rounded-xl bg-blue-950 p-6 text-sm text-blue-100 shadow-inner">
-                <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">{post.codeLanguage} example</div>
-                <pre className="overflow-x-auto whitespace-pre-wrap font-mono leading-7 text-blue-50">{post.code}</pre>
+              <div className="mt-8 grid gap-6 lg:grid-cols-2">
+                <div className="rounded-xl bg-blue-950 p-6 text-sm text-blue-100 shadow-inner">
+                  <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">{post.codeLanguage} example</div>
+                  <pre className="overflow-x-auto whitespace-pre-wrap font-mono leading-7 text-blue-50">{post.code}</pre>
+                </div>
+                {post.codeOutput && (
+                  <div className="rounded-xl border border-blue-100 bg-white p-6 text-sm text-gray-700 shadow-inner">
+                    <div className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Output / graph</div>
+                    <pre className="overflow-x-auto whitespace-pre-wrap font-mono leading-7 text-gray-700">{post.codeOutput}</pre>
+                  </div>
+                )}
               </div>
+              {post.codeInterpretation && (
+                <div className="mt-6 rounded-xl bg-blue-50 p-6 text-sm leading-7 text-gray-700">
+                  <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">Interpretation</div>
+                  <p>{post.codeInterpretation}</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
