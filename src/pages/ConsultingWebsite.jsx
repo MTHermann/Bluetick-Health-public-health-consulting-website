@@ -34,37 +34,37 @@ const services = [
   {
     icon: BarChart3,
     title: 'Statistical Analysis',
-    body: 'Regression, survival, longitudinal and time-series analysis. Our biostatisticians provide expert statistical consulting for health researchers, clinicians, and public health practitioners. We apply advanced methods including linear and logistic regression, Cox proportional hazards models, Kaplan-Meier survival analysis, mixed-effects models, generalised estimating equations (GEE), ARIMA time series forecasting, and multivariate analysis. We work with complex health datasets from clinical trials, cohort studies, cross-sectional surveys, and routine health information systems — delivering clear, publication-ready results using R, Stata, and SAS.',
+    body: 'Our biostatisticians provide expert statistical consulting for health researchers, clinicians, and public health practitioners. We apply advanced methods including linear and logistic regression, Cox proportional hazards models, Kaplan-Meier survival analysis, mixed-effects models, generalised estimating equations (GEE), ARIMA time series forecasting, and multivariate analysis. We work with complex health datasets from clinical trials, cohort studies, cross-sectional surveys, and routine health information systems - delivering clear, publication-ready results using R, Stata, and SAS.',
   },
   {
     icon: Database,
     title: 'Data Management',
-    body: 'REDCap design, cleaning, validation, training, and data governance support. We provide end-to-end data management solutions for clinical and public health research — from database architecture and electronic data capture (EDC) design to data quality assurance, audit trails, and regulatory-compliant data governance. Our team supports NGOs, academic institutions, and health programmes in building clean, analysis-ready datasets. We specialise in REDCap implementation, including custom instrument design, branching logic, data validation rules, user training, and integration with statistical analysis pipelines.',
+    body: 'We provide end-to-end data management solutions for clinical and public health research - from database architecture and electronic data capture (EDC) design to data quality assurance, audit trails, and regulatory-compliant data governance. Our team supports NGOs, academic institutions, and health programmes in building clean, analysis-ready datasets. We specialise in REDCap implementation, including custom instrument design, branching logic, data validation rules, user training, and integration with statistical analysis pipelines.',
   },
   {
     icon: ClipboardList,
     title: 'Research Support',
-    body: 'Study design, monitoring and evaluation, reporting, and publications. We offer comprehensive research support services for health research teams — from epidemiological study design and sample size calculations to literature reviews, data analysis planning, and scientific writing. Our consultants assist with grant proposal development, ethics applications, interim and final study reports, and peer-reviewed manuscript preparation. We support randomised controlled trials (RCTs), observational studies, systematic reviews, and programme evaluations for academic institutions, NGOs, and government health departments.',
+    body: 'We offer comprehensive research support services for health research teams - from epidemiological study design and sample size calculations to literature reviews, data analysis planning, and scientific writing. Our consultants assist with grant proposal development, ethics applications, interim and final study reports, and peer-reviewed manuscript preparation. We support randomised controlled trials (RCTs), observational studies, systematic reviews, and programme evaluations for academic institutions, NGOs, and government health departments.',
   },
   {
     icon: Briefcase,
     title: 'Project Management',
-    body: 'SOP and protocol development, regulatory compliance, and operational leadership. We bring structured project management expertise to public health and research programmes — ensuring timelines, budgets, and quality standards are met. Our services include the development of standard operating procedures (SOPs), study protocols, risk registers, and operational plans. We support Good Clinical Practice (GCP) compliance, stakeholder coordination, and regulatory submissions. Ideal for health programmes, NGOs, and research institutions seeking operational rigour and accountability across complex, multi-site projects.',
+    body: 'We bring structured project management expertise to public health and research programmes - ensuring timelines, budgets, and quality standards are met. Our services include the development of standard operating procedures (SOPs), study protocols, risk registers, and operational plans. We support Good Clinical Practice (GCP) compliance, stakeholder coordination, and regulatory submissions. Ideal for health programmes, NGOs, and research institutions seeking operational rigour and accountability across complex, multi-site projects.',
   },
   {
     icon: TrendingUp,
     title: 'Monitoring & Evaluating Public Health Programs',
-    body: 'We design and implement robust monitoring and evaluation (M&E) frameworks and systems to measure programme performance, outcomes, and impact. We work with programme teams and stakeholders to develop systems that track progress, identify learning opportunities, and demonstrate accountability. Our M&E services include results frameworks, indicator development, data collection tool design, routine data quality assessments (RDQA), mid-term and end-line evaluations, and impact assessments. We support donor reporting, PEPFAR and Global Fund programmes, and government health departments across sub-Saharan Africa.',
+    body: 'Our M&E services include results frameworks, indicator development, data collection tool design, routine data quality assessments (RDQA), mid-term and end-line evaluations, and impact assessments. We support donor reporting, PEPFAR and Global Fund programmes, and government health departments across sub-Saharan Africa.',
   },
   {
     icon: FlaskConical,
     title: 'Clinical Trials Support',
-    body: 'Statistical and data support for clinical trials, including design, protocol development, ethics submissions, randomization, site selection and oversight, patient recruitment strategy, data management and statistical analysis. We provide expert biostatistical consulting throughout the full clinical trial lifecycle — from Phase I through Phase IV. Our services include sample size and power calculations, randomisation and allocation concealment, statistical analysis plans (SAPs), interim analysis support, and final clinical study reports (CSRs). We work to ICH E9 and CONSORT standards, ensuring regulatory-compliant trial conduct for academic and industry sponsors.',
+    body: 'We provide expert biostatistical consulting throughout the full clinical trial lifecycle - from Phase I through Phase IV. Our services include sample size and power calculations, randomisation and allocation concealment, statistical analysis plans (SAPs), interim analysis support, and final clinical study reports (CSRs). We work to ICH E9 and CONSORT standards, ensuring regulatory-compliant trial conduct for academic and industry sponsors.',
   },
   {
     icon: TrendingUp,
     title: 'Health Economics & Economic Evaluation',
-    body: 'We help clients demonstrate the clinical and economic value of healthcare technologies and develop evidence strategies to support pricing, reimbursement, and market access. Cost-effectiveness analysis, budget impact modelling, and health technology assessment support. Our health economists apply decision-analytic modelling techniques — including cost-utility analysis (CUA), cost-benefit analysis (CBA), Markov models, and discrete event simulation — to support HTA submissions for SAHPRA, NICE, and other health technology bodies. We serve pharmaceutical companies, medical device manufacturers, and public health programmes seeking evidence-based economic justification.',
+    body: 'Our health economists apply decision-analytic modelling techniques - including cost-utility analysis (CUA), cost-benefit analysis (CBA), Markov models, and discrete event simulation - to support HTA submissions for SAHPRA, NICE, and other health technology bodies. We serve pharmaceutical companies, medical device manufacturers, and public health programmes seeking evidence-based economic justification.',
   },
 ]
 
