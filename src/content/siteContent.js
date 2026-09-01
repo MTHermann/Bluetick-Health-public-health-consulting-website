@@ -234,7 +234,7 @@ Missingness bar chart by variable showing highest missingness in viral_load`,
   {
     slug: 'epidemiological-study-design',
     title: 'Epidemiological Study Design: Selecting Designs That Produce Defensible Evidence',
-    datePublished: '2026-09-02',
+    datePublished: '2026-08-29',
     author: defaultAuthor,
     keywords: ['epidemiological study design', 'cohort studies', 'case-control', 'cross-sectional', 'public health research'],
     excerpt:
@@ -271,7 +271,7 @@ Forest-style plot of risk ratio with 95% confidence interval`,
   {
     slug: 'redcap-implementation-guide',
     title: 'REDCap Implementation Guide for Clinical and Public Health Research Programmes',
-    datePublished: '2026-09-09',
+    datePublished: '2026-08-31',
     author: defaultAuthor,
     keywords: ['REDCap implementation', 'electronic data capture', 'clinical research', 'public health data systems', 'database design'],
     excerpt:
@@ -561,7 +561,7 @@ export const pageContent = {
       'Bluetick Health blog, survival analysis, regression analysis, clinical trial statistics, epidemiology, REDCap implementation, health economics',
     heading: 'Blog',
     intro:
-      'SEO-focused articles designed for researchers, clinical teams, and public health programmes seeking practical guidance in statistical analysis, epidemiology, health economics, and data management.',
+      'Articles designed for researchers, clinical teams, and public health programmes seeking practical guidance in statistical analysis, epidemiology, health economics, and data management.',
   },
   '/resources/': {
     title: 'Resources and Tools | R Packages, Stata Guides, Clinical Trial Resources',
