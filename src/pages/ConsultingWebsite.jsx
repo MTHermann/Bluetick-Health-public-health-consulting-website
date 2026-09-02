@@ -68,6 +68,13 @@ const services = [
   },
 ]
 
+const phoneCountryOptions = [
+  { value: '+27', label: '🇿🇦 South Africa' },
+  { value: '+1', label: '🇺🇸 United States' },
+  { value: '+44', label: '🇬🇧 United Kingdom' },
+  { value: '+251', label: '🇪🇹 Ethiopia' },
+]
+
 function normalizePath(pathname) {
   if (!pathname || pathname === '/') {
     return '/'
@@ -107,11 +114,24 @@ function PageContainer({ children }) {
 
 function SiteHeader({ pathname }) {
   const navDropdownItems = {
-    Services: [{ label: 'View Services', href: '/#services' }],
-    Blogs: [{ label: 'View Blogs', href: '/blog/' }],
-    News: [{ label: 'View News', href: '/news/' }],
-    Products: [{ label: 'View Products', href: '/products/' }],
-    Vacancies: [{ label: 'View Vacancies', href: '/vacancies/' }],
+    Services: [
+      { label: 'Statistical Analysis', href: '/#services' },
+      { label: 'Data Management', href: '/#services' },
+      { label: 'Research Support', href: '/#services' },
+      { label: 'Project Management', href: '/#services' },
+      { label: 'Clinical Trials Support', href: '/#services' },
+      { label: 'Health Economics & Economic Evaluation', href: '/#services' },
+    ],
+    Blogs: [{ label: 'All blog post pages', href: '/blog/' }],
+    News: [
+      { label: 'Bluetick Updates', href: '/news/#bluetick-updates' },
+      { label: 'African Health News', href: '/news/#african-health-news' },
+      { label: 'Global Public Health News', href: '/news/#global-public-health-news' },
+    ],
+    Products: [
+      { label: 'Bluetick Health EMR', href: '/products/#bluetick-health-emr' },
+      { label: 'Upcoming Digital Solutions', href: '/products/#upcoming-digital-solutions' },
+    ],
   }
 
   return (
@@ -136,13 +156,13 @@ function SiteHeader({ pathname }) {
                   href={href}
                   aria-current={isActive ? 'page' : undefined}
                   className={`rounded px-2 py-1 transition-colors hover:bg-blue-100 ${isActive ? 'bg-blue-100 font-semibold' : ''} ${
-                    isContactUs ? 'header-contact-us-nav text-base' : ''
+                    isContactUs ? 'header-contact-us-nav' : ''
                   }`}
                 >
                   {label}
                 </a>
                 {dropdownItems ? (
-                  <div className="header-nav-dropdown absolute left-0 top-full z-30 mt-2 min-w-44 rounded-md border border-blue-100 bg-white py-1 shadow-lg">
+                  <div className="header-nav-dropdown absolute left-0 top-full z-30 min-w-44 rounded-md border border-blue-100 bg-white py-1 shadow-lg">
                     {dropdownItems.map((item) => (
                       <a
                         key={item.label}
@@ -187,7 +207,7 @@ function PageIntro({ title, intro, eyebrow = 'Bluetick Health' }) {
   )
 }
 
-function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink }) {
+function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink, showConsultationSection }) {
   return (
     <>
       <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-20 text-center">
@@ -287,54 +307,85 @@ function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink
         </div>
       </section>
 
-      <section id="contact" className="section-code-bg section-bg-contact bg-[#f3f9ff] px-6 py-16">
-        <div className="mx-auto max-w-2xl">
-          <h2 className="mb-8 text-center text-2xl font-semibold text-blue-900">Contact</h2>
-          <p className="mb-8 text-center text-gray-500">Reach out to discuss your project or request a consultation.</p>
+      <div id="contact" />
+      {showConsultationSection ? (
+        <section className="section-code-bg section-bg-contact bg-[#f3f9ff] px-6 py-16">
+          <div className="mx-auto max-w-2xl">
+            <p className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Contact Us</p>
+            <h2 className="mb-8 mt-3 text-center text-2xl font-semibold text-blue-900">Request Your Free Consultation</h2>
+            <p className="mb-8 text-center text-gray-500">Reach out to discuss your project or request a consultation.</p>
 
-          <div className="mb-8 flex flex-col items-center justify-center gap-4 text-gray-700 sm:flex-row sm:gap-8">
-            <a href="mailto:mitikuhermanng@gmail.com" className="inline-flex items-center gap-2">
-              <Mail className="h-5 w-5 text-blue-600" /> mitikuhermanng@gmail.com
-            </a>
-            <a href="tel:+27611170478" className="inline-flex items-center gap-2">
-              <Phone className="h-5 w-5 text-blue-600" /> +27 611170478
-            </a>
+            <div className="mb-8 flex flex-col items-center justify-center gap-4 text-gray-700 sm:flex-row sm:gap-8">
+              <a href="mailto:mitikuhermanng@gmail.com" className="inline-flex items-center gap-2">
+                <Mail className="h-5 w-5 text-blue-600" /> mitikuhermanng@gmail.com
+              </a>
+              <a href="tel:+27611170478" className="inline-flex items-center gap-2">
+                <Phone className="h-5 w-5 text-blue-600" /> +27 611170478
+              </a>
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <input
+                name="name"
+                type="text"
+                autoComplete="name"
+                placeholder="Name"
+                value={form.name}
+                required
+                className="rounded border border-gray-200 bg-white p-3"
+                onChange={handleChange}
+              />
+              <input
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Email"
+                value={form.email}
+                required
+                className="rounded border border-gray-200 bg-white p-3"
+                onChange={handleChange}
+              />
+              <div className="grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
+                <select
+                  name="phoneCountry"
+                  value={form.phoneCountry}
+                  className="rounded border border-gray-200 bg-white p-3"
+                  onChange={handleChange}
+                  aria-label="Phone country"
+                >
+                  {phoneCountryOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label} {option.value}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  name="phoneNumber"
+                  type="tel"
+                  autoComplete="tel-national"
+                  placeholder="Phone number"
+                  value={form.phoneNumber}
+                  required
+                  className="rounded border border-gray-200 bg-white p-3"
+                  onChange={handleChange}
+                />
+              </div>
+              <textarea
+                name="message"
+                rows={5}
+                placeholder="Tell us about your project"
+                value={form.message}
+                required
+                className="resize-none rounded border border-gray-200 bg-white p-3"
+                onChange={handleChange}
+              />
+              <button type="submit" className="rounded bg-blue-600 px-4 py-2 font-bold text-white transition-colors hover:bg-blue-700">
+                Get In Touch Now
+              </button>
+            </form>
           </div>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input
-              name="name"
-              type="text"
-              autoComplete="name"
-              placeholder="Your Name"
-              value={form.name}
-              required
-              className="rounded border border-gray-200 bg-white p-3"
-              onChange={handleChange}
-            />
-            <input
-              name="email"
-              type="email"
-              autoComplete="email"
-              placeholder="Your Email"
-              value={form.email}
-              required
-              className="rounded border border-gray-200 bg-white p-3"
-              onChange={handleChange}
-            />
-            <textarea
-              name="message"
-              rows={5}
-              placeholder="Your Message"
-              value={form.message}
-              required
-              className="resize-none rounded border border-gray-200 bg-white p-3"
-              onChange={handleChange}
-            />
-            <Button type="submit">Send Message</Button>
-          </form>
-        </div>
-      </section>
+        </section>
+      ) : null}
     </>
   )
 }
@@ -560,7 +611,7 @@ function NewsPage() {
       <PageIntro title={newsInfo.heading} intro={newsInfo.intro} eyebrow="Latest updates" />
       <section className="section-code-bg section-bg-about px-6 py-16">
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-          <div>
+          <div id="bluetick-updates">
             <h2 className="mb-5 text-2xl font-semibold text-blue-900">Bluetick Health News</h2>
             <div className="space-y-5">
               {bluetickNewsItems.map((item) => (
@@ -580,7 +631,8 @@ function NewsPage() {
               ))}
             </div>
           </div>
-          <div>
+          <div id="african-health-news">
+            <div id="global-public-health-news" />
             <h2 className="mb-5 text-2xl font-semibold text-blue-900">Global &amp; African Health News</h2>
             <div className="space-y-5">
               {globalHealthNewsItems.map((item) => (
@@ -627,7 +679,7 @@ function ProductsPage() {
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {productsContent.products.map((product) => (
-              <Card key={product.name}>
+              <Card key={product.name} id="bluetick-health-emr">
                 <CardContent className="p-6">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-blue-100">
                     <img
@@ -647,6 +699,19 @@ function ProductsPage() {
                 </CardContent>
               </Card>
             ))}
+            <Card id="upcoming-digital-solutions">
+              <CardContent className="p-6">
+                <h2 className="text-lg font-semibold text-blue-900">Upcoming Digital Solutions</h2>
+                <p className="mt-2 text-sm text-gray-500">In planning</p>
+                <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                  Bluetick Health is preparing additional digital solutions to strengthen analytics, interoperability,
+                  and decision support for health programmes.
+                </p>
+                <span className="mt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+                  Upcoming
+                </span>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -657,7 +722,8 @@ function ProductsPage() {
 export default function ConsultingWebsite() {
   const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
   const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', phoneCountry: phoneCountryOptions[0].value, phoneNumber: '', message: '' })
+  const [activeHash, setActiveHash] = useState(window.location.hash)
   const pathname = normalizePath(window.location.pathname)
   const currentPost = useMemo(() => blogPosts.find((post) => getPostPath(post.slug) === pathname), [pathname])
 
@@ -713,6 +779,13 @@ export default function ConsultingWebsite() {
     }
   }, [pathname])
 
+  useEffect(() => {
+    const syncHash = () => setActiveHash(window.location.hash)
+    syncHash()
+    window.addEventListener('hashchange', syncHash)
+    return () => window.removeEventListener('hashchange', syncHash)
+  }, [pathname])
+
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -720,7 +793,9 @@ export default function ConsultingWebsite() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
+    const body = encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phoneCountry} ${form.phoneNumber}\n\nProject details:\n${form.message}`
+    )
     const mailto = `mailto:mitikuhermanng@gmail.com?subject=${subject}&body=${body}`
     window.location.href = mailto
   }
@@ -732,6 +807,7 @@ export default function ConsultingWebsite() {
       handleSubmit={handleSubmit}
       globeLogoSrc={globeLogoSrc}
       linkedinLink={linkedinLink}
+      showConsultationSection={pathname === '/' && activeHash === '#contact'}
     />
   )
 
