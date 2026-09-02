@@ -106,6 +106,14 @@ function PageContainer({ children }) {
 }
 
 function SiteHeader({ pathname }) {
+  const navDropdownItems = {
+    Services: [{ label: 'View Services', href: '/#services' }],
+    Blogs: [{ label: 'View Blogs', href: '/blog/' }],
+    News: [{ label: 'View News', href: '/news/' }],
+    Products: [{ label: 'View Products', href: '/products/' }],
+    Vacancies: [{ label: 'View Vacancies', href: '/vacancies/' }],
+  }
+
   return (
     <header className="sticky top-0 z-20 border-b border-blue-100 bg-[#eaf4ff]/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
@@ -119,16 +127,34 @@ function SiteHeader({ pathname }) {
               : href.endsWith('/')
                 ? pathname === href
                 : false
+            const dropdownItems = navDropdownItems[label]
+            const isContactUs = label === 'Contact Us'
 
             return (
-              <a
-                key={href}
-                href={href}
-                aria-current={isActive ? 'page' : undefined}
-                className={`rounded px-2 py-1 transition-colors hover:bg-blue-100 ${isActive ? 'bg-blue-100 font-semibold' : ''}`}
-              >
-                {label}
-              </a>
+              <div key={href} className="header-nav-item relative">
+                <a
+                  href={href}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`rounded px-2 py-1 transition-colors hover:bg-blue-100 ${isActive ? 'bg-blue-100 font-semibold' : ''} ${
+                    isContactUs ? 'header-contact-us-nav text-base' : ''
+                  }`}
+                >
+                  {label}
+                </a>
+                {dropdownItems ? (
+                  <div className="header-nav-dropdown absolute left-0 top-full z-30 mt-2 min-w-44 rounded-md border border-blue-100 bg-white py-1 shadow-lg">
+                    {dropdownItems.map((item) => (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        className="block px-3 py-2 text-sm text-blue-900 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
             )
           })}
         </nav>
