@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { getCountries, getCountryCallingCode } from 'libphonenumber-js/min'
 import {
   ArrowLeft,
   BarChart3,
@@ -68,12 +69,20 @@ const services = [
   },
 ]
 
-const phoneCountryOptions = [
-  { value: '+27', label: '🇿🇦 South Africa' },
-  { value: '+1', label: '🇺🇸 United States' },
-  { value: '+44', label: '🇬🇧 United Kingdom' },
-  { value: '+251', label: '🇪🇹 Ethiopia' },
-]
+const countryNameFormatter = new Intl.DisplayNames(['en'], { type: 'region' })
+
+const phoneCountryOptions = getCountries()
+  .map((countryCode) => {
+    const dialCode = `+${getCountryCallingCode(countryCode)}`
+    return {
+      value: countryCode,
+      countryCode,
+      countryName: countryNameFormatter.of(countryCode) || countryCode,
+      dialCode,
+      flagUrl: `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`,
+    }
+  })
+  .sort((a, b) => a.countryName.localeCompare(b.countryName))
 
 function normalizePath(pathname) {
   if (!pathname || pathname === '/') {
@@ -207,7 +216,19 @@ function PageIntro({ title, intro, eyebrow = 'Bluetick Health' }) {
   )
 }
 
-function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink, showConsultationSection }) {
+function HomePage({
+  form,
+  handleChange,
+  handleSubmit,
+  globeLogoSrc,
+  linkedinLink,
+  showConsultationSection,
+  selectedPhoneCountry,
+  isPhoneCountryOpen,
+  setIsPhoneCountryOpen,
+  phoneCountryMenuRef,
+  handlePhoneCountrySelect,
+}) {
   return (
     <>
       <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-20 text-center">
@@ -346,19 +367,59 @@ function HomePage({ form, handleChange, handleSubmit, globeLogoSrc, linkedinLink
                 onChange={handleChange}
               />
               <div className="grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
-                <select
-                  name="phoneCountry"
-                  value={form.phoneCountry}
-                  className="rounded border border-gray-200 bg-white p-3"
-                  onChange={handleChange}
-                  aria-label="Phone country"
-                >
-                  {phoneCountryOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label} {option.value}
-                    </option>
-                  ))}
-                </select>
+                <div className="relative" ref={phoneCountryMenuRef}>
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between rounded border border-gray-200 bg-white p-3 text-left"
+                    onClick={() => setIsPhoneCountryOpen((open) => !open)}
+                    aria-haspopup="listbox"
+                    aria-expanded={isPhoneCountryOpen}
+                    aria-label="Phone country"
+                  >
+                    <span className="inline-flex items-center gap-2 truncate">
+                      <img
+                        src={selectedPhoneCountry.flagUrl}
+                        alt=""
+                        className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
+                        loading="lazy"
+                      />
+                      <span className="truncate">
+                        {selectedPhoneCountry.countryName} {selectedPhoneCountry.dialCode}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" className="text-gray-500">
+                      ▾
+                    </span>
+                  </button>
+                  {isPhoneCountryOpen ? (
+                    <ul
+                      role="listbox"
+                      className="absolute z-20 mt-1 max-h-64 w-full overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
+                    >
+                      {phoneCountryOptions.map((option) => (
+                        <li key={option.value}>
+                          <button
+                            type="button"
+                            className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-blue-50 ${
+                              option.value === form.phoneCountry ? 'bg-blue-50' : ''
+                            }`}
+                            onClick={() => handlePhoneCountrySelect(option.value)}
+                          >
+                            <img
+                              src={option.flagUrl}
+                              alt=""
+                              className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
+                              loading="lazy"
+                            />
+                            <span>
+                              {option.countryName} {option.dialCode}
+                            </span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
                 <input
                   name="phoneNumber"
                   type="tel"
@@ -722,10 +783,14 @@ function ProductsPage() {
 export default function ConsultingWebsite() {
   const linkedinLink = 'https://www.linkedin.com/company/bluetick-health'
   const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
-  const [form, setForm] = useState({ name: '', email: '', phoneCountry: phoneCountryOptions[0].value, phoneNumber: '', message: '' })
+  const defaultPhoneCountry = phoneCountryOptions.find((option) => option.countryCode === 'ZA')?.value ?? phoneCountryOptions[0].value
+  const [form, setForm] = useState({ name: '', email: '', phoneCountry: defaultPhoneCountry, phoneNumber: '', message: '' })
+  const [isPhoneCountryOpen, setIsPhoneCountryOpen] = useState(false)
+  const phoneCountryMenuRef = useRef(null)
   const [activeHash, setActiveHash] = useState(window.location.hash)
   const pathname = normalizePath(window.location.pathname)
   const currentPost = useMemo(() => blogPosts.find((post) => getPostPath(post.slug) === pathname), [pathname])
+  const selectedPhoneCountry = phoneCountryOptions.find((option) => option.value === form.phoneCountry) ?? phoneCountryOptions[0]
 
   useEffect(() => {
     const pageMeta = getPageMeta(pathname)
@@ -786,15 +851,41 @@ export default function ConsultingWebsite() {
     return () => window.removeEventListener('hashchange', syncHash)
   }, [pathname])
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (phoneCountryMenuRef.current && !phoneCountryMenuRef.current.contains(event.target)) {
+        setIsPhoneCountryOpen(false)
+      }
+    }
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsPhoneCountryOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleEscape)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [])
+
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handlePhoneCountrySelect = (phoneCountry) => {
+    setForm((prev) => ({ ...prev, phoneCountry }))
+    setIsPhoneCountryOpen(false)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
     const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phoneCountry} ${form.phoneNumber}\n\nProject details:\n${form.message}`
+      `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${selectedPhoneCountry.dialCode} ${form.phoneNumber}\n\nProject details:\n${form.message}`
     )
     const mailto = `mailto:mitikuhermanng@gmail.com?subject=${subject}&body=${body}`
     window.location.href = mailto
@@ -808,6 +899,11 @@ export default function ConsultingWebsite() {
       globeLogoSrc={globeLogoSrc}
       linkedinLink={linkedinLink}
       showConsultationSection={pathname === '/' && activeHash === '#contact'}
+      selectedPhoneCountry={selectedPhoneCountry}
+      isPhoneCountryOpen={isPhoneCountryOpen}
+      setIsPhoneCountryOpen={setIsPhoneCountryOpen}
+      phoneCountryMenuRef={phoneCountryMenuRef}
+      handlePhoneCountrySelect={handlePhoneCountrySelect}
     />
   )
 
