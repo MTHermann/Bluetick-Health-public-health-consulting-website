@@ -6,13 +6,13 @@ export const navigationLinks = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/#services' },
   { label: 'Projects', href: '/#projects' },
-  { label: 'Blog', href: '/blog/' },
+  { label: 'Blogs', href: '/blog/' },
   { label: 'News', href: '/news/' },
   { label: 'Products', href: '/products/' },
   { label: 'Resources', href: '/resources/' },
   { label: 'FAQ', href: '/faq/' },
   { label: 'Vacancies', href: '/vacancies/' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Contact Us', href: '/#contact' },
 ]
 
 export const blogPosts = [
