@@ -334,7 +334,6 @@ function SiteHeader({ pathname }) {
                     <span className="inline-flex items-center gap-1.5">
                       {label}
                       {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
-                      {dropdownItems ? <span className="sr-only"> submenu available</span> : null}
                     </span>
                   </a>
                   {dropdownItems ? (
@@ -348,7 +347,7 @@ function SiteHeader({ pathname }) {
                       onClick={() => toggleDropdown(label)}
                       aria-haspopup="menu"
                       aria-expanded={openDropdownLabel === label}
-                      aria-label={`Toggle ${label} submenu`}
+                      aria-label={`${label} submenu ${openDropdownLabel === label ? 'expanded' : 'collapsed'}`}
                     >
                       <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
@@ -412,7 +411,6 @@ function SiteHeader({ pathname }) {
                     <span className="inline-flex items-center gap-1.5">
                       {label}
                       {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
-                      {dropdownItems ? <span className="sr-only"> submenu available</span> : null}
                     </span>
                   </a>
                   {dropdownItems ? (
@@ -424,7 +422,7 @@ function SiteHeader({ pathname }) {
                       onClick={() => toggleDropdown(label)}
                       aria-haspopup="menu"
                       aria-expanded={openDropdownLabel === label}
-                      aria-label={`Toggle ${label} submenu`}
+                      aria-label={`${label} submenu ${openDropdownLabel === label ? 'expanded' : 'collapsed'}`}
                     >
                       <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
