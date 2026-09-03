@@ -933,6 +933,7 @@ function ProductsPage() {
             </div>
           </div>
         </div>
+        </div>
       </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-6xl">
