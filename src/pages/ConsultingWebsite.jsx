@@ -347,7 +347,7 @@ function SiteHeader({ pathname }) {
                       onClick={() => toggleDropdown(label)}
                       aria-haspopup="menu"
                       aria-expanded={openDropdownLabel === label}
-                      aria-label={`${label} submenu ${openDropdownLabel === label ? 'expanded' : 'collapsed'}`}
+                      aria-label={`Toggle ${label} submenu`}
                     >
                       <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
@@ -422,7 +422,7 @@ function SiteHeader({ pathname }) {
                       onClick={() => toggleDropdown(label)}
                       aria-haspopup="menu"
                       aria-expanded={openDropdownLabel === label}
-                      aria-label={`${label} submenu ${openDropdownLabel === label ? 'expanded' : 'collapsed'}`}
+                      aria-label={`Toggle ${label} submenu`}
                     >
                       <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
