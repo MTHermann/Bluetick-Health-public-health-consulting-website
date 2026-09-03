@@ -334,6 +334,7 @@ function SiteHeader({ pathname }) {
                     <span className="inline-flex items-center gap-1.5">
                       {label}
                       {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
+                      {dropdownItems ? <span className="sr-only"> submenu available</span> : null}
                     </span>
                   </a>
                   {dropdownItems ? (
@@ -411,6 +412,7 @@ function SiteHeader({ pathname }) {
                     <span className="inline-flex items-center gap-1.5">
                       {label}
                       {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
+                      {dropdownItems ? <span className="sr-only"> submenu available</span> : null}
                     </span>
                   </a>
                   {dropdownItems ? (
