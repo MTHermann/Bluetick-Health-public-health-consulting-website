@@ -933,7 +933,12 @@ function ResourcesPage() {
               <h2 className="mb-4 text-2xl font-semibold text-blue-900">{resourceGroup.category}</h2>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {resourceGroup.items.map((item, index) => (
-                  <Card key={item.href} className={getContentCardPaletteClass(groupIndex + index)}>
+                  <Card
+                    key={item.href}
+                    className={getContentCardPaletteClass(
+                      resources.slice(0, groupIndex).reduce((total, group) => total + group.items.length, 0) + index
+                    )}
+                  >
                     <CardContent className="p-6">
                       <h3 className="text-lg font-semibold text-blue-900">{item.title}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.description}</p>
