@@ -3,15 +3,7 @@
 @tailwind utilities;
 
 .header-nav-dropdown {
-  display: none;
-}
-
-.header-nav-item:hover .header-nav-dropdown {
-  display: block;
-}
-
-.header-nav-item:focus-within .header-nav-dropdown {
-  display: block;
+  pointer-events: auto;
 }
 
 .header-contact-us-nav {

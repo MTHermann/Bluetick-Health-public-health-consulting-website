@@ -238,7 +238,6 @@ function PageContainer({ children }) {
 }
 
 function SiteHeader({ pathname }) {
-  const isHome = pathname === '/'
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdownLabel, setOpenDropdownLabel] = useState(null)
   const navDropdownItems = {
@@ -277,26 +276,26 @@ function SiteHeader({ pathname }) {
     setOpenDropdownLabel(null)
   }
 
+  const handleDesktopDropdownBlur = (event, label) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setOpenDropdownLabel((currentLabel) => (currentLabel === label ? null : currentLabel))
+    }
+  }
+
   return (
     <header
-      className={`sticky top-0 z-30 backdrop-blur ${
-        isHome ? 'border-b border-white/10 bg-[#06152b]/78' : 'border-b border-blue-100 bg-[#f8fbff]/95'
-      }`}
+      className="sticky top-0 z-30 border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
         <a
           href="/"
-          className={`text-sm font-bold tracking-[0.2em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
-            isHome ? 'text-white focus-visible:outline-blue-300' : 'text-blue-900 focus-visible:outline-blue-500'
-          }`}
+          className="text-sm font-bold tracking-[0.2em] text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200"
         >
           BLUETICK HEALTH
         </a>
         <button
           type="button"
-          className={`inline-flex items-center justify-center rounded-xl p-2 md:hidden ${
-            isHome ? 'text-white focus-visible:outline-blue-300' : 'text-blue-900 focus-visible:outline-blue-500'
-          } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`}
+          className="inline-flex items-center justify-center rounded-xl p-2 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 md:hidden"
           onClick={() => setIsMobileMenuOpen((open) => !open)}
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-site-navigation"
@@ -304,7 +303,7 @@ function SiteHeader({ pathname }) {
         >
           {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
-        <nav className={`hidden flex-wrap items-center justify-end gap-3 text-sm md:flex ${isHome ? 'text-blue-50' : 'text-blue-900'}`}>
+        <nav className="hidden flex-wrap items-center justify-end gap-3 text-sm text-blue-50 md:flex">
           {navigationLinks.map(({ label, href }) => {
             const isActive = href === '/'
               ? pathname === '/'
@@ -315,55 +314,52 @@ function SiteHeader({ pathname }) {
             const isContactUs = label === 'Contact Us'
 
             return (
-              <div key={href} className="header-nav-item relative" onMouseLeave={() => setOpenDropdownLabel(null)}>
+              <div
+                key={href}
+                className="header-nav-item relative"
+                onMouseEnter={() => dropdownItems && setOpenDropdownLabel(label)}
+                onMouseLeave={() => setOpenDropdownLabel(null)}
+                onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
+              >
                 <div className="flex items-center gap-1">
                   <a
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
                     onClick={closeMenus}
-                    className={`rounded-full px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                      isHome
-                        ? `hover:bg-white/10 focus-visible:outline-blue-300 ${
-                            isActive ? 'bg-white/10 font-semibold text-white' : 'text-blue-50'
-                          } ${isContactUs ? 'bg-blue-500 text-white hover:bg-blue-400' : ''}`
-                        : `hover:bg-blue-100 focus-visible:outline-blue-500 ${
-                            isActive ? 'bg-blue-100 font-semibold text-blue-900' : 'text-blue-900'
-                          } ${isContactUs ? 'bg-blue-900 text-white hover:bg-blue-800' : ''}`
+                    className={`rounded-full px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
+                      isContactUs
+                        ? 'bg-cyan-400 text-slate-950 hover:bg-cyan-300'
+                        : isActive
+                          ? 'bg-white/16 font-semibold text-white'
+                          : 'text-blue-50 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     {label}
                   </a>
-                  {dropdownItems ? (
-                    <button
-                      type="button"
-                      className={`rounded-full p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                        isHome
-                          ? 'text-blue-50 hover:bg-white/10 focus-visible:outline-blue-300'
-                          : 'text-blue-900 hover:bg-blue-100 focus-visible:outline-blue-500'
-                      }`}
-                      onClick={() => toggleDropdown(label)}
-                      aria-haspopup="menu"
-                      aria-expanded={openDropdownLabel === label}
-                      aria-label={`Toggle ${label} submenu`}
+                {dropdownItems ? (
+                  <button
+                    type="button"
+                    className="rounded-full p-2 text-blue-50 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
+                    onClick={() => toggleDropdown(label)}
+                    onFocus={() => setOpenDropdownLabel(label)}
+                    aria-haspopup="menu"
+                    aria-expanded={openDropdownLabel === label}
+                    aria-label={`Toggle ${label} submenu`}
                     >
                       <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
                   ) : null}
                 </div>
-                {dropdownItems ? (
+                {dropdownItems && openDropdownLabel === label ? (
                   <div
-                    className={`header-nav-dropdown absolute left-0 top-full z-30 min-w-44 rounded-2xl py-2 shadow-lg ${
-                      isHome ? 'border border-white/10 bg-[#0d2242] text-blue-50' : 'border border-blue-100 bg-white'
-                    } ${openDropdownLabel === label ? 'block' : ''}`}
+                    className="header-nav-dropdown absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
                   >
                     {dropdownItems.map((item) => (
                       <a
                         key={item.label}
                         href={item.href}
                         onClick={closeMenus}
-                        className={`block px-4 py-2 text-sm transition-colors ${
-                          isHome ? 'text-blue-50 hover:bg-white/10 hover:text-white' : 'text-blue-900 hover:bg-blue-50 hover:text-blue-700'
-                        }`}
+                        className="block px-4 py-2 text-sm text-blue-50 transition-colors hover:bg-white/10 hover:text-white"
                       >
                         {item.label}
                       </a>
@@ -379,7 +375,7 @@ function SiteHeader({ pathname }) {
         id="mobile-site-navigation"
         className={`mx-auto max-w-6xl px-6 pb-4 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}
       >
-        <div className={`rounded-3xl border p-3 shadow-lg ${isHome ? 'border-white/10 bg-[#0d2242] text-blue-50' : 'border-blue-100 bg-white text-blue-900'}`}>
+        <div className="rounded-3xl border border-cyan-400/20 bg-[#0b2a57] p-3 text-blue-50 shadow-lg shadow-slate-950/25">
           {navigationLinks.map(({ label, href }) => {
             const dropdownItems = navDropdownItems[label]
             const isContactUs = label === 'Contact Us'
@@ -387,9 +383,7 @@ function SiteHeader({ pathname }) {
             return (
               <div
                 key={`mobile-${href}`}
-                className={`border-b last:mb-0 last:border-b-0 last:pb-0 ${
-                  isHome ? 'border-white/10' : 'border-blue-100'
-                }`}
+                className="border-b border-white/10 last:mb-0 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-center gap-2 py-1">
                   <a
@@ -397,12 +391,8 @@ function SiteHeader({ pathname }) {
                     onClick={closeMenus}
                     className={`flex-1 rounded-2xl px-3 py-3 text-sm font-medium transition-colors ${
                       isContactUs
-                        ? isHome
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-blue-900 text-white'
-                        : isHome
-                          ? 'text-blue-50 hover:bg-white/10'
-                          : 'text-blue-900 hover:bg-blue-50'
+                        ? 'bg-cyan-400 text-slate-950'
+                        : 'text-blue-50 hover:bg-white/10'
                     }`}
                   >
                     {label}
@@ -410,9 +400,7 @@ function SiteHeader({ pathname }) {
                   {dropdownItems ? (
                     <button
                       type="button"
-                      className={`rounded-2xl p-3 transition-colors ${
-                        isHome ? 'text-blue-50 hover:bg-white/10' : 'text-blue-900 hover:bg-blue-50'
-                      }`}
+                      className="rounded-2xl p-3 text-blue-50 transition-colors hover:bg-white/10"
                       onClick={() => toggleDropdown(label)}
                       aria-haspopup="menu"
                       aria-expanded={openDropdownLabel === label}
@@ -429,9 +417,7 @@ function SiteHeader({ pathname }) {
                         key={`mobile-${item.label}`}
                         href={item.href}
                         onClick={closeMenus}
-                        className={`block rounded-2xl px-3 py-2 text-sm ${
-                          isHome ? 'text-blue-100 hover:bg-white/10 hover:text-white' : 'text-blue-800 hover:bg-blue-50'
-                        }`}
+                        className="block rounded-2xl px-3 py-2 text-sm text-blue-100 hover:bg-white/10 hover:text-white"
                       >
                         {item.label}
                       </a>
