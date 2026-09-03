@@ -240,6 +240,7 @@ function PageContainer({ children }) {
 function SiteHeader({ pathname }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [openDropdownLabel, setOpenDropdownLabel] = useState(null)
+  const closeDropdownTimeoutRef = useRef(null)
   const navDropdownItems = {
     Services: [
       { label: 'Statistical Analysis', href: '/#services' },
@@ -267,6 +268,12 @@ function SiteHeader({ pathname }) {
     setOpenDropdownLabel(null)
   }, [pathname])
 
+  useEffect(() => () => {
+    if (closeDropdownTimeoutRef.current) {
+      window.clearTimeout(closeDropdownTimeoutRef.current)
+    }
+  }, [])
+
   const toggleDropdown = (label) => {
     setOpenDropdownLabel((currentLabel) => (currentLabel === label ? null : label))
   }
@@ -282,9 +289,31 @@ function SiteHeader({ pathname }) {
     }
   }
 
+  const handleDesktopDropdownEnter = (label, hasDropdown) => {
+    if (closeDropdownTimeoutRef.current) {
+      window.clearTimeout(closeDropdownTimeoutRef.current)
+      closeDropdownTimeoutRef.current = null
+    }
+
+    if (hasDropdown) {
+      setOpenDropdownLabel(label)
+    }
+  }
+
+  const handleDesktopDropdownLeave = () => {
+    if (closeDropdownTimeoutRef.current) {
+      window.clearTimeout(closeDropdownTimeoutRef.current)
+    }
+
+    closeDropdownTimeoutRef.current = window.setTimeout(() => {
+      setOpenDropdownLabel(null)
+      closeDropdownTimeoutRef.current = null
+    }, 120)
+  }
+
   return (
     <header
-      className="sticky top-0 z-30 border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
+      className="sticky top-0 z-50 overflow-visible border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
     >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
         <a
@@ -317,8 +346,8 @@ function SiteHeader({ pathname }) {
               <div
                 key={href}
                 className="header-nav-item relative"
-                onMouseEnter={() => dropdownItems && setOpenDropdownLabel(label)}
-                onMouseLeave={() => setOpenDropdownLabel(null)}
+                onMouseEnter={() => handleDesktopDropdownEnter(label, Boolean(dropdownItems))}
+                onMouseLeave={handleDesktopDropdownLeave}
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
@@ -352,7 +381,9 @@ function SiteHeader({ pathname }) {
                 </div>
                 {dropdownItems && openDropdownLabel === label ? (
                   <div
-                    className="header-nav-dropdown absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
+                    className="header-nav-dropdown absolute left-0 top-[calc(100%-2px)] z-50 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
+                    onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
+                    onMouseLeave={handleDesktopDropdownLeave}
                   >
                     {dropdownItems.map((item) => (
                       <a
@@ -476,17 +507,17 @@ function HomePage({
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
         <div className="relative mx-auto grid min-h-[86vh] max-w-6xl items-center gap-16 py-20 sm:py-24 lg:min-h-[92vh] lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:py-28">
           <div className="max-w-xl">
-            <p className="reveal-on-scroll inline-flex rounded-full border border-blue-400/30 bg-white/5 px-4 py-2 text-sm font-semibold uppercase tracking-[0.22em] text-blue-100">
+            <p className="reveal-on-scroll is-visible inline-flex rounded-full border border-blue-400/30 bg-white/5 px-4 py-2 text-sm font-semibold uppercase tracking-[0.22em] text-blue-100">
               Global Evidence. Local Impact.
             </p>
-            <h1 className="reveal-on-scroll mt-8 max-w-[14ch] text-[clamp(3.7rem,6.4vw,5rem)] font-semibold leading-[0.95] tracking-[-0.045em] text-white">
+            <h1 className="reveal-on-scroll is-visible mt-8 max-w-[14ch] text-[clamp(3.7rem,6.4vw,5rem)] font-semibold leading-[0.95] tracking-[-0.045em] text-white">
               Independent public health analytics for stronger research decisions
             </h1>
-            <p className="reveal-on-scroll mt-7 max-w-lg text-lg leading-8 text-slate-200 md:text-xl" style={{ '--reveal-delay': '80ms' }}>
+            <p className="reveal-on-scroll is-visible mt-7 max-w-lg text-lg leading-8 text-slate-200 md:text-xl" style={{ '--reveal-delay': '80ms' }}>
               Bluetick Health partners with healthcare systems, researchers, NGOs, and academic teams on rigorous
               statistical analysis, epidemiology, and programme evidence.
             </p>
-            <div className="reveal-on-scroll mt-12 flex flex-wrap items-center gap-4" style={{ '--reveal-delay': '140ms' }}>
+            <div className="reveal-on-scroll is-visible mt-12 flex flex-wrap items-center gap-4" style={{ '--reveal-delay': '140ms' }}>
               <Button asChild>
                 <a href="/#contact">Request a consultation</a>
               </Button>
@@ -501,7 +532,7 @@ function HomePage({
               href={linkedinLink}
               target="_blank"
               rel="noreferrer"
-              className="reveal-on-scroll mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+              className="reveal-on-scroll is-visible mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
               style={{ '--reveal-delay': '210ms' }}
             >
               <Linkedin className="h-4 w-4" /> LinkedIn
@@ -511,7 +542,7 @@ function HomePage({
           <div aria-hidden="true" className="relative mx-auto w-full max-w-[31rem]">
             <div className="absolute -left-10 top-8 h-28 w-28 rounded-full bg-cyan-400/15 blur-3xl" />
             <div className="absolute -right-4 bottom-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl" />
-            <div className="reveal-on-scroll reveal-slide relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-7 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
+            <div className="reveal-on-scroll reveal-slide is-visible relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-7 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Analytics snapshot</p>
