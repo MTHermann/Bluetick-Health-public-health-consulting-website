@@ -1153,7 +1153,7 @@ function ProductsPage() {
                       <div className="flex items-center gap-3">
                         <div className="flex h-10 flex-1 items-center rounded-xl border border-white/[0.08] bg-[#0c1a31] px-4">
                           <div className="h-2 w-28 rounded-full bg-white/20" />
-                      </div>
+                        </div>
                         <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview notifications" />
                         <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview tasks" />
                       </div>
@@ -1224,8 +1224,6 @@ function ProductsPage() {
                 </div>
               </div>
             </div>
-          </div>
-          </div>
         </div>
       </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
