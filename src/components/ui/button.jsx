@@ -6,7 +6,7 @@ const buttonVariants = {
 }
 
 export function Button({ children, variant = 'default', asChild = false, ...props }) {
-  const buttonClass = `inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium transition-colors ${buttonVariants[variant]}`
+  const buttonClass = `button-shift inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium transition-colors ${buttonVariants[variant]}`
   
   if (asChild && React.isValidElement(children)) {
     return React.cloneElement(children, { className: buttonClass, ...props })

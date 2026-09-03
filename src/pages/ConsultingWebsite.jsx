@@ -13,6 +13,7 @@ import {
   FlaskConical,
   Linkedin,
   Mail,
+  MonitorSmartphone,
   Phone,
   TrendingUp,
 } from 'lucide-react'
@@ -255,46 +256,46 @@ function HomePage({
 }) {
   return (
     <>
-      <section className="relative overflow-hidden bg-[#051427] px-6 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.24),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.16),_transparent_30%)]" />
+      <section className="hero-surface relative overflow-hidden px-6 text-white">
         <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
-        <div className="relative mx-auto grid min-h-[78vh] max-w-6xl items-center gap-14 py-16 sm:py-20 lg:min-h-[84vh] lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:py-24">
-          <div className="max-w-2xl">
-            <p className="inline-flex rounded-full border border-blue-400/30 bg-white/5 px-4 py-2 text-sm font-semibold uppercase tracking-[0.22em] text-blue-100">
+        <div className="relative mx-auto grid min-h-[86vh] max-w-6xl items-center gap-16 py-20 sm:py-24 lg:min-h-[92vh] lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.9fr)] lg:py-28">
+          <div className="max-w-xl">
+            <p className="reveal-on-scroll inline-flex rounded-full border border-blue-400/30 bg-white/5 px-4 py-2 text-sm font-semibold uppercase tracking-[0.22em] text-blue-100">
               Global Evidence. Local Impact.
             </p>
-            <h1 className="mt-8 max-w-3xl text-[clamp(3.5rem,6vw,4.5rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-white">
+            <h1 className="reveal-on-scroll mt-8 max-w-[14ch] text-[clamp(3.7rem,6.4vw,5rem)] font-semibold leading-[0.95] tracking-[-0.045em] text-white">
               Independent public health analytics for stronger research decisions
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-200 md:text-xl">
+            <p className="reveal-on-scroll mt-7 max-w-lg text-lg leading-8 text-slate-200 md:text-xl" style={{ '--reveal-delay': '80ms' }}>
               Bluetick Health partners with healthcare systems, researchers, NGOs, and academic teams on rigorous
               statistical analysis, epidemiology, and programme evidence.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="reveal-on-scroll mt-12 flex flex-wrap items-center gap-4" style={{ '--reveal-delay': '140ms' }}>
               <Button asChild>
                 <a href="/#contact">Request a consultation</a>
               </Button>
               <a
                 href="/#services"
-                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                className="button-shift inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
               >
                 Explore services <ArrowRight className="h-4 w-4" />
               </a>
-              <a
-                href={linkedinLink}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
-              >
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
             </div>
+            <a
+              href={linkedinLink}
+              target="_blank"
+              rel="noreferrer"
+              className="reveal-on-scroll mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+              style={{ '--reveal-delay': '210ms' }}
+            >
+              <Linkedin className="h-4 w-4" /> LinkedIn
+            </a>
           </div>
 
-          <div aria-hidden="true" className="relative mx-auto w-full max-w-[30rem]">
+          <div aria-hidden="true" className="relative mx-auto w-full max-w-[31rem]">
             <div className="absolute -left-10 top-8 h-28 w-28 rounded-full bg-cyan-400/15 blur-3xl" />
             <div className="absolute -right-4 bottom-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl" />
-            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-6 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
+            <div className="reveal-on-scroll reveal-slide relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-7 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Analytics snapshot</p>
@@ -321,19 +322,9 @@ function HomePage({
                   <span>Year-over-year</span>
                 </div>
               </div>
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Studies</p>
-                  <p className="mt-3 text-2xl font-semibold text-white">Multi-site</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Methods</p>
-                  <p className="mt-3 text-2xl font-semibold text-white">Advanced</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Reporting</p>
-                  <p className="mt-3 text-2xl font-semibold text-white">Decision-ready</p>
-                </div>
+              <div className="mt-7 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Reporting cadence</p>
+                <p className="mt-2 text-2xl font-semibold text-white">Decision-ready insights</p>
               </div>
             </div>
           </div>
@@ -361,24 +352,28 @@ function HomePage({
 
       <section id="services" className="section-code-bg section-bg-services section-code-bg--shine bg-[#f4f7fb] px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl reveal-on-scroll">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Services</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
               Specialized consulting services for evidence-driven health decisions
             </h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {services.map(({ icon: Icon, title, body }) => (
-              <Card key={title} className="h-full rounded-[24px] border-slate-200/90 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+            {services.map(({ icon: Icon, title, body }, index) => (
+              <Card
+                key={title}
+                className="service-card reveal-on-scroll h-full"
+                style={{ '--reveal-delay': `${index * 70}ms` }}
+              >
                 <CardContent className="flex h-full flex-col p-8 md:p-9">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50">
-                    <Icon className="h-5 w-5 text-blue-700" />
+                  <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
+                    <Icon className="h-6 w-6 text-blue-700" />
                   </div>
-                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-950">{title}</h3>
-                  <p className="mt-4 text-base leading-7 text-slate-600">{body}</p>
+                  <h3 className="min-h-[3.5rem] text-xl font-semibold tracking-[-0.02em] text-slate-950">{title}</h3>
+                  <p className="mt-5 text-base leading-7 text-slate-600">{body}</p>
                   <a
                     href="/#contact"
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition-colors hover:text-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                    className="mt-auto pt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition-colors hover:text-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
                   >
                     Discuss service <ArrowRight className="h-4 w-4" />
                   </a>
@@ -418,18 +413,34 @@ function HomePage({
 
       <div id="contact" />
       {showConsultationSection ? (
-        <section className="section-code-bg section-bg-contact bg-[#f4f7fb] px-6 py-24">
-          <div className="mx-auto max-w-2xl">
-            <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)] md:p-10">
-              <p className="text-center text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Contact Us</p>
-              <h2 className="mb-6 mt-4 text-center text-3xl font-semibold tracking-[-0.03em] text-slate-950">
-                Request your free consultation
-              </h2>
-              <p className="mb-8 text-center text-base leading-7 text-slate-500">
-                Reach out to discuss your project scope, timelines, and data needs.
-              </p>
+        <section className="section-code-bg section-bg-contact bg-[#041325] px-6 py-24 text-white">
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-8 rounded-[30px] border border-white/10 bg-[#051a33] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.45)] md:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] md:p-10">
+              <div className="reveal-on-scroll rounded-[24px] border border-white/10 bg-white/5 p-7 md:p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200">Contact Us</p>
+                <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white">Request your free consultation</h2>
+                <p className="mt-5 text-base leading-7 text-blue-100">
+                  Reach out to discuss your project scope, timelines, and data needs.
+                </p>
+                <div className="mt-8 flex flex-col gap-4 text-blue-100">
+                  <a
+                    href="mailto:mitikuhermanng@gmail.com"
+                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                  >
+                    <Mail className="h-5 w-5 text-cyan-200" /> mitikuhermanng@gmail.com
+                  </a>
+                  <a
+                    href="tel:+27611170478"
+                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                  >
+                    <Phone className="h-5 w-5 text-cyan-200" /> +27 611170478
+                  </a>
+                </div>
+              </div>
 
-              <div className="mb-8 flex flex-col items-center justify-center gap-4 text-slate-700 sm:flex-row sm:gap-8">
+              <div className="reveal-on-scroll rounded-[24px] border border-slate-200 bg-[#f8fafc] p-8 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,0.12)] md:p-10" style={{ '--reveal-delay': '90ms' }}>
+                <p className="text-center text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Start your project discussion</p>
+                <div className="mb-8 mt-6 flex flex-col items-center justify-center gap-4 text-slate-700 sm:flex-row sm:gap-8">
                 <a
                   href="mailto:mitikuhermanng@gmail.com"
                   className="inline-flex items-center gap-2 rounded-full px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
@@ -541,7 +552,7 @@ function HomePage({
                 />
                 <button
                   type="submit"
-                  className="rounded-2xl bg-blue-600 px-5 py-3.5 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                  className="button-shift rounded-2xl bg-blue-600 px-5 py-3.5 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
                 >
                   Get in touch now
                 </button>
@@ -832,19 +843,54 @@ function NewsPage() {
 
 function ProductsPage() {
   const productsInfo = pageContent['/products/']
+  const featuredProduct = productsContent.products[0]
 
   return (
     <>
       <PageIntro title={productsInfo.heading} intro={productsInfo.intro} eyebrow="Digital health solutions" />
+      <section id="bluetick-health-emr" className="relative overflow-hidden bg-[#051427] px-6 py-20 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.22),_transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.14),_transparent_40%)]" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]">
+          <div className="reveal-on-scroll">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200">{featuredProduct.category}</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white md:text-4xl">{featuredProduct.name}</h2>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-blue-100">{featuredProduct.description}</p>
+            <span className="mt-7 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-100">
+              {featuredProduct.status}
+            </span>
+          </div>
+          <div className="reveal-on-scroll reveal-slide relative" style={{ '--reveal-delay': '90ms' }}>
+            <div className="mx-auto w-full max-w-md rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(8,24,44,0.96),rgba(3,12,24,0.96))] p-5 shadow-[0_24px_56px_rgba(2,12,27,0.52)]">
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product preview</p>
+                <MonitorSmartphone className="h-5 w-5 text-cyan-200" />
+              </div>
+              <div className="rounded-2xl border border-white/10 bg-[#0a2240] p-4">
+                <div className="mb-4 h-24 rounded-xl bg-[linear-gradient(145deg,#0f3f78,#1f6cbf)]" />
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-xl bg-white/8 p-3">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Clinical workflow</p>
+                    <p className="mt-2 text-sm font-semibold text-white">Structured care pathways</p>
+                  </div>
+                  <div className="rounded-xl bg-white/8 p-3">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Analytics</p>
+                    <p className="mt-2 text-sm font-semibold text-white">Dashboard reporting</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="mb-8 rounded-xl bg-[#eaf4ff] p-6 md:p-8">
             <p className="text-sm leading-relaxed text-gray-700">{productsContent.partnershipMessage}</p>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {productsContent.products.map((product) => (
-              <Card key={product.name} id="bluetick-health-emr">
-                <CardContent className="p-6">
+            {productsContent.products.map((product, index) => (
+              <Card key={product.name} className="reveal-on-scroll service-card h-full" style={{ '--reveal-delay': `${index * 80}ms` }}>
+                <CardContent className="flex h-full flex-col p-6">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-blue-100">
                     <img
                       src={`${import.meta.env.BASE_URL}${product.logo.replace(/^\//, '')}`}
@@ -857,21 +903,21 @@ function ProductsPage() {
                   <h2 className="text-lg font-semibold text-blue-900">{product.name}</h2>
                   <p className="mt-2 text-sm text-gray-500">{product.category}</p>
                   <p className="mt-4 text-sm leading-relaxed text-gray-600">{product.description}</p>
-                  <span className="mt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+                  <span className="mt-auto pt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
                     {product.status}
                   </span>
                 </CardContent>
               </Card>
             ))}
-            <Card id="upcoming-digital-solutions">
-              <CardContent className="p-6">
+            <Card id="upcoming-digital-solutions" className="reveal-on-scroll service-card h-full" style={{ '--reveal-delay': '120ms' }}>
+              <CardContent className="flex h-full flex-col p-6">
                 <h2 className="text-lg font-semibold text-blue-900">Upcoming Digital Solutions</h2>
                 <p className="mt-2 text-sm text-gray-500">In planning</p>
                 <p className="mt-4 text-sm leading-relaxed text-gray-600">
                   Bluetick Health is preparing additional digital solutions to strengthen analytics, interoperability,
                   and decision support for health programmes.
                 </p>
-                <span className="mt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+                <span className="mt-auto pt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
                   Upcoming
                 </span>
               </CardContent>
@@ -974,6 +1020,35 @@ export default function ConsultingWebsite() {
       document.removeEventListener('keydown', handleEscape)
     }
   }, [])
+
+  useEffect(() => {
+    const revealNodes = Array.from(document.querySelectorAll('.reveal-on-scroll'))
+    if (!revealNodes.length) {
+      return
+    }
+
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (reduceMotionQuery.matches) {
+      revealNodes.forEach((node) => node.classList.add('is-visible'))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.14, rootMargin: '0px 0px -8% 0px' }
+    )
+
+    revealNodes.forEach((node) => observer.observe(node))
+
+    return () => observer.disconnect()
+  }, [pathname, activeHash])
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
