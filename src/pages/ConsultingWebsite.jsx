@@ -222,7 +222,7 @@ function setMetaTag(selector, attributes) {
 }
 
 function PageContainer({ children }) {
-  return <div className="min-h-screen bg-white text-slate-900">{children}</div>
+  return <div className="premium-page min-h-screen text-slate-900">{children}</div>
 }
 
 function SiteHeader({ pathname }) {
