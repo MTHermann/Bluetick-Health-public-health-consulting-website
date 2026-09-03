@@ -559,6 +559,7 @@ function HomePage({
               </form>
             </div>
           </div>
+          </div>
         </section>
       ) : null}
     </>
