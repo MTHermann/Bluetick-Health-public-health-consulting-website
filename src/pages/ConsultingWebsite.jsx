@@ -110,6 +110,105 @@ function formatDate(date) {
   })
 }
 
+const productPreviewModules = [
+  {
+    id: 'registration',
+    label: 'Registration',
+    shortLabel: 'Reg',
+    accentColor: '#67e8f9',
+    accentSurface: 'linear-gradient(145deg, rgba(34, 211, 238, 0.26), rgba(59, 130, 246, 0.16))',
+    icon: ClipboardList,
+    panelTitle: 'Front desk intake',
+    panelSubtitle: 'New patients complete digital registration before triage.',
+    kpiLabel: 'Patients checked in',
+    kpiValue: '128',
+    statusLabel: '4 forms pending review',
+    queueLabel: 'Average intake time',
+    queueValue: '06 min',
+    highlightLabel: 'Insurance verification',
+    highlightValue: '92%',
+    chartPrimary: 'M0 76C18 76 28 34 48 34C66 34 78 66 102 66C122 66 132 46 156 46C178 46 188 22 208 22C226 22 238 40 260 40',
+    chartSecondary: 'M0 92C20 92 32 70 52 70C72 70 86 84 108 84C128 84 140 74 162 74C184 74 196 88 216 88C236 88 246 80 260 80',
+    activity: [
+      { label: 'Patient ID', value: 'BT-24018', toneClass: 'from-fuchsia-400/35 to-orange-300/25' },
+      { label: 'Consent', value: 'Signed', toneClass: 'from-violet-400/35 to-fuchsia-300/25' },
+      { label: 'Routing', value: 'Triage', toneClass: 'from-cyan-400/35 to-blue-300/25' },
+    ],
+  },
+  {
+    id: 'triage',
+    label: 'Triage',
+    shortLabel: 'Tri',
+    accentColor: '#86efac',
+    accentSurface: 'linear-gradient(145deg, rgba(52, 211, 153, 0.3), rgba(20, 184, 166, 0.16))',
+    icon: FlaskConical,
+    panelTitle: 'Nurse triage overview',
+    panelSubtitle: 'Vitals, risk flags, and queue visibility update in real time.',
+    kpiLabel: 'Patients triaged',
+    kpiValue: '84',
+    statusLabel: '2 urgent cases escalated',
+    queueLabel: 'Median wait time',
+    queueValue: '11 min',
+    highlightLabel: 'Vitals captured',
+    highlightValue: '97%',
+    chartPrimary: 'M0 68C18 68 28 30 50 30C72 30 80 54 106 54C126 54 136 42 156 42C178 42 188 16 210 16C228 16 242 28 260 28',
+    chartSecondary: 'M0 90C16 90 28 74 46 74C68 74 82 88 104 88C124 88 140 64 162 64C184 64 196 76 220 76C236 76 248 66 260 66',
+    activity: [
+      { label: 'Blood pressure', value: '122/78', toneClass: 'from-emerald-400/35 to-lime-300/20' },
+      { label: 'SpO₂', value: '98%', toneClass: 'from-cyan-400/35 to-sky-300/20' },
+      { label: 'Priority', value: 'Routine', toneClass: 'from-blue-400/35 to-indigo-300/20' },
+    ],
+  },
+  {
+    id: 'labs',
+    label: 'Laboratory',
+    shortLabel: 'Lab',
+    accentColor: '#f0abfc',
+    accentSurface: 'linear-gradient(145deg, rgba(232, 121, 249, 0.26), rgba(244, 63, 94, 0.14))',
+    icon: Database,
+    panelTitle: 'Laboratory orders',
+    panelSubtitle: 'Specimens, pending results, and flagged findings stay linked to the chart.',
+    kpiLabel: 'Results posted',
+    kpiValue: '56',
+    statusLabel: '6 abnormal values require sign-off',
+    queueLabel: 'Turnaround time',
+    queueValue: '03 hrs',
+    highlightLabel: 'Orders completed',
+    highlightValue: '89%',
+    chartPrimary: 'M0 74C18 74 26 48 46 48C66 48 78 56 98 56C120 56 130 26 154 26C176 26 188 34 210 34C232 34 242 18 260 18',
+    chartSecondary: 'M0 94C18 94 30 80 50 80C70 80 82 90 106 90C128 90 140 72 162 72C184 72 194 82 216 82C236 82 246 74 260 74',
+    activity: [
+      { label: 'CBC status', value: 'Ready', toneClass: 'from-fuchsia-400/35 to-rose-300/20' },
+      { label: 'Malaria RDT', value: 'Pending', toneClass: 'from-amber-300/35 to-orange-300/20' },
+      { label: 'Alert review', value: 'Queued', toneClass: 'from-cyan-400/35 to-blue-300/20' },
+    ],
+  },
+  {
+    id: 'reports',
+    label: 'Reporting',
+    shortLabel: 'Rpt',
+    accentColor: '#fcd34d',
+    accentSurface: 'linear-gradient(145deg, rgba(251, 191, 36, 0.28), rgba(249, 115, 22, 0.16))',
+    icon: TrendingUp,
+    panelTitle: 'Programme dashboard',
+    panelSubtitle: 'Facility trends and monthly indicators roll up into one reporting view.',
+    kpiLabel: 'Reports generated',
+    kpiValue: '18',
+    statusLabel: 'Monthly DHIS export ready',
+    queueLabel: 'Data quality score',
+    queueValue: '98%',
+    highlightLabel: 'Indicators synced',
+    highlightValue: '145',
+    chartPrimary: 'M0 82C20 82 30 60 52 60C72 60 86 66 108 66C130 66 140 38 160 38C184 38 192 12 214 12C234 12 244 26 260 26',
+    chartSecondary: 'M0 98C18 98 30 90 50 90C72 90 84 72 108 72C128 72 138 78 160 78C184 78 196 60 218 60C238 60 246 52 260 52',
+    activity: [
+      { label: 'ANC visits', value: '+12%', toneClass: 'from-amber-300/35 to-yellow-300/18' },
+      { label: 'Stock alerts', value: '03', toneClass: 'from-orange-300/35 to-rose-300/18' },
+      { label: 'District sync', value: 'Done', toneClass: 'from-cyan-400/35 to-sky-300/20' },
+    ],
+  },
+]
+
 function setMetaTag(selector, attributes) {
   let tag = document.head.querySelector(selector)
   if (!tag) {
@@ -977,6 +1076,9 @@ function NewsPage() {
 function ProductsPage() {
   const productsInfo = pageContent['/products/']
   const featuredProduct = productsContent.products[0]
+  const [activeModuleId, setActiveModuleId] = useState(productPreviewModules[1].id)
+  const activeModule = productPreviewModules.find((module) => module.id === activeModuleId) || productPreviewModules[0]
+  const ActiveModuleIcon = activeModule.icon
 
   return (
     <>
@@ -998,73 +1100,130 @@ function ProductsPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product preview</p>
                 <MonitorSmartphone className="h-5 w-5 text-cyan-200" />
               </div>
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#08162b] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-              <div className="grid min-h-[320px] grid-cols-[84px_minmax(0,1fr)]">
-                <div className="border-r border-white/[0.06] bg-[#09172c] p-3">
-                  <div className="mb-4 flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-fuchsia-500/20" />
-                    <div>
-                      <div className="h-2.5 w-14 rounded-full bg-white/[0.85]" />
-                      <div className="mt-1 h-2 w-10 rounded-full bg-white/30" />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    {['bg-white/[0.85]', 'bg-white/25', 'bg-white/25', 'bg-white/25', 'bg-white/25'].map((itemClass, index) => (
-                      <div key={index} className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.04] px-2 py-2">
-                        <div className={`h-2.5 w-2.5 rounded-full ${itemClass}`} />
-                        <div className="h-2 w-8 rounded-full bg-white/20" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-5 rounded-2xl bg-[linear-gradient(145deg,rgba(244,114,182,0.35),rgba(96,165,250,0.18))] p-3">
-                    <div className="h-10 rounded-xl bg-white/[0.12]" />
-                  </div>
-                </div>
-                <div className="bg-[#10213c] p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 flex-1 rounded-xl border border-white/[0.08] bg-[#0c1a31]" />
-                    <div className="h-10 w-10 rounded-xl bg-[#0c1a31]" />
-                    <div className="h-10 w-10 rounded-xl bg-[#0c1a31]" />
-                  </div>
-                  <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0b1930] p-4">
-                    <div className="grid gap-3 sm:grid-cols-[150px_minmax(0,1fr)]">
-                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-1">
-                        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
-                          <div className="h-2 w-14 rounded-full bg-white/[0.45]" />
-                          <div className="mt-3 h-6 w-16 rounded-full bg-cyan-300/70" />
+                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#08162b] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                  <div className="grid min-h-[320px] grid-cols-[84px_minmax(0,1fr)]">
+                    <div className="border-r border-white/[0.06] bg-[#09172c] p-3">
+                      <div className="mb-4 flex items-center gap-2">
+                        <div className="rounded-[18px] bg-[linear-gradient(145deg,rgba(192,132,252,0.32),rgba(99,102,241,0.18))] p-2.5 shadow-[0_12px_28px_rgba(44,20,82,0.25)]">
+                          <ActiveModuleIcon className="h-4 w-4 text-white" />
                         </div>
-                        <div className="rounded-xl border border-white/[0.08] bg-emerald-500/70 p-3">
-                          <div className="h-2 w-16 rounded-full bg-white/[0.55]" />
-                          <div className="mt-3 h-6 w-20 rounded-full bg-white/[0.85]" />
+                        <div>
+                          <div className="h-2.5 w-14 rounded-full bg-white/[0.85]" />
+                          <div className="mt-1 h-2 w-10 rounded-full bg-white/30" />
                         </div>
                       </div>
-                      <div className="rounded-xl border border-white/[0.08] bg-[#0d1f38] p-3">
-                        <div className="mb-3 flex gap-2">
-                          <div className="h-7 w-14 rounded-lg bg-emerald-500/75" />
-                          <div className="h-7 w-14 rounded-lg border border-white/20 bg-white/5" />
+                      <div className="space-y-2">
+                        {productPreviewModules.map((module) => {
+                          const isActive = module.id === activeModule.id
+
+                          return (
+                            <button
+                              key={module.id}
+                              type="button"
+                              aria-pressed={isActive}
+                              aria-label={`Show ${module.label} preview`}
+                              onClick={() => setActiveModuleId(module.id)}
+                              className={`product-preview-nav group flex w-full items-center gap-2 rounded-xl border px-2 py-2 text-left transition ${
+                                isActive
+                                  ? 'border-cyan-300/35 bg-white/[0.09] shadow-[0_12px_28px_rgba(10,132,255,0.14)]'
+                                  : 'border-white/[0.06] bg-white/[0.04] hover:border-white/[0.14] hover:bg-white/[0.07]'
+                              }`}
+                            >
+                              <div
+                                className={`h-2.5 w-2.5 rounded-full ${isActive ? '' : 'bg-white/25'}`}
+                                style={isActive ? { backgroundColor: module.accentColor } : undefined}
+                              />
+                              <div className="flex-1">
+                                <div className={`h-2 rounded-full ${isActive ? 'bg-white/70' : 'bg-white/25'}`} />
+                                <span className="sr-only">{module.label}</span>
+                              </div>
+                            </button>
+                          )
+                        })}
+                      </div>
+                      <div className="mt-5 rounded-2xl p-3" style={{ backgroundImage: activeModule.accentSurface }}>
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">{activeModule.shortLabel}</p>
+                        <div className="mt-3 h-10 rounded-xl bg-white/[0.12] px-3 py-2">
+                          <div className="h-2 w-14 rounded-full bg-white/40" />
+                          <div className="mt-2 h-2.5 w-10 rounded-full" style={{ backgroundColor: activeModule.accentColor }} />
                         </div>
-                        <svg viewBox="0 0 260 110" className="h-28 w-full">
-                          <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
-                          <path d="M0 66C24 66 38 38 64 38C88 38 94 78 120 78C146 78 156 46 182 46C206 46 220 24 236 24C248 24 254 36 260 40" fill="none" stroke="#e11d48" strokeWidth="4" strokeLinecap="round" />
-                          <path d="M0 88C26 88 36 66 60 66C84 66 92 82 116 82C140 82 154 70 178 70C204 70 214 90 236 90C248 90 256 82 260 82" fill="none" stroke="#818cf8" strokeWidth="4" strokeLinecap="round" />
-                        </svg>
                       </div>
                     </div>
-                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                      {['Reports', 'Scans', 'Labs'].map((label) => (
-                        <div key={label} className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
-                          <div className="h-12 rounded-lg bg-[linear-gradient(145deg,rgba(244,114,182,0.28),rgba(251,191,36,0.22))]" />
-                          <div className="mt-3 h-2.5 w-16 rounded-full bg-emerald-400/60" />
-                          <div className="mt-2 h-2 w-12 rounded-full bg-white/30" />
+                    <div className="bg-[#10213c] p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 flex-1 items-center rounded-xl border border-white/[0.08] bg-[#0c1a31] px-4">
+                          <div className="h-2 w-28 rounded-full bg-white/20" />
                         </div>
-                      ))}
+                        <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview notifications" />
+                        <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview tasks" />
+                      </div>
+                      <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0b1930] p-4">
+                        <div className="grid gap-3 sm:grid-cols-[150px_minmax(0,1fr)]">
+                          <div className="grid grid-cols-2 gap-3 sm:grid-cols-1">
+                            <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
+                              <div className="h-2 w-16 rounded-full bg-white/[0.45]" />
+                              <p className="mt-3 text-lg font-semibold text-white">{activeModule.queueValue}</p>
+                              <p className="mt-1 text-[11px] leading-4 text-blue-100/75">{activeModule.queueLabel}</p>
+                            </div>
+                            <div className="rounded-xl border border-white/[0.08] p-3" style={{ backgroundImage: activeModule.accentSurface }}>
+                              <div className="h-2 w-16 rounded-full bg-white/[0.55]" />
+                              <p className="mt-3 text-lg font-semibold text-white">{activeModule.highlightValue}</p>
+                              <p className="mt-1 text-[11px] leading-4 text-white/80">{activeModule.highlightLabel}</p>
+                            </div>
+                          </div>
+                          <div className="rounded-xl border border-white/[0.08] bg-[#0d1f38] p-3">
+                            <div className="mb-3 flex items-center justify-between gap-2">
+                              <div>
+                                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-100/75">{activeModule.kpiLabel}</p>
+                                <p className="mt-1 text-lg font-semibold text-white">{activeModule.kpiValue}</p>
+                              </div>
+                              <div className="flex gap-2">
+                                <div className="product-preview-toggle h-7 w-14 rounded-lg" style={{ backgroundColor: activeModule.accentColor }} />
+                                <div className="product-preview-toggle h-7 w-14 rounded-lg border border-white/20 bg-white/5" />
+                              </div>
+                            </div>
+                            <svg viewBox="0 0 260 110" className="product-preview-chart h-28 w-full" aria-hidden="true">
+                              <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
+                              <path d={activeModule.chartPrimary} fill="none" stroke="#fb7185" strokeWidth="4" strokeLinecap="round" />
+                              <path d={activeModule.chartSecondary} fill="none" stroke="#818cf8" strokeWidth="4" strokeLinecap="round" />
+                            </svg>
+                          </div>
+                        </div>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                          {activeModule.activity.map((item) => (
+                            <div key={item.label} className="product-preview-card rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
+                              <div className={`h-12 rounded-lg bg-gradient-to-br ${item.toneClass}`} />
+                              <span className="mt-3 block h-2.5 w-16 rounded-full" style={{ backgroundColor: activeModule.accentColor }} />
+                              <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-100/70">{item.label}</p>
+                              <p className="mt-1 text-sm font-medium text-white">{item.value}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0c1b31] p-4">
+                          <div className="flex items-center justify-between gap-3">
+                            <div>
+                              <p className="text-sm font-semibold text-white">{activeModule.panelTitle}</p>
+                              <p className="mt-1 text-xs leading-5 text-blue-100/70">{activeModule.panelSubtitle}</p>
+                            </div>
+                            <span className="product-preview-status inline-flex rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-100/80">
+                              Live
+                            </span>
+                          </div>
+                          <div
+                            className="mt-4 rounded-2xl p-4 text-white shadow-[0_18px_40px_rgba(10,100,80,0.22)]"
+                            style={{ backgroundImage: activeModule.accentSurface }}
+                          >
+                            <div className="h-2.5 w-20 rounded-full bg-white/55" />
+                            <p className="mt-3 text-2xl font-semibold">{activeModule.kpiValue}</p>
+                            <p className="mt-1 text-xs text-white/85">{activeModule.statusLabel}</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
         </div>
       </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
