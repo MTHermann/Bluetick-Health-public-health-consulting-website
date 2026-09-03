@@ -350,19 +350,15 @@ function SiteHeader({ pathname }) {
                     </button>
                   ) : null}
                 </div>
-                {dropdownItems ? (
+                {dropdownItems && openDropdownLabel === label ? (
                   <div
-                    aria-hidden={openDropdownLabel === label ? undefined : true}
-                    className={`header-nav-dropdown absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25 ${
-                      openDropdownLabel === label ? 'is-open' : ''
-                    }`}
+                    className="header-nav-dropdown is-open absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
                   >
                     {dropdownItems.map((item) => (
                       <a
                         key={item.label}
                         href={item.href}
                         onClick={closeMenus}
-                        tabIndex={openDropdownLabel === label ? 0 : -1}
                         className="block px-4 py-2 text-sm text-blue-50 transition-colors hover:bg-white/10 hover:text-white"
                       >
                         {item.label}
