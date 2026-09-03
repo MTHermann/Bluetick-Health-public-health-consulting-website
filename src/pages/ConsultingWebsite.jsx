@@ -75,6 +75,18 @@ const services = [
 ]
 
 const countryNameFormatter = new Intl.DisplayNames(['en'], { type: 'region' })
+const contentCardPaletteClasses = [
+  'bg-[#f2f8ff] border-blue-100',
+  'bg-[#edf7ff] border-sky-100',
+  'bg-[#f4f1ff] border-violet-100',
+  'bg-[#eefbf7] border-emerald-100',
+  'bg-[#fff5ec] border-amber-100',
+  'bg-[#f3f7fa] border-slate-200',
+]
+
+function getContentCardPaletteClass(index) {
+  return contentCardPaletteClasses[index % contentCardPaletteClasses.length]
+}
 
 const phoneCountryOptions = getCountries()
   .map((countryCode) => {
@@ -334,7 +346,7 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
                   ) : null}
                 </div>
@@ -406,7 +418,7 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                      <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
                   ) : null}
                 </div>
@@ -549,9 +561,9 @@ function HomePage({
         </div>
       </section>
 
-      <section className="section-code-bg section-bg-about bg-white px-6 py-24">
+      <section className="section-code-bg section-bg-about px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="max-w-4xl rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)] md:p-12">
+          <div className="max-w-4xl rounded-[28px] border border-blue-200 bg-[#e7f0ff] p-8 shadow-[0_18px_40px_rgba(15,23,42,0.08)] md:p-12">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">About</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
               Independent consultancy for complex health data and research delivery
@@ -809,8 +821,8 @@ function BlogPage() {
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-6 md:grid-cols-2">
-            {blogPosts.map((post) => (
-              <Card key={post.slug}>
+            {blogPosts.map((post, index) => (
+              <Card key={post.slug} className={getContentCardPaletteClass(index)}>
                 <CardContent className="p-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(post.datePublished)}</p>
                   <h2 className="mt-3 text-xl font-semibold text-blue-900">{post.title}</h2>
@@ -901,18 +913,30 @@ function BlogPostPage({ post }) {
 
 function ResourcesPage() {
   const resourcesInfo = pageContent['/resources/']
+  const resourceGroupOffsets = resources.reduce((offsets, _, index) => {
+    if (index === 0) {
+      offsets.push(0)
+      return offsets
+    }
+
+    offsets.push(offsets[index - 1] + resources[index - 1].items.length)
+    return offsets
+  }, [])
 
   return (
     <>
       <PageIntro title={resourcesInfo.heading} intro={resourcesInfo.intro} eyebrow="Backlink-ready references" />
       <section className="section-code-bg section-bg-about px-6 py-16">
         <div className="mx-auto max-w-6xl space-y-8">
-          {resources.map((resourceGroup) => (
+          {resources.map((resourceGroup, groupIndex) => (
             <div key={resourceGroup.category}>
               <h2 className="mb-4 text-2xl font-semibold text-blue-900">{resourceGroup.category}</h2>
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {resourceGroup.items.map((item) => (
-                  <Card key={item.href}>
+                {resourceGroup.items.map((item, index) => (
+                  <Card
+                    key={item.href}
+                    className={getContentCardPaletteClass(resourceGroupOffsets[groupIndex] + index)}
+                  >
                     <CardContent className="p-6">
                       <h3 className="text-lg font-semibold text-blue-900">{item.title}</h3>
                       <p className="mt-3 text-sm leading-relaxed text-gray-600">{item.description}</p>
@@ -1024,8 +1048,8 @@ function NewsPage() {
           <div id="bluetick-updates">
             <h2 className="mb-5 text-2xl font-semibold text-blue-900">Bluetick Health News</h2>
             <div className="space-y-5">
-              {bluetickNewsItems.map((item) => (
-                <Card key={`${item.date}-${item.title}`}>
+              {bluetickNewsItems.map((item, index) => (
+                <Card key={`${item.date}-${item.title}`} className={getContentCardPaletteClass(index)}>
                   <CardContent className="p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(item.date)}</p>
                     <h3 className="mt-3 text-lg font-semibold text-blue-900">{item.title}</h3>
@@ -1045,8 +1069,8 @@ function NewsPage() {
             <div id="global-public-health-news" />
             <h2 className="mb-5 text-2xl font-semibold text-blue-900">Global &amp; African Health News</h2>
             <div className="space-y-5">
-              {globalHealthNewsItems.map((item) => (
-                <Card key={`${item.date}-${item.title}`}>
+              {globalHealthNewsItems.map((item, index) => (
+                <Card key={`${item.date}-${item.title}`} className={getContentCardPaletteClass(index + 1)}>
                   <CardContent className="p-6">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-700">{formatDate(item.date)}</p>
                     <h3 className="mt-3 text-lg font-semibold text-blue-900">{item.title}</h3>
