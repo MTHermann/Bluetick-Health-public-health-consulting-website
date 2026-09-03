@@ -866,21 +866,73 @@ function ProductsPage() {
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product preview</p>
                 <MonitorSmartphone className="h-5 w-5 text-cyan-200" />
               </div>
-              <div className="rounded-2xl border border-white/10 bg-[#0a2240] p-4">
-                <div className="mb-4 h-24 rounded-xl bg-[linear-gradient(145deg,#0f3f78,#1f6cbf)]" />
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-xl bg-white/8 p-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Clinical workflow</p>
-                    <p className="mt-2 text-sm font-semibold text-white">Structured care pathways</p>
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#08162b] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+              <div className="grid min-h-[320px] grid-cols-[84px_minmax(0,1fr)]">
+                <div className="border-r border-white/[0.06] bg-[#09172c] p-3">
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-fuchsia-500/20" />
+                    <div>
+                      <div className="h-2.5 w-14 rounded-full bg-white/[0.85]" />
+                      <div className="mt-1 h-2 w-10 rounded-full bg-white/30" />
+                    </div>
                   </div>
-                  <div className="rounded-xl bg-white/8 p-3">
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-300">Analytics</p>
-                    <p className="mt-2 text-sm font-semibold text-white">Dashboard reporting</p>
+                  <div className="space-y-2">
+                    {['bg-white/[0.85]', 'bg-white/25', 'bg-white/25', 'bg-white/25', 'bg-white/25'].map((itemClass, index) => (
+                      <div key={index} className="flex items-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.04] px-2 py-2">
+                        <div className={`h-2.5 w-2.5 rounded-full ${itemClass}`} />
+                        <div className="h-2 w-8 rounded-full bg-white/20" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-5 rounded-2xl bg-[linear-gradient(145deg,rgba(244,114,182,0.35),rgba(96,165,250,0.18))] p-3">
+                    <div className="h-10 rounded-xl bg-white/[0.12]" />
+                  </div>
+                </div>
+                <div className="bg-[#10213c] p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 flex-1 rounded-xl border border-white/[0.08] bg-[#0c1a31]" />
+                    <div className="h-10 w-10 rounded-xl bg-[#0c1a31]" />
+                    <div className="h-10 w-10 rounded-xl bg-[#0c1a31]" />
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0b1930] p-4">
+                    <div className="grid gap-3 sm:grid-cols-[150px_minmax(0,1fr)]">
+                      <div className="grid grid-cols-2 gap-3 sm:grid-cols-1">
+                        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
+                          <div className="h-2 w-14 rounded-full bg-white/[0.45]" />
+                          <div className="mt-3 h-6 w-16 rounded-full bg-cyan-300/70" />
+                        </div>
+                        <div className="rounded-xl border border-white/[0.08] bg-emerald-500/70 p-3">
+                          <div className="h-2 w-16 rounded-full bg-white/[0.55]" />
+                          <div className="mt-3 h-6 w-20 rounded-full bg-white/[0.85]" />
+                        </div>
+                      </div>
+                      <div className="rounded-xl border border-white/[0.08] bg-[#0d1f38] p-3">
+                        <div className="mb-3 flex gap-2">
+                          <div className="h-7 w-14 rounded-lg bg-emerald-500/75" />
+                          <div className="h-7 w-14 rounded-lg border border-white/20 bg-white/5" />
+                        </div>
+                        <svg viewBox="0 0 260 110" className="h-28 w-full">
+                          <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
+                          <path d="M0 66C24 66 38 38 64 38C88 38 94 78 120 78C146 78 156 46 182 46C206 46 220 24 236 24C248 24 254 36 260 40" fill="none" stroke="#e11d48" strokeWidth="4" strokeLinecap="round" />
+                          <path d="M0 88C26 88 36 66 60 66C84 66 92 82 116 82C140 82 154 70 178 70C204 70 214 90 236 90C248 90 256 82 260 82" fill="none" stroke="#818cf8" strokeWidth="4" strokeLinecap="round" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                      {['Reports', 'Scans', 'Labs'].map((label) => (
+                        <div key={label} className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
+                          <div className="h-12 rounded-lg bg-[linear-gradient(145deg,rgba(244,114,182,0.28),rgba(251,191,36,0.22))]" />
+                          <div className="mt-3 h-2.5 w-16 rounded-full bg-emerald-400/60" />
+                          <div className="mt-2 h-2 w-12 rounded-full bg-white/30" />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
         </div>
       </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
@@ -888,28 +940,7 @@ function ProductsPage() {
           <div className="mb-8 rounded-xl bg-[#eaf4ff] p-6 md:p-8">
             <p className="text-sm leading-relaxed text-gray-700">{productsContent.partnershipMessage}</p>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {productsContent.products.map((product, index) => (
-              <Card key={product.name} className="reveal-on-scroll service-card h-full" style={{ '--reveal-delay': `${index * 80}ms` }}>
-                <CardContent className="flex h-full flex-col p-6">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-blue-100">
-                    <img
-                      src={`${import.meta.env.BASE_URL}${product.logo.replace(/^\//, '')}`}
-                      alt={`${product.name} logo`}
-                      width="40"
-                      height="40"
-                      className="h-10 w-10 object-contain"
-                    />
-                  </div>
-                  <h2 className="text-lg font-semibold text-blue-900">{product.name}</h2>
-                  <p className="mt-2 text-sm text-gray-500">{product.category}</p>
-                  <p className="mt-4 text-sm leading-relaxed text-gray-600">{product.description}</p>
-                  <span className="mt-auto pt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
-                    {product.status}
-                  </span>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="max-w-xl">
             <Card id="upcoming-digital-solutions" className="reveal-on-scroll service-card h-full" style={{ '--reveal-delay': '120ms' }}>
               <CardContent className="flex h-full flex-col p-6">
                 <h2 className="text-lg font-semibold text-blue-900">Upcoming Digital Solutions</h2>
