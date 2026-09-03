@@ -123,27 +123,6 @@
   --section-code-opacity: 0.16;
 }
 
-.premium-surface {
-  position: relative;
-  overflow: hidden;
-}
-
-.premium-surface::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 38%),
-    radial-gradient(115% 75% at 84% 92%, rgba(186, 230, 253, 0.16), rgba(186, 230, 253, 0) 68%);
-}
-
-.premium-surface > * {
-  position: relative;
-  z-index: 1;
-}
-
 .hero-surface {
   background:
     radial-gradient(130% 80% at 8% 0%, rgba(59, 130, 246, 0.28), rgba(59, 130, 246, 0) 44%),
