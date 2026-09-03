@@ -3,15 +3,25 @@
 @tailwind utilities;
 
 .header-nav-dropdown {
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 160ms ease,
+    visibility 160ms ease;
 }
 
-.header-nav-item:hover .header-nav-dropdown {
-  display: block;
-}
-
+.header-nav-item:hover .header-nav-dropdown,
 .header-nav-item:focus-within .header-nav-dropdown {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.header-nav-dropdown.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .header-contact-us-nav {
