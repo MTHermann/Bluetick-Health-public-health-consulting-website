@@ -7,6 +7,7 @@ import {
   ArrowRight,
   BarChart3,
   Briefcase,
+  ChevronDown,
   ClipboardList,
   Database,
   ExternalLink,
@@ -345,12 +346,7 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <span
-                        aria-hidden="true"
-                        className={`text-sm leading-none transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`}
-                      >
-                        ▾
-                      </span>
+                      <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
                   ) : null}
                 </div>
@@ -422,12 +418,7 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <span
-                        aria-hidden="true"
-                        className={`text-sm leading-none transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`}
-                      >
-                        ▾
-                      </span>
+                      <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
                   ) : null}
                 </div>
@@ -922,6 +913,15 @@ function BlogPostPage({ post }) {
 
 function ResourcesPage() {
   const resourcesInfo = pageContent['/resources/']
+  const resourceGroupOffsets = resources.reduce((offsets, _, index) => {
+    if (index === 0) {
+      offsets.push(0)
+      return offsets
+    }
+
+    offsets.push(offsets[index - 1] + resources[index - 1].items.length)
+    return offsets
+  }, [])
 
   return (
     <>
@@ -935,9 +935,7 @@ function ResourcesPage() {
                 {resourceGroup.items.map((item, index) => (
                   <Card
                     key={item.href}
-                    className={getContentCardPaletteClass(
-                      resources.slice(0, groupIndex).reduce((total, group) => total + group.items.length, 0) + index
-                    )}
+                    className={getContentCardPaletteClass(resourceGroupOffsets[groupIndex] + index)}
                   >
                     <CardContent className="p-6">
                       <h3 className="text-lg font-semibold text-blue-900">{item.title}</h3>
