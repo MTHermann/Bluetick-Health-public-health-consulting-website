@@ -352,7 +352,7 @@ function SiteHeader({ pathname }) {
                 </div>
                 {dropdownItems && openDropdownLabel === label ? (
                   <div
-                    className="header-nav-dropdown is-open absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
+                    className="header-nav-dropdown absolute left-0 top-full z-30 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
                   >
                     {dropdownItems.map((item) => (
                       <a

@@ -3,17 +3,6 @@
 @tailwind utilities;
 
 .header-nav-dropdown {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 160ms ease,
-    visibility 160ms ease;
-}
-
-.header-nav-dropdown.is-open {
-  visibility: visible;
-  opacity: 1;
   pointer-events: auto;
 }
 
