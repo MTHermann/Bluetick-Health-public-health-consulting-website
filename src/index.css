@@ -33,7 +33,7 @@
   background:
     radial-gradient(75% 42% at 8% 0%, rgba(14, 116, 144, 0.08), rgba(14, 116, 144, 0) 60%),
     radial-gradient(58% 32% at 90% 100%, rgba(30, 58, 138, 0.06), rgba(30, 58, 138, 0) 66%),
-    #f7f6f2;
+    #edf4fb;
 }
 
 .premium-page::before {
@@ -93,8 +93,8 @@
   --section-code-image: url('/assets/code-bg-r-survival.svg');
   --section-code-opacity: 0.14;
   background:
-    linear-gradient(180deg, rgba(255, 254, 249, 0.98), rgba(251, 250, 244, 0.98)),
-    #faf9f4;
+    linear-gradient(180deg, rgba(240, 248, 255, 0.98), rgba(233, 244, 255, 0.98)),
+    #eaf4ff;
 }
 
 .section-bg-services {
