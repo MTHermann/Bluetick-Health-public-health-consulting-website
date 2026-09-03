@@ -276,6 +276,12 @@ function SiteHeader({ pathname }) {
     setOpenDropdownLabel(null)
   }
 
+  const handleDesktopDropdownBlur = (event, label) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setOpenDropdownLabel((currentLabel) => (currentLabel === label ? null : currentLabel))
+    }
+  }
+
   return (
     <header
       className="sticky top-0 z-30 border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
@@ -313,6 +319,8 @@ function SiteHeader({ pathname }) {
                 className="header-nav-item relative"
                 onMouseEnter={() => dropdownItems && setOpenDropdownLabel(label)}
                 onMouseLeave={() => setOpenDropdownLabel(null)}
+                onFocusCapture={() => dropdownItems && setOpenDropdownLabel(label)}
+                onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
                   <a
