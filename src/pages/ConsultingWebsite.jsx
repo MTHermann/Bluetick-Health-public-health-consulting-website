@@ -271,6 +271,7 @@ function SiteHeader({ pathname }) {
   useEffect(() => () => {
     if (closeDropdownTimeoutRef.current) {
       window.clearTimeout(closeDropdownTimeoutRef.current)
+      closeDropdownTimeoutRef.current = null
     }
   }, [])
 
