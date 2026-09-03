@@ -60,8 +60,13 @@ const services = [
   },
   {
     icon: FlaskConical,
-    title: 'Clinical Trials & Health Economics',
-    body: 'Trial design, SAP development, interim analysis, and economic evaluation support for sponsors, investigators, and health technology assessments.',
+    title: 'Clinical Trials Support',
+    body: 'Trial design, SAP development, interim analysis, and protocol-linked statistical support for sponsors and investigators.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Health Economics & Economic Evaluation',
+    body: 'Cost-effectiveness analysis, budget impact modelling, and decision-focused evaluation support for policy and investment planning.',
   },
 ]
 
@@ -126,7 +131,8 @@ function SiteHeader({ pathname }) {
       { label: 'Research Support', href: '/#services' },
       { label: 'Project Management', href: '/#services' },
       { label: 'Monitoring & Evaluation', href: '/#services' },
-      { label: 'Clinical Trials & Health Economics', href: '/#services' },
+      { label: 'Clinical Trials Support', href: '/#services' },
+      { label: 'Health Economics & Economic Evaluation', href: '/#services' },
     ],
     Blogs: [{ label: 'All blog post pages', href: '/blog/' }],
     News: [
@@ -358,7 +364,7 @@ function HomePage({
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Services</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
-              Six focused service areas with a cleaner delivery structure
+              Specialized consulting services for evidence-driven health decisions
             </h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
