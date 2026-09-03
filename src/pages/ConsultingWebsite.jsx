@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { getCountries, getCountryCallingCode } from 'libphonenumber-js/min'
 import {
   ArrowLeft,
+  ArrowRight,
   BarChart3,
   Briefcase,
   ClipboardList,
@@ -35,37 +36,32 @@ const services = [
   {
     icon: BarChart3,
     title: 'Statistical Analysis',
-    body: 'Our biostatisticians provide expert statistical consulting for health researchers, clinicians, and public health practitioners. We apply advanced methods including linear and logistic regression, Cox proportional hazards models, Kaplan-Meier survival analysis, mixed-effects models, generalised estimating equations (GEE), ARIMA time series forecasting, and multivariate analysis. We work with complex health datasets from clinical trials, cohort studies, cross-sectional surveys, and routine health information systems - delivering clear, publication-ready results using R, Stata, and SAS.',
+    body: 'Advanced modelling, survival analysis, forecasting, and publication-ready outputs for clinical research, surveys, and routine health data.',
   },
   {
     icon: Database,
     title: 'Data Management',
-    body: 'We provide end-to-end data management solutions for clinical and public health research - from database architecture and electronic data capture (EDC) design to data quality assurance, audit trails, and regulatory-compliant data governance. Our team supports NGOs, academic institutions, and health programmes in building clean, analysis-ready datasets. We specialise in REDCap implementation, including custom instrument design, branching logic, data validation rules, user training, and integration with statistical analysis pipelines.',
+    body: 'Secure database design, REDCap implementation, validation workflows, and analysis-ready datasets for research and programme teams.',
   },
   {
     icon: ClipboardList,
     title: 'Research Support',
-    body: 'We offer comprehensive research support services for health research teams - from epidemiological study design and sample size calculations to literature reviews, data analysis planning, and scientific writing. Our consultants assist with grant proposal development, ethics applications, interim and final study reports, and peer-reviewed manuscript preparation. We support randomised controlled trials (RCTs), observational studies, systematic reviews, and programme evaluations for academic institutions, NGOs, and government health departments.',
+    body: 'Study design, sample size planning, literature reviews, technical writing, and evidence packages for rigorous health research delivery.',
   },
   {
     icon: Briefcase,
     title: 'Project Management',
-    body: 'We bring structured project management expertise to public health and research programmes - ensuring timelines, budgets, and quality standards are met. Our services include the development of standard operating procedures (SOPs), study protocols, risk registers, and operational plans. We support Good Clinical Practice (GCP) compliance, stakeholder coordination, and regulatory submissions. Ideal for health programmes, NGOs, and research institutions seeking operational rigour and accountability across complex, multi-site projects.',
+    body: 'Operational planning, SOPs, stakeholder coordination, and delivery oversight for complex public health and research programmes.',
   },
   {
     icon: TrendingUp,
-    title: 'Monitoring & Evaluating Public Health Programs',
-    body: 'Our M&E services include results frameworks, indicator development, data collection tool design, routine data quality assessments (RDQA), mid-term and end-line evaluations, and impact assessments. We support donor reporting, PEPFAR and Global Fund programmes, and government health departments across sub-Saharan Africa.',
+    title: 'Monitoring & Evaluation',
+    body: 'Results frameworks, indicator systems, data quality reviews, and programme evaluations that support donor reporting and decision-making.',
   },
   {
     icon: FlaskConical,
-    title: 'Clinical Trials Support',
-    body: 'We provide expert biostatistical consulting throughout the full clinical trial lifecycle - from Phase I through Phase IV. Our services include sample size and power calculations, randomisation and allocation concealment, statistical analysis plans (SAPs), interim analysis support, and final clinical study reports (CSRs). We work to ICH E9 and CONSORT standards, ensuring regulatory-compliant trial conduct for academic and industry sponsors.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Health Economics & Economic Evaluation',
-    body: 'Our health economists apply decision-analytic modelling techniques - including cost-utility analysis (CUA), cost-benefit analysis (CBA), Markov models, and discrete event simulation - to support HTA submissions for SAHPRA, NICE, and other health technology bodies. We serve pharmaceutical companies, medical device manufacturers, and public health programmes seeking evidence-based economic justification.',
+    title: 'Clinical Trials & Health Economics',
+    body: 'Trial design, SAP development, interim analysis, and economic evaluation support for sponsors, investigators, and health technology assessments.',
   },
 ]
 
@@ -118,18 +114,19 @@ function setMetaTag(selector, attributes) {
 }
 
 function PageContainer({ children }) {
-  return <div className="min-h-screen bg-[#eaf4ff] text-gray-800">{children}</div>
+  return <div className="min-h-screen bg-white text-slate-900">{children}</div>
 }
 
 function SiteHeader({ pathname }) {
+  const isHome = pathname === '/'
   const navDropdownItems = {
     Services: [
       { label: 'Statistical Analysis', href: '/#services' },
       { label: 'Data Management', href: '/#services' },
       { label: 'Research Support', href: '/#services' },
       { label: 'Project Management', href: '/#services' },
-      { label: 'Clinical Trials Support', href: '/#services' },
-      { label: 'Health Economics & Economic Evaluation', href: '/#services' },
+      { label: 'Monitoring & Evaluation', href: '/#services' },
+      { label: 'Clinical Trials & Health Economics', href: '/#services' },
     ],
     Blogs: [{ label: 'All blog post pages', href: '/blog/' }],
     News: [
@@ -144,12 +141,21 @@ function SiteHeader({ pathname }) {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-blue-100 bg-[#eaf4ff]/95 backdrop-blur">
+    <header
+      className={`sticky top-0 z-30 backdrop-blur ${
+        isHome ? 'border-b border-white/10 bg-[#06152b]/78' : 'border-b border-blue-100 bg-[#f8fbff]/95'
+      }`}
+    >
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
-        <a href="/" className="text-sm font-bold tracking-[0.2em] text-blue-900">
+        <a
+          href="/"
+          className={`text-sm font-bold tracking-[0.2em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 ${
+            isHome ? 'text-white focus-visible:outline-blue-300' : 'text-blue-900 focus-visible:outline-blue-500'
+          }`}
+        >
           BLUETICK HEALTH
         </a>
-        <nav className="flex flex-wrap items-center justify-end gap-3 text-sm text-blue-900">
+        <nav className={`flex flex-wrap items-center justify-end gap-3 text-sm ${isHome ? 'text-blue-50' : 'text-blue-900'}`}>
           {navigationLinks.map(({ label, href }) => {
             const isActive = href === '/'
               ? pathname === '/'
@@ -164,19 +170,31 @@ function SiteHeader({ pathname }) {
                 <a
                   href={href}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`rounded px-2 py-1 transition-colors hover:bg-blue-100 ${isActive ? 'bg-blue-100 font-semibold' : ''} ${
-                    isContactUs ? 'header-contact-us-nav' : ''
+                  className={`rounded-full px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                    isHome
+                      ? `hover:bg-white/10 focus-visible:outline-blue-300 ${
+                          isActive ? 'bg-white/10 font-semibold text-white' : 'text-blue-50'
+                        } ${isContactUs ? 'bg-blue-500 text-white hover:bg-blue-400' : ''}`
+                      : `hover:bg-blue-100 focus-visible:outline-blue-500 ${
+                          isActive ? 'bg-blue-100 font-semibold text-blue-900' : 'text-blue-900'
+                        } ${isContactUs ? 'bg-blue-900 text-white hover:bg-blue-800' : ''}`
                   }`}
                 >
                   {label}
                 </a>
                 {dropdownItems ? (
-                  <div className="header-nav-dropdown absolute left-0 top-full z-30 min-w-44 rounded-md border border-blue-100 bg-white py-1 shadow-lg">
+                  <div
+                    className={`header-nav-dropdown absolute left-0 top-full z-30 min-w-44 rounded-2xl py-2 shadow-lg ${
+                      isHome ? 'border border-white/10 bg-[#0d2242] text-blue-50' : 'border border-blue-100 bg-white'
+                    }`}
+                  >
                     {dropdownItems.map((item) => (
                       <a
                         key={item.label}
                         href={item.href}
-                        className="block px-3 py-2 text-sm text-blue-900 transition-colors hover:bg-blue-50 hover:text-blue-700"
+                        className={`block px-4 py-2 text-sm transition-colors ${
+                          isHome ? 'text-blue-50 hover:bg-white/10 hover:text-white' : 'text-blue-900 hover:bg-blue-50 hover:text-blue-700'
+                        }`}
                       >
                         {item.label}
                       </a>
@@ -231,76 +249,133 @@ function HomePage({
 }) {
   return (
     <>
-      <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-20 text-center">
-        <div className="mb-8 flex justify-center">
-          <div className="inline-flex flex-col items-center rounded-2xl bg-white px-8 py-5 shadow-lg">
-            <div className="flex items-center gap-3">
-              <img
-                src={globeLogoSrc}
-                alt="Bluetick Health globe logo"
-                width="72"
-                height="72"
-                className="h-[72px] w-[72px] shrink-0 object-contain"
-              />
-              <div className="flex flex-col leading-none">
-                <span className="text-3xl font-black tracking-widest text-blue-900">BLUETICK</span>
-                <span className="text-3xl font-black tracking-widest text-cyan-500">HEALTH</span>
+      <section className="relative overflow-hidden bg-[#051427] px-6 text-white">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.24),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.16),_transparent_30%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-400/60 to-transparent" />
+        <div className="relative mx-auto grid min-h-[78vh] max-w-6xl items-center gap-14 py-16 sm:py-20 lg:min-h-[84vh] lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)] lg:py-24">
+          <div className="max-w-2xl">
+            <p className="inline-flex rounded-full border border-blue-400/30 bg-white/5 px-4 py-2 text-sm font-semibold uppercase tracking-[0.22em] text-blue-100">
+              Global Evidence. Local Impact.
+            </p>
+            <h1 className="mt-8 max-w-3xl text-[clamp(3.5rem,6vw,4.5rem)] font-semibold leading-[0.96] tracking-[-0.04em] text-white">
+              Independent public health analytics for stronger research decisions
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-200 md:text-xl">
+              Bluetick Health partners with healthcare systems, researchers, NGOs, and academic teams on rigorous
+              statistical analysis, epidemiology, and programme evidence.
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Button asChild>
+                <a href="/#contact">Request a consultation</a>
+              </Button>
+              <a
+                href="/#services"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+              >
+                Explore services <ArrowRight className="h-4 w-4" />
+              </a>
+              <a
+                href={linkedinLink}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+              >
+                <Linkedin className="h-4 w-4" /> LinkedIn
+              </a>
+            </div>
+          </div>
+
+          <div aria-hidden="true" className="relative mx-auto w-full max-w-[30rem]">
+            <div className="absolute -left-10 top-8 h-28 w-28 rounded-full bg-cyan-400/15 blur-3xl" />
+            <div className="absolute -right-4 bottom-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl" />
+            <div className="relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-6 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Analytics snapshot</p>
+                  <p className="mt-2 text-2xl font-semibold text-white">Regional health insight</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-2">
+                  <img src={globeLogoSrc} alt="" className="h-12 w-12 object-contain opacity-80" />
+                </div>
+              </div>
+              <div className="mt-8 rounded-[24px] border border-white/10 bg-[#0b1f3d] p-5">
+                <div className="flex items-end gap-3">
+                  {[42, 58, 74, 64, 92, 118].map((height, index) => (
+                    <div key={height} className="flex flex-1 flex-col items-center gap-3">
+                      <span className={`h-2 w-2 rounded-full ${index === 4 ? 'bg-cyan-300' : 'bg-blue-200/70'}`} />
+                      <div
+                        className={`w-full rounded-full ${index === 4 ? 'bg-gradient-to-t from-cyan-400 to-blue-500' : 'bg-white/12'}`}
+                        style={{ height }}
+                      />
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-5 flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-400">
+                  <span>Trend</span>
+                  <span>Year-over-year</span>
+                </div>
+              </div>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Studies</p>
+                  <p className="mt-3 text-2xl font-semibold text-white">Multi-site</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Methods</p>
+                  <p className="mt-3 text-2xl font-semibold text-white">Advanced</p>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Reporting</p>
+                  <p className="mt-3 text-2xl font-semibold text-white">Decision-ready</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <h1 className="mx-auto max-w-4xl text-3xl font-bold text-white md:text-4xl">
-          Independent Statistical & Public Health Research Consultancy
-        </h1>
-        <p className="mx-auto mt-4 max-w-3xl text-lg text-blue-100">
-          Supporting healthcare systems, clinical research, NGOs, and academic institutions with advanced statistical analysis and epidemiological insights.
-        </p>
-        <p className="mx-auto mt-3 text-sm font-semibold tracking-[0.2em] text-blue-200">
-          Global Evidence. Local Impact.
-        </p>
-
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button asChild>
-            <a href="/#contact">Get in Touch</a>
-          </Button>
-          <a
-            href={linkedinLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded border border-white px-4 py-2 font-medium text-white transition-colors hover:bg-white hover:text-blue-900"
-          >
-            <Linkedin className="h-4 w-4" /> LinkedIn
-          </a>
-        </div>
       </section>
 
-      <section className="section-code-bg section-bg-about px-6 py-16">
-        <div className="mx-auto max-w-5xl rounded-xl bg-[#dff0ff] p-8 md:p-10">
-          <h2 className="mb-4 text-2xl font-semibold text-blue-900">About</h2>
-          <p className="leading-relaxed text-gray-700">
-            Independent Consultancy specializing in public health research, healthcare analytics, and statistical modelling.
-            We support evidence-based decision-making through analysis of large-scale health datasets, epidemiological
-            studies, and advanced statistical methods. Our multidisciplinary team brings together clinicians,
-            epidemiologists, biostatisticians, health economists, and programme specialists to deliver solutions that
-            are both scientifically sound and practically relevant, combining global best practice with deep local
-            knowledge.
-          </p>
-        </div>
-      </section>
-
-      <section id="services" className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
+      <section className="section-code-bg section-bg-about bg-white px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-8 text-2xl font-semibold text-blue-900">Services</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="max-w-4xl rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)] md:p-12">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">About</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
+              Independent consultancy for complex health data and research delivery
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-slate-600">
+              Independent Consultancy specializing in public health research, healthcare analytics, and statistical
+              modelling. We support evidence-based decision-making through analysis of large-scale health datasets,
+              epidemiological studies, and advanced statistical methods. Our multidisciplinary team brings together
+              clinicians, epidemiologists, biostatisticians, health economists, and programme specialists to deliver
+              solutions that are both scientifically sound and practically relevant, combining global best practice with
+              deep local knowledge.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" className="section-code-bg section-bg-services section-code-bg--shine bg-[#f4f7fb] px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Services</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
+              Six focused service areas with a cleaner delivery structure
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {services.map(({ icon: Icon, title, body }) => (
-              <Card key={title}>
-                <CardContent className="p-6">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+              <Card key={title} className="h-full rounded-[24px] border-slate-200/90 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+                <CardContent className="flex h-full flex-col p-8 md:p-9">
+                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50">
                     <Icon className="h-5 w-5 text-blue-700" />
                   </div>
-                  <h3 className="mb-2 font-semibold text-blue-900">{title}</h3>
-                  <p className="text-sm leading-relaxed text-gray-600">{body}</p>
+                  <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-950">{title}</h3>
+                  <p className="mt-4 text-base leading-7 text-slate-600">{body}</p>
+                  <a
+                    href="/#contact"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition-colors hover:text-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                  >
+                    Discuss service <ArrowRight className="h-4 w-4" />
+                  </a>
                 </CardContent>
               </Card>
             ))}
@@ -308,17 +383,22 @@ function HomePage({
         </div>
       </section>
 
-      <section id="projects" className="section-code-bg section-bg-projects section-code-bg--shine px-6 py-16">
+      <section id="projects" className="section-code-bg section-bg-projects section-code-bg--shine bg-white px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <h2 className="mb-6 text-2xl font-semibold text-blue-900">Projects & Publications</h2>
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Projects & Publications</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
+              Current platform work grounded in practical health system use
+            </h2>
+          </div>
           <div className="grid gap-6 md:grid-cols-2">
-            <Card>
-              <CardContent className="p-6">
-                <h3 className="mb-2 text-lg font-semibold text-blue-900">Bluetick Health EMR Platform</h3>
-                <p className="text-sm leading-relaxed text-gray-600">
+            <Card className="rounded-[24px] border-slate-200/90 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+              <CardContent className="p-8 md:p-9">
+                <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-950">Bluetick Health EMR Platform</h3>
+                <p className="mt-4 text-base leading-7 text-slate-600">
                   Bluetick Health Electronic Medical Record (EMR) in Development stage.
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">
+                <p className="mt-4 text-base leading-7 text-slate-600">
                   Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics,
                   dashboards, and automated reporting. We welcome funding, technical partnerships, healthcare
                   institutions, and research collaborations to accelerate platform development, testing, implementation,
@@ -332,120 +412,135 @@ function HomePage({
 
       <div id="contact" />
       {showConsultationSection ? (
-        <section className="section-code-bg section-bg-contact bg-[#f3f9ff] px-6 py-16">
+        <section className="section-code-bg section-bg-contact bg-[#f4f7fb] px-6 py-24">
           <div className="mx-auto max-w-2xl">
-            <p className="text-center text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">Contact Us</p>
-            <h2 className="mb-8 mt-3 text-center text-2xl font-semibold text-blue-900">Request Your Free Consultation</h2>
-            <p className="mb-8 text-center text-gray-500">Reach out to discuss your project or request a consultation.</p>
+            <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_18px_40px_rgba(15,23,42,0.06)] md:p-10">
+              <p className="text-center text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Contact Us</p>
+              <h2 className="mb-6 mt-4 text-center text-3xl font-semibold tracking-[-0.03em] text-slate-950">
+                Request your free consultation
+              </h2>
+              <p className="mb-8 text-center text-base leading-7 text-slate-500">
+                Reach out to discuss your project scope, timelines, and data needs.
+              </p>
 
-            <div className="mb-8 flex flex-col items-center justify-center gap-4 text-gray-700 sm:flex-row sm:gap-8">
-              <a href="mailto:mitikuhermanng@gmail.com" className="inline-flex items-center gap-2">
-                <Mail className="h-5 w-5 text-blue-600" /> mitikuhermanng@gmail.com
-              </a>
-              <a href="tel:+27611170478" className="inline-flex items-center gap-2">
-                <Phone className="h-5 w-5 text-blue-600" /> +27 611170478
-              </a>
-            </div>
+              <div className="mb-8 flex flex-col items-center justify-center gap-4 text-slate-700 sm:flex-row sm:gap-8">
+                <a
+                  href="mailto:mitikuhermanng@gmail.com"
+                  className="inline-flex items-center gap-2 rounded-full px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                >
+                  <Mail className="h-5 w-5 text-blue-600" /> mitikuhermanng@gmail.com
+                </a>
+                <a
+                  href="tel:+27611170478"
+                  className="inline-flex items-center gap-2 rounded-full px-3 py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                >
+                  <Phone className="h-5 w-5 text-blue-600" /> +27 611170478
+                </a>
+              </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
-                name="name"
-                type="text"
-                autoComplete="name"
-                placeholder="Name"
-                value={form.name}
-                required
-                className="rounded border border-gray-200 bg-white p-3"
-                onChange={handleChange}
-              />
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                placeholder="Email"
-                value={form.email}
-                required
-                className="rounded border border-gray-200 bg-white p-3"
-                onChange={handleChange}
-              />
-              <div className="grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
-                <div className="relative" ref={phoneCountryMenuRef}>
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between rounded border border-gray-200 bg-white p-3 text-left"
-                    onClick={() => setIsPhoneCountryOpen((open) => !open)}
-                    aria-haspopup="listbox"
-                    aria-expanded={isPhoneCountryOpen}
-                    aria-label="Phone country"
-                  >
-                    <span className="inline-flex items-center gap-2 truncate">
-                      <img
-                        src={selectedPhoneCountry.flagUrl}
-                        alt=""
-                        className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
-                        loading="lazy"
-                      />
-                      <span className="truncate">
-                        {selectedPhoneCountry.countryName} {selectedPhoneCountry.dialCode}
-                      </span>
-                    </span>
-                    <span aria-hidden="true" className="text-gray-500">
-                      ▾
-                    </span>
-                  </button>
-                  {isPhoneCountryOpen ? (
-                    <ul
-                      role="listbox"
-                      className="absolute z-20 mt-1 max-h-64 w-full overflow-y-auto rounded border border-gray-200 bg-white py-1 shadow-lg"
-                    >
-                      {phoneCountryOptions.map((option) => (
-                        <li key={option.value}>
-                          <button
-                            type="button"
-                            className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-blue-50 ${
-                              option.value === form.phoneCountry ? 'bg-blue-50' : ''
-                            }`}
-                            onClick={() => handlePhoneCountrySelect(option.value)}
-                          >
-                            <img
-                              src={option.flagUrl}
-                              alt=""
-                              className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
-                              loading="lazy"
-                            />
-                            <span>
-                              {option.countryName} {option.dialCode}
-                            </span>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </div>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
-                  name="phoneNumber"
-                  type="tel"
-                  autoComplete="tel-national"
-                  placeholder="Phone number"
-                  value={form.phoneNumber}
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Name"
+                  value={form.name}
                   required
-                  className="rounded border border-gray-200 bg-white p-3"
+                  className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
                   onChange={handleChange}
                 />
-              </div>
-              <textarea
-                name="message"
-                rows={5}
-                placeholder="Tell us about your project"
-                value={form.message}
-                required
-                className="resize-none rounded border border-gray-200 bg-white p-3"
-                onChange={handleChange}
-              />
-              <button type="submit" className="rounded bg-blue-600 px-4 py-2 font-bold text-white transition-colors hover:bg-blue-700">
-                Get In Touch Now
-              </button>
-            </form>
+                <input
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Email"
+                  value={form.email}
+                  required
+                  className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                  onChange={handleChange}
+                />
+                <div className="grid gap-3 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
+                  <div className="relative" ref={phoneCountryMenuRef}>
+                    <button
+                      type="button"
+                      className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                      onClick={() => setIsPhoneCountryOpen((open) => !open)}
+                      aria-haspopup="listbox"
+                      aria-expanded={isPhoneCountryOpen}
+                      aria-label="Phone country"
+                    >
+                      <span className="inline-flex items-center gap-2 truncate">
+                        <img
+                          src={selectedPhoneCountry.flagUrl}
+                          alt=""
+                          className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
+                          loading="lazy"
+                        />
+                        <span className="truncate">
+                          {selectedPhoneCountry.countryName} {selectedPhoneCountry.dialCode}
+                        </span>
+                      </span>
+                      <span aria-hidden="true" className="text-gray-500">
+                        ▾
+                      </span>
+                    </button>
+                    {isPhoneCountryOpen ? (
+                      <ul
+                        role="listbox"
+                        className="absolute z-20 mt-1 max-h-64 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white py-1 shadow-lg"
+                      >
+                        {phoneCountryOptions.map((option) => (
+                          <li key={option.value}>
+                            <button
+                              type="button"
+                              className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-blue-50 ${
+                                option.value === form.phoneCountry ? 'bg-blue-50' : ''
+                              }`}
+                              onClick={() => handlePhoneCountrySelect(option.value)}
+                            >
+                              <img
+                                src={option.flagUrl}
+                                alt=""
+                                className="h-4 w-6 shrink-0 rounded-sm border border-gray-200 object-cover"
+                                loading="lazy"
+                              />
+                              <span>
+                                {option.countryName} {option.dialCode}
+                              </span>
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </div>
+                  <input
+                    name="phoneNumber"
+                    type="tel"
+                    autoComplete="tel-national"
+                    placeholder="Phone number"
+                    value={form.phoneNumber}
+                    required
+                    className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                    onChange={handleChange}
+                  />
+                </div>
+                <textarea
+                  name="message"
+                  rows={5}
+                  placeholder="Tell us about your project"
+                  value={form.message}
+                  required
+                  className="resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                  onChange={handleChange}
+                />
+                <button
+                  type="submit"
+                  className="rounded-2xl bg-blue-600 px-5 py-3.5 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                >
+                  Get in touch now
+                </button>
+              </form>
+            </div>
           </div>
         </section>
       ) : null}
