@@ -233,7 +233,7 @@ function HomePage({
     <>
       <section className="bg-gradient-to-b from-blue-900 to-blue-800 px-6 py-20 text-center">
         <div className="mb-8 flex justify-center">
-          <div className="inline-flex flex-col items-center gap-2 rounded-2xl bg-white px-8 py-5 shadow-lg">
+          <div className="inline-flex flex-col items-center rounded-2xl bg-white px-8 py-5 shadow-lg">
             <div className="flex items-center gap-3">
               <img
                 src={globeLogoSrc}
@@ -247,7 +247,6 @@ function HomePage({
                 <span className="text-3xl font-black tracking-widest text-cyan-500">HEALTH</span>
               </div>
             </div>
-            <p className="mt-1 text-xs font-semibold tracking-[0.2em] text-blue-800">GLOBAL EVIDENCE. LOCAL IMPACT.</p>
           </div>
         </div>
 
@@ -256,6 +255,9 @@ function HomePage({
         </h1>
         <p className="mx-auto mt-4 max-w-3xl text-lg text-blue-100">
           Supporting healthcare systems, clinical research, NGOs, and academic institutions with advanced statistical analysis and epidemiological insights.
+        </p>
+        <p className="mx-auto mt-3 text-sm font-semibold tracking-[0.2em] text-blue-200">
+          Global Evidence. Local Impact.
         </p>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
