@@ -584,14 +584,14 @@ function HomePage({
                 style={{ '--reveal-delay': `${index * 70}ms` }}
               >
                 <CardContent className="flex h-full flex-col p-8 md:p-9">
-                  <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
-                    <Icon className="h-6 w-6 text-blue-700" />
+                  <div className="mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]">
+                    <Icon className="h-6 w-6 text-cyan-200" />
                   </div>
-                  <h3 className="min-h-[3.5rem] text-xl font-semibold tracking-[-0.02em] text-slate-950">{title}</h3>
-                  <p className="mt-5 text-base leading-7 text-slate-600">{body}</p>
+                  <h3 className="min-h-[3.5rem] text-xl font-semibold tracking-[-0.02em] text-white">{title}</h3>
+                  <p className="mt-5 text-base leading-7 text-blue-100/85">{body}</p>
                   <a
                     href="/#contact"
-                    className="mt-auto pt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-700 transition-colors hover:text-blue-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+                    className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-cyan-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
                   >
                     Discuss service <ArrowRight className="h-4 w-4" />
                   </a>
@@ -611,13 +611,16 @@ function HomePage({
             </h2>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
-            <Card className="rounded-[24px] border-slate-200/90 shadow-[0_18px_40px_rgba(15,23,42,0.06)]">
+            <Card className="project-card reveal-on-scroll rounded-[24px]" style={{ '--reveal-delay': '90ms' }}>
               <CardContent className="p-8 md:p-9">
-                <h3 className="text-xl font-semibold tracking-[-0.02em] text-slate-950">Bluetick Health EMR Platform</h3>
-                <p className="mt-4 text-base leading-7 text-slate-600">
+                <p className="inline-flex rounded-full border border-cyan-300/20 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
+                  Featured platform
+                </p>
+                <h3 className="mt-5 text-xl font-semibold tracking-[-0.02em] text-white">Bluetick Health EMR Platform</h3>
+                <p className="mt-4 text-base leading-7 text-blue-100/85">
                   Bluetick Health Electronic Medical Record (EMR) in Development stage.
                 </p>
-                <p className="mt-4 text-base leading-7 text-slate-600">
+                <p className="mt-4 text-base leading-7 text-blue-100/85">
                   Bluetick Health is an EMR platform designed for routine clinical data collection, real-time analytics,
                   dashboards, and automated reporting. We welcome funding, technical partnerships, healthcare
                   institutions, and research collaborations to accelerate platform development, testing, implementation,
@@ -1234,13 +1237,13 @@ function ProductsPage() {
           <div className="max-w-xl">
             <Card id="upcoming-digital-solutions" className="reveal-on-scroll service-card h-full" style={{ '--reveal-delay': '120ms' }}>
               <CardContent className="flex h-full flex-col p-6">
-                <h2 className="text-lg font-semibold text-blue-900">Upcoming Digital Solutions</h2>
-                <p className="mt-2 text-sm text-gray-500">In planning</p>
-                <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                <h2 className="text-lg font-semibold text-white">Upcoming Digital Solutions</h2>
+                <p className="mt-2 text-sm text-cyan-100/75">In planning</p>
+                <p className="mt-4 text-sm leading-relaxed text-blue-100/85">
                   Bluetick Health is preparing additional digital solutions to strengthen analytics, interoperability,
                   and decision support for health programmes.
                 </p>
-                <span className="mt-auto pt-5 inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-900">
+                <span className="mt-auto inline-flex self-start rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-medium text-cyan-100">
                   Upcoming
                 </span>
               </CardContent>
