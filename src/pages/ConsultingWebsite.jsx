@@ -319,7 +319,6 @@ function SiteHeader({ pathname }) {
                 className="header-nav-item relative"
                 onMouseEnter={() => dropdownItems && setOpenDropdownLabel(label)}
                 onMouseLeave={() => setOpenDropdownLabel(null)}
-                onFocusCapture={() => dropdownItems && setOpenDropdownLabel(label)}
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
@@ -342,9 +341,10 @@ function SiteHeader({ pathname }) {
                     type="button"
                     className="rounded-full p-2 text-blue-50 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
                     onClick={() => toggleDropdown(label)}
+                    onFocus={() => setOpenDropdownLabel(label)}
                     aria-haspopup="menu"
                     aria-expanded={openDropdownLabel === label}
-                      aria-label={`Toggle ${label} submenu`}
+                    aria-label={`Toggle ${label} submenu`}
                     >
                       <ChevronDown className={`h-4 w-4 stroke-[2.5] transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
                     </button>
