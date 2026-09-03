@@ -10,6 +10,10 @@
   display: block;
 }
 
+.header-nav-item:focus-within .header-nav-dropdown {
+  display: block;
+}
+
 .header-contact-us-nav {
   background-color: #000;
   color: #fff;

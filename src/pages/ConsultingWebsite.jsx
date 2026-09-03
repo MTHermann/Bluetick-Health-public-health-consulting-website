@@ -7,15 +7,18 @@ import {
   ArrowRight,
   BarChart3,
   Briefcase,
+  ChevronDown,
   ClipboardList,
   Database,
   ExternalLink,
   FlaskConical,
   Linkedin,
   Mail,
+  Menu,
   MonitorSmartphone,
   Phone,
   TrendingUp,
+  X,
 } from 'lucide-react'
 import {
   blogPosts,
@@ -125,6 +128,8 @@ function PageContainer({ children }) {
 
 function SiteHeader({ pathname }) {
   const isHome = pathname === '/'
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [openDropdownLabel, setOpenDropdownLabel] = useState(null)
   const navDropdownItems = {
     Services: [
       { label: 'Statistical Analysis', href: '/#services' },
@@ -147,6 +152,20 @@ function SiteHeader({ pathname }) {
     ],
   }
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+    setOpenDropdownLabel(null)
+  }, [pathname])
+
+  const toggleDropdown = (label) => {
+    setOpenDropdownLabel((currentLabel) => (currentLabel === label ? null : label))
+  }
+
+  const closeMenus = () => {
+    setIsMobileMenuOpen(false)
+    setOpenDropdownLabel(null)
+  }
+
   return (
     <header
       className={`sticky top-0 z-30 backdrop-blur ${
@@ -162,7 +181,19 @@ function SiteHeader({ pathname }) {
         >
           BLUETICK HEALTH
         </a>
-        <nav className={`flex flex-wrap items-center justify-end gap-3 text-sm ${isHome ? 'text-blue-50' : 'text-blue-900'}`}>
+        <button
+          type="button"
+          className={`inline-flex items-center justify-center rounded-xl p-2 md:hidden ${
+            isHome ? 'text-white focus-visible:outline-blue-300' : 'text-blue-900 focus-visible:outline-blue-500'
+          } focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2`}
+          onClick={() => setIsMobileMenuOpen((open) => !open)}
+          aria-expanded={isMobileMenuOpen}
+          aria-controls="mobile-site-navigation"
+          aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+        >
+          {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+        <nav className={`hidden flex-wrap items-center justify-end gap-3 text-sm md:flex ${isHome ? 'text-blue-50' : 'text-blue-900'}`}>
           {navigationLinks.map(({ label, href }) => {
             const isActive = href === '/'
               ? pathname === '/'
@@ -173,32 +204,52 @@ function SiteHeader({ pathname }) {
             const isContactUs = label === 'Contact Us'
 
             return (
-              <div key={href} className="header-nav-item relative">
-                <a
-                  href={href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`rounded-full px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                    isHome
-                      ? `hover:bg-white/10 focus-visible:outline-blue-300 ${
-                          isActive ? 'bg-white/10 font-semibold text-white' : 'text-blue-50'
-                        } ${isContactUs ? 'bg-blue-500 text-white hover:bg-blue-400' : ''}`
-                      : `hover:bg-blue-100 focus-visible:outline-blue-500 ${
-                          isActive ? 'bg-blue-100 font-semibold text-blue-900' : 'text-blue-900'
-                        } ${isContactUs ? 'bg-blue-900 text-white hover:bg-blue-800' : ''}`
-                  }`}
-                >
-                  {label}
-                </a>
+              <div key={href} className="header-nav-item relative" onMouseLeave={() => setOpenDropdownLabel(null)}>
+                <div className="flex items-center gap-1">
+                  <a
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
+                    onClick={closeMenus}
+                    className={`rounded-full px-3 py-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                      isHome
+                        ? `hover:bg-white/10 focus-visible:outline-blue-300 ${
+                            isActive ? 'bg-white/10 font-semibold text-white' : 'text-blue-50'
+                          } ${isContactUs ? 'bg-blue-500 text-white hover:bg-blue-400' : ''}`
+                        : `hover:bg-blue-100 focus-visible:outline-blue-500 ${
+                            isActive ? 'bg-blue-100 font-semibold text-blue-900' : 'text-blue-900'
+                          } ${isContactUs ? 'bg-blue-900 text-white hover:bg-blue-800' : ''}`
+                    }`}
+                  >
+                    {label}
+                  </a>
+                  {dropdownItems ? (
+                    <button
+                      type="button"
+                      className={`rounded-full p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                        isHome
+                          ? 'text-blue-50 hover:bg-white/10 focus-visible:outline-blue-300'
+                          : 'text-blue-900 hover:bg-blue-100 focus-visible:outline-blue-500'
+                      }`}
+                      onClick={() => toggleDropdown(label)}
+                      aria-haspopup="menu"
+                      aria-expanded={openDropdownLabel === label}
+                      aria-label={`Toggle ${label} submenu`}
+                    >
+                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                    </button>
+                  ) : null}
+                </div>
                 {dropdownItems ? (
                   <div
                     className={`header-nav-dropdown absolute left-0 top-full z-30 min-w-44 rounded-2xl py-2 shadow-lg ${
                       isHome ? 'border border-white/10 bg-[#0d2242] text-blue-50' : 'border border-blue-100 bg-white'
-                    }`}
+                    } ${openDropdownLabel === label ? 'block' : ''}`}
                   >
                     {dropdownItems.map((item) => (
                       <a
                         key={item.label}
                         href={item.href}
+                        onClick={closeMenus}
                         className={`block px-4 py-2 text-sm transition-colors ${
                           isHome ? 'text-blue-50 hover:bg-white/10 hover:text-white' : 'text-blue-900 hover:bg-blue-50 hover:text-blue-700'
                         }`}
@@ -213,6 +264,74 @@ function SiteHeader({ pathname }) {
           })}
         </nav>
       </div>
+      <nav
+        id="mobile-site-navigation"
+        className={`mx-auto max-w-6xl px-6 pb-4 md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+      >
+        <div className={`rounded-3xl border p-3 shadow-lg ${isHome ? 'border-white/10 bg-[#0d2242] text-blue-50' : 'border-blue-100 bg-white text-blue-900'}`}>
+          {navigationLinks.map(({ label, href }) => {
+            const dropdownItems = navDropdownItems[label]
+            const isContactUs = label === 'Contact Us'
+
+            return (
+              <div
+                key={`mobile-${href}`}
+                className={`border-b last:mb-0 last:border-b-0 last:pb-0 ${
+                  isHome ? 'border-white/10' : 'border-blue-100'
+                }`}
+              >
+                <div className="flex items-center gap-2 py-1">
+                  <a
+                    href={href}
+                    onClick={closeMenus}
+                    className={`flex-1 rounded-2xl px-3 py-3 text-sm font-medium transition-colors ${
+                      isContactUs
+                        ? isHome
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-blue-900 text-white'
+                        : isHome
+                          ? 'text-blue-50 hover:bg-white/10'
+                          : 'text-blue-900 hover:bg-blue-50'
+                    }`}
+                  >
+                    {label}
+                  </a>
+                  {dropdownItems ? (
+                    <button
+                      type="button"
+                      className={`rounded-2xl p-3 transition-colors ${
+                        isHome ? 'text-blue-50 hover:bg-white/10' : 'text-blue-900 hover:bg-blue-50'
+                      }`}
+                      onClick={() => toggleDropdown(label)}
+                      aria-haspopup="menu"
+                      aria-expanded={openDropdownLabel === label}
+                      aria-label={`Toggle ${label} submenu`}
+                    >
+                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                    </button>
+                  ) : null}
+                </div>
+                {dropdownItems && openDropdownLabel === label ? (
+                  <div className="pb-3 pl-3">
+                    {dropdownItems.map((item) => (
+                      <a
+                        key={`mobile-${item.label}`}
+                        href={item.href}
+                        onClick={closeMenus}
+                        className={`block rounded-2xl px-3 py-2 text-sm ${
+                          isHome ? 'text-blue-100 hover:bg-white/10 hover:text-white' : 'text-blue-800 hover:bg-blue-50'
+                        }`}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            )
+          })}
+        </div>
+      </nav>
     </header>
   )
 }
@@ -247,7 +366,7 @@ function HomePage({
   handleSubmit,
   globeLogoSrc,
   linkedinLink,
-  showConsultationSection,
+  hasPreparedInquiry,
   selectedPhoneCountry,
   isPhoneCountryOpen,
   setIsPhoneCountryOpen,
@@ -411,9 +530,7 @@ function HomePage({
         </div>
       </section>
 
-      <div id="contact" />
-      {showConsultationSection ? (
-        <section className="section-code-bg section-bg-contact bg-[#041325] px-6 py-24 text-white">
+      <section id="contact" className="section-code-bg section-bg-contact scroll-mt-24 bg-[#041325] px-6 py-24 text-white">
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-8 rounded-[30px] border border-white/10 bg-[#051a33] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.45)] md:grid-cols-[minmax(0,0.4fr)_minmax(0,0.6fr)] md:p-10">
               <div className="reveal-on-scroll rounded-[24px] border border-white/10 bg-white/5 p-7 md:p-8">
@@ -554,14 +671,29 @@ function HomePage({
                   type="submit"
                   className="button-shift rounded-2xl bg-blue-600 px-5 py-3.5 font-semibold text-white transition-colors hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
                 >
-                  Get in touch now
+                  Prepare your inquiry email
                 </button>
+                <p className="text-sm leading-6 text-slate-600">
+                  Submitting opens your email app with your message prefilled for faster follow-up.
+                </p>
+                {hasPreparedInquiry ? (
+                  <div className="rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm leading-6 text-blue-900">
+                    If your email app did not open, send your message directly to{' '}
+                    <a href="mailto:mitikuhermanng@gmail.com" className="font-semibold underline underline-offset-2">
+                      mitikuhermanng@gmail.com
+                    </a>{' '}
+                    or call{' '}
+                    <a href="tel:+27611170478" className="font-semibold underline underline-offset-2">
+                      +27 611170478
+                    </a>
+                    .
+                  </div>
+                ) : null}
               </form>
             </div>
           </div>
           </div>
         </section>
-      ) : null}
     </>
   )
 }
@@ -966,6 +1098,7 @@ export default function ConsultingWebsite() {
   const globeLogoSrc = `${import.meta.env.BASE_URL}assets/bluetick-globe.png`
   const defaultPhoneCountry = phoneCountryOptions.find((option) => option.countryCode === 'ZA')?.value ?? phoneCountryOptions[0].value
   const [form, setForm] = useState({ name: '', email: '', phoneCountry: defaultPhoneCountry, phoneNumber: '', message: '' })
+  const [hasPreparedInquiry, setHasPreparedInquiry] = useState(false)
   const [isPhoneCountryOpen, setIsPhoneCountryOpen] = useState(false)
   const phoneCountryMenuRef = useRef(null)
   const [activeHash, setActiveHash] = useState(window.location.hash)
@@ -1083,6 +1216,7 @@ export default function ConsultingWebsite() {
   }, [pathname, activeHash])
 
   const handleChange = (e) => {
+    setHasPreparedInquiry(false)
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
@@ -1093,6 +1227,7 @@ export default function ConsultingWebsite() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setHasPreparedInquiry(true)
     const subject = encodeURIComponent(`Consulting Inquiry from ${form.name}`)
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${selectedPhoneCountry.dialCode} ${form.phoneNumber}\n\nProject details:\n${form.message}`
@@ -1108,7 +1243,7 @@ export default function ConsultingWebsite() {
       handleSubmit={handleSubmit}
       globeLogoSrc={globeLogoSrc}
       linkedinLink={linkedinLink}
-      showConsultationSection={pathname === '/' && activeHash === '#contact'}
+      hasPreparedInquiry={hasPreparedInquiry}
       selectedPhoneCountry={selectedPhoneCountry}
       isPhoneCountryOpen={isPhoneCountryOpen}
       setIsPhoneCountryOpen={setIsPhoneCountryOpen}
