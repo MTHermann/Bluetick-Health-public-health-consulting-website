@@ -7,7 +7,6 @@ import {
   ArrowRight,
   BarChart3,
   Briefcase,
-  ChevronDown,
   ClipboardList,
   Database,
   ExternalLink,
@@ -331,10 +330,7 @@ function SiteHeader({ pathname }) {
                           } ${isContactUs ? 'bg-blue-900 text-white hover:bg-blue-800' : ''}`
                     }`}
                   >
-                    <span className="inline-flex items-center gap-1.5">
-                      {label}
-                      {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
-                    </span>
+                    {label}
                   </a>
                   {dropdownItems ? (
                     <button
@@ -349,7 +345,12 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                      <span
+                        aria-hidden="true"
+                        className={`text-sm leading-none transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`}
+                      >
+                        ▾
+                      </span>
                     </button>
                   ) : null}
                 </div>
@@ -408,10 +409,7 @@ function SiteHeader({ pathname }) {
                           : 'text-blue-900 hover:bg-blue-50'
                     }`}
                   >
-                    <span className="inline-flex items-center gap-1.5">
-                      {label}
-                      {dropdownItems ? <span aria-hidden="true" className="text-xs leading-none">▾</span> : null}
-                    </span>
+                    {label}
                   </a>
                   {dropdownItems ? (
                     <button
@@ -424,7 +422,12 @@ function SiteHeader({ pathname }) {
                       aria-expanded={openDropdownLabel === label}
                       aria-label={`Toggle ${label} submenu`}
                     >
-                      <ChevronDown className={`h-4 w-4 transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`} />
+                      <span
+                        aria-hidden="true"
+                        className={`text-sm leading-none transition-transform ${openDropdownLabel === label ? 'rotate-180' : ''}`}
+                      >
+                        ▾
+                      </span>
                     </button>
                   ) : null}
                 </div>
