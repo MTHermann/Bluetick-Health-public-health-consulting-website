@@ -152,10 +152,10 @@ const emrPreviewCards = [
     metricValue: '6',
     detail: 'Geographic case patterns, stock pressure, and programme coverage rendered from anonymised routine data.',
     regions: [
-      { name: 'North zone', rate: '18.4 / 1k', toneClass: 'bg-emerald-300/70' },
-      { name: 'Central zone', rate: '22.1 / 1k', toneClass: 'bg-cyan-300/70' },
-      { name: 'Metro zone', rate: '31.8 / 1k', toneClass: 'bg-amber-300/75' },
-      { name: 'Lake zone', rate: '27.6 / 1k', toneClass: 'bg-violet-300/70' },
+      { name: 'North zone', rate: '18.4 / 1k', width: '48%', toneClass: 'bg-emerald-300/70' },
+      { name: 'Central zone', rate: '22.1 / 1k', width: '61%', toneClass: 'bg-cyan-300/70' },
+      { name: 'Metro zone', rate: '31.8 / 1k', width: '86%', toneClass: 'bg-amber-300/75' },
+      { name: 'Lake zone', rate: '27.6 / 1k', width: '74%', toneClass: 'bg-violet-300/70' },
     ],
   },
   {
@@ -266,10 +266,7 @@ function renderEmrPreviewVisual(preview) {
                   <span className="text-xs font-semibold text-blue-100/70">{region.rate}</span>
                 </div>
                 <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-                  <div
-                    className={`h-full rounded-full ${region.toneClass}`}
-                    style={{ width: region.rate === '31.8 / 1k' ? '86%' : region.rate === '27.6 / 1k' ? '74%' : region.rate === '22.1 / 1k' ? '61%' : '48%' }}
-                  />
+                  <div className={`h-full rounded-full ${region.toneClass}`} style={{ width: region.width }} />
                 </div>
               </div>
             ))}
@@ -335,7 +332,7 @@ function renderEmrPreviewVisual(preview) {
                       : 'Translate outputs into reports and decisions.'}
               </p>
             </div>
-            {index < preview.steps.length - 1 ? <ArrowRight className="h-4 w-4 text-white/40" /> : null}
+            {index < preview.steps.length - 1 ? <ArrowRight aria-hidden="true" className="h-4 w-4 text-white/40" /> : null}
           </div>
         ))}
       </div>
