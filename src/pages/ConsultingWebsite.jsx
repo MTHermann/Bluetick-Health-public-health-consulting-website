@@ -314,9 +314,9 @@ function SiteHeader({ pathname }) {
 
   return (
     <header
-      className="sticky top-0 z-50 overflow-visible border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
+      className="sticky top-0 z-[60] overflow-visible border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
     >
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 overflow-visible px-6 py-4">
         <a
           href="/"
           className="text-sm font-bold tracking-[0.2em] text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200"
@@ -333,7 +333,7 @@ function SiteHeader({ pathname }) {
         >
           {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
-        <nav className="hidden flex-wrap items-center justify-end gap-3 text-sm text-blue-50 md:flex">
+        <nav className="relative z-[70] hidden flex-wrap items-center justify-end gap-3 overflow-visible text-sm text-blue-50 md:flex">
           {navigationLinks.map(({ label, href }) => {
             const isActive = href === '/'
               ? pathname === '/'
@@ -349,6 +349,7 @@ function SiteHeader({ pathname }) {
                 className="header-nav-item relative"
                 onMouseEnter={() => handleDesktopDropdownEnter(label, Boolean(dropdownItems))}
                 onMouseLeave={handleDesktopDropdownLeave}
+                onFocusCapture={() => dropdownItems && setOpenDropdownLabel(label)}
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
@@ -382,7 +383,7 @@ function SiteHeader({ pathname }) {
                 </div>
                 {dropdownItems && openDropdownLabel === label ? (
                   <div
-                    className="header-nav-dropdown absolute left-0 top-[calc(100%-2px)] z-50 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
+                    className="header-nav-dropdown absolute left-0 top-full z-[80] mt-1 min-w-52 rounded-2xl border border-cyan-400/20 bg-[#0b2a57] py-2 text-blue-50 shadow-lg shadow-slate-950/25"
                     onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
                     onMouseLeave={handleDesktopDropdownLeave}
                   >
