@@ -122,104 +122,226 @@ function formatDate(date) {
   })
 }
 
-const productPreviewModules = [
+const emrPreviewCards = [
   {
-    id: 'registration',
-    label: 'Registration',
-    shortLabel: 'Reg',
+    id: 'dashboard',
+    eyebrow: 'Analytical dashboard',
+    title: 'Facility performance snapshot',
     accentColor: '#67e8f9',
     accentSurface: 'linear-gradient(145deg, rgba(34, 211, 238, 0.26), rgba(59, 130, 246, 0.16))',
-    icon: ClipboardList,
-    panelTitle: 'Front desk intake',
-    panelSubtitle: 'New patients complete digital registration before triage.',
-    kpiLabel: 'Patients checked in',
-    kpiValue: '128',
-    statusLabel: '4 forms pending review',
-    queueLabel: 'Average intake time',
-    queueValue: '06 min',
-    highlightLabel: 'Insurance verification',
-    highlightValue: '92%',
-    chartPrimary: 'M0 76C18 76 28 34 48 34C66 34 78 66 102 66C122 66 132 46 156 46C178 46 188 22 208 22C226 22 238 40 260 40',
-    chartSecondary: 'M0 92C20 92 32 70 52 70C72 70 86 84 108 84C128 84 140 74 162 74C184 74 196 88 216 88C236 88 246 80 260 80',
-    activity: [
-      { label: 'Patient ID', value: 'BT-24018', toneClass: 'from-fuchsia-400/35 to-orange-300/25' },
-      { label: 'Consent', value: 'Signed', toneClass: 'from-violet-400/35 to-fuchsia-300/25' },
-      { label: 'Routing', value: 'Triage', toneClass: 'from-cyan-400/35 to-blue-300/25' },
+    icon: BarChart3,
+    metricLabel: 'Monthly completeness',
+    metricValue: '98.2%',
+    detail: 'Routine service utilisation, data quality, and reporting indicators in one EMR workspace.',
+    chartPrimary: 'M0 84C18 84 30 70 50 70C72 70 84 42 108 42C128 42 138 54 160 54C184 54 194 22 214 22C236 22 246 30 260 30',
+    chartSecondary: 'M0 96C18 96 28 88 50 88C72 88 84 72 104 72C128 72 136 78 160 78C182 78 194 60 216 60C238 60 248 50 260 50',
+    statTiles: [
+      { label: 'Reporting units', value: '24' },
+      { label: 'Late submissions', value: '2' },
+      { label: 'Flagged trends', value: '5' },
     ],
   },
   {
-    id: 'triage',
-    label: 'Triage',
-    shortLabel: 'Tri',
+    id: 'map',
+    eyebrow: 'Epidemiological map',
+    title: 'District burden overview',
     accentColor: '#86efac',
     accentSurface: 'linear-gradient(145deg, rgba(52, 211, 153, 0.3), rgba(20, 184, 166, 0.16))',
-    icon: FlaskConical,
-    panelTitle: 'Nurse triage overview',
-    panelSubtitle: 'Vitals, risk flags, and queue visibility update in real time.',
-    kpiLabel: 'Patients triaged',
-    kpiValue: '84',
-    statusLabel: '2 urgent cases escalated',
-    queueLabel: 'Median wait time',
-    queueValue: '11 min',
-    highlightLabel: 'Vitals captured',
-    highlightValue: '97%',
-    chartPrimary: 'M0 68C18 68 28 30 50 30C72 30 80 54 106 54C126 54 136 42 156 42C178 42 188 16 210 16C228 16 242 28 260 28',
-    chartSecondary: 'M0 90C16 90 28 74 46 74C68 74 82 88 104 88C124 88 140 64 162 64C184 64 196 76 220 76C236 76 248 66 260 66',
-    activity: [
-      { label: 'Blood pressure', value: '122/78', toneClass: 'from-emerald-400/35 to-lime-300/20' },
-      { label: 'SpO₂', value: '98%', toneClass: 'from-cyan-400/35 to-sky-300/20' },
-      { label: 'Priority', value: 'Routine', toneClass: 'from-blue-400/35 to-indigo-300/20' },
+    icon: TrendingUp,
+    metricLabel: 'Hotspot districts',
+    metricValue: '6',
+    detail: 'Geographic case patterns, stock pressure, and programme coverage rendered from anonymised routine data.',
+    regions: [
+      { name: 'North zone', rate: '18.4 / 1k', toneClass: 'bg-emerald-300/70' },
+      { name: 'Central zone', rate: '22.1 / 1k', toneClass: 'bg-cyan-300/70' },
+      { name: 'Metro zone', rate: '31.8 / 1k', toneClass: 'bg-amber-300/75' },
+      { name: 'Lake zone', rate: '27.6 / 1k', toneClass: 'bg-violet-300/70' },
     ],
   },
   {
-    id: 'labs',
-    label: 'Laboratory',
-    shortLabel: 'Lab',
+    id: 'registry',
+    eyebrow: 'Registry architecture',
+    title: 'Data pipeline and governance',
     accentColor: '#f0abfc',
     accentSurface: 'linear-gradient(145deg, rgba(232, 121, 249, 0.26), rgba(244, 63, 94, 0.14))',
     icon: Database,
-    panelTitle: 'Laboratory orders',
-    panelSubtitle: 'Specimens, pending results, and flagged findings stay linked to the chart.',
-    kpiLabel: 'Results posted',
-    kpiValue: '56',
-    statusLabel: '6 abnormal values require sign-off',
-    queueLabel: 'Turnaround time',
-    queueValue: '03 hrs',
-    highlightLabel: 'Orders completed',
-    highlightValue: '89%',
-    chartPrimary: 'M0 74C18 74 26 48 46 48C66 48 78 56 98 56C120 56 130 26 154 26C176 26 188 34 210 34C232 34 242 18 260 18',
-    chartSecondary: 'M0 94C18 94 30 80 50 80C70 80 82 90 106 90C128 90 140 72 162 72C184 72 194 82 216 82C236 82 246 74 260 74',
-    activity: [
-      { label: 'CBC status', value: 'Ready', toneClass: 'from-fuchsia-400/35 to-rose-300/20' },
-      { label: 'Malaria RDT', value: 'Pending', toneClass: 'from-amber-300/35 to-orange-300/20' },
-      { label: 'Alert review', value: 'Queued', toneClass: 'from-cyan-400/35 to-blue-300/20' },
+    metricLabel: 'Validated data layers',
+    metricValue: '12',
+    detail: 'Registry structures, interoperability checkpoints, and role-based review paths visible without showing real records.',
+    nodes: [
+      { label: 'Facility EMR', shortLabel: 'EMR' },
+      { label: 'Laboratory', shortLabel: 'LAB' },
+      { label: 'Warehouse', shortLabel: 'LMIS' },
+      { label: 'District reporting', shortLabel: 'DHIS' },
     ],
   },
   {
-    id: 'reports',
-    label: 'Reporting',
-    shortLabel: 'Rpt',
+    id: 'workflow',
+    eyebrow: 'Research workflow',
+    title: 'Evidence production pathway',
     accentColor: '#fcd34d',
     accentSurface: 'linear-gradient(145deg, rgba(251, 191, 36, 0.28), rgba(249, 115, 22, 0.16))',
-    icon: TrendingUp,
-    panelTitle: 'Programme dashboard',
-    panelSubtitle: 'Facility trends and monthly indicators roll up into one reporting view.',
-    kpiLabel: 'Reports generated',
-    kpiValue: '18',
-    statusLabel: 'Monthly DHIS export ready',
-    queueLabel: 'Data quality score',
-    queueValue: '98%',
-    highlightLabel: 'Indicators synced',
-    highlightValue: '145',
-    chartPrimary: 'M0 82C20 82 30 60 52 60C72 60 86 66 108 66C130 66 140 38 160 38C184 38 192 12 214 12C234 12 244 26 260 26',
-    chartSecondary: 'M0 98C18 98 30 90 50 90C72 90 84 72 108 72C128 72 138 78 160 78C184 78 196 60 218 60C238 60 246 52 260 52',
-    activity: [
-      { label: 'ANC visits', value: '+12%', toneClass: 'from-amber-300/35 to-yellow-300/18' },
-      { label: 'Stock alerts', value: '03', toneClass: 'from-orange-300/35 to-rose-300/18' },
-      { label: 'District sync', value: 'Done', toneClass: 'from-cyan-400/35 to-sky-300/20' },
-    ],
+    icon: ClipboardList,
+    metricLabel: 'Analysis cycles this quarter',
+    metricValue: '9',
+    detail: 'A single EMR can support protocol review, cleaning, statistical analysis, and manuscript-ready outputs.',
+    steps: ['Protocol alignment', 'Data cleaning', 'R analysis', 'Decision brief'],
   },
 ]
+
+function renderEmrPreviewVisual(preview) {
+  if (preview.id === 'dashboard') {
+    return (
+      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
+        <div className="grid gap-3 sm:grid-cols-[118px_minmax(0,1fr)]">
+          <div className="space-y-3">
+            {preview.statTiles.map((tile) => (
+              <div key={tile.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/65">{tile.label}</p>
+                <p className="mt-2 text-lg font-semibold text-white">{tile.value}</p>
+              </div>
+            ))}
+          </div>
+          <div className="rounded-2xl border border-white/[0.08] bg-[#10213c] p-3">
+            <div className="mb-3 flex items-center justify-between">
+              <div className="h-2.5 w-24 rounded-full bg-white/20" />
+              <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/75">
+                Live
+              </span>
+            </div>
+            <svg viewBox="0 0 260 110" className="product-preview-chart h-28 w-full" aria-hidden="true">
+              <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
+              <path d={preview.chartPrimary} fill="none" stroke="#67e8f9" strokeWidth="4" strokeLinecap="round" />
+              <path d={preview.chartSecondary} fill="none" stroke="#a78bfa" strokeWidth="4" strokeLinecap="round" />
+            </svg>
+            <div className="mt-3 grid grid-cols-4 gap-2">
+              {[52, 68, 48, 84].map((height, index) => (
+                <div key={height} className="flex items-end gap-2 rounded-2xl border border-white/[0.06] bg-white/[0.04] px-3 py-2">
+                  <div className="w-2 rounded-full bg-cyan-300/85" style={{ height }} />
+                  <div className="w-2 rounded-full bg-violet-300/65" style={{ height: height - 14 }} />
+                  <span className="ml-auto text-[10px] font-semibold text-blue-100/55">Q{index + 1}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (preview.id === 'map') {
+    return (
+      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
+        <div className="grid gap-3 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+          <div className="rounded-2xl border border-white/[0.08] bg-[radial-gradient(circle_at_28%_24%,rgba(134,239,172,0.28),transparent_34%),radial-gradient(circle_at_65%_58%,rgba(125,211,252,0.24),transparent_30%),linear-gradient(180deg,rgba(12,28,50,0.98),rgba(11,23,43,0.98))] p-3">
+            <div className="relative h-[180px] rounded-[20px] border border-dashed border-white/10 bg-white/[0.03]">
+              {[
+                { left: '22%', top: '22%', size: 'h-4 w-4', toneClass: 'bg-emerald-300' },
+                { left: '58%', top: '26%', size: 'h-6 w-6', toneClass: 'bg-cyan-300' },
+                { left: '66%', top: '58%', size: 'h-7 w-7', toneClass: 'bg-amber-300' },
+                { left: '36%', top: '68%', size: 'h-5 w-5', toneClass: 'bg-violet-300' },
+              ].map((marker, index) => (
+                <span
+                  key={index}
+                  className={`absolute rounded-full ${marker.size} ${marker.toneClass} shadow-[0_0_0_8px_rgba(255,255,255,0.04)]`}
+                  style={{ left: marker.left, top: marker.top }}
+                />
+              ))}
+              <svg viewBox="0 0 260 180" className="absolute inset-0 h-full w-full opacity-35" aria-hidden="true">
+                <path d="M38 18L92 28L122 18L164 34L212 22L222 68L198 102L214 142L176 160L124 148L82 160L42 134L28 94L40 58Z" fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="2" strokeLinejoin="round" />
+                <path d="M88 32L94 76L76 126" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
+                <path d="M126 20L132 62L158 102L124 146" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
+                <path d="M164 34L170 78L200 104" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
+              </svg>
+            </div>
+          </div>
+          <div className="space-y-3">
+            {preview.regions.map((region) => (
+              <div key={region.name} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className={`h-3 w-3 rounded-full ${region.toneClass}`} />
+                    <p className="text-sm font-medium text-white">{region.name}</p>
+                  </div>
+                  <span className="text-xs font-semibold text-blue-100/70">{region.rate}</span>
+                </div>
+                <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className={`h-full rounded-full ${region.toneClass}`}
+                    style={{ width: region.rate === '31.8 / 1k' ? '86%' : region.rate === '27.6 / 1k' ? '74%' : region.rate === '22.1 / 1k' ? '61%' : '48%' }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (preview.id === 'registry') {
+    return (
+      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
+        <div className="rounded-2xl border border-white/[0.08] bg-[#10213c] p-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {preview.nodes.map((node, index) => (
+              <div key={node.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/70">
+                    {node.shortLabel}
+                  </span>
+                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: preview.accentColor }} />
+                </div>
+                <p className="mt-4 text-sm font-medium text-white">{node.label}</p>
+                {index < preview.nodes.length - 1 ? (
+                  <div className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/45">
+                    <span className="h-px flex-1 bg-white/10" />
+                    Sync
+                    <span className="h-px flex-1 bg-white/10" />
+                  </div>
+                ) : (
+                  <div className="mt-4 rounded-xl border border-dashed border-white/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/45">
+                    Governance review
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
+      <div className="grid gap-3">
+        {preview.steps.map((step, index) => (
+          <div key={step} className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-2xl text-sm font-semibold text-slate-950"
+              style={{ backgroundImage: preview.accentSurface }}
+            >
+              {index + 1}
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-white">{step}</p>
+              <p className="mt-1 text-xs leading-5 text-blue-100/65">
+                {index === 0
+                  ? 'Define indicators and align data capture.'
+                  : index === 1
+                    ? 'Validate, reconcile, and anonymise records.'
+                    : index === 2
+                      ? 'Generate reproducible plots and models.'
+                      : 'Translate outputs into reports and decisions.'}
+              </p>
+            </div>
+            {index < preview.steps.length - 1 ? <ArrowRight className="h-4 w-4 text-white/40" /> : null}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 function setMetaTag(selector, attributes) {
   let tag = document.head.querySelector(selector)
@@ -1122,9 +1244,6 @@ function NewsPage() {
 function ProductsPage() {
   const productsInfo = pageContent['/products/']
   const featuredProduct = productsContent.products[0]
-  const [activeModuleId, setActiveModuleId] = useState(productPreviewModules[1].id)
-  const activeModule = productPreviewModules.find((module) => module.id === activeModuleId) || productPreviewModules[0]
-  const ActiveModuleIcon = activeModule.icon
 
   return (
     <>
@@ -1141,135 +1260,46 @@ function ProductsPage() {
             </span>
           </div>
           <div className="reveal-on-scroll reveal-slide relative" style={{ '--reveal-delay': '90ms' }}>
-            <div className="mx-auto w-full max-w-md rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(8,24,44,0.96),rgba(3,12,24,0.96))] p-5 shadow-[0_24px_56px_rgba(2,12,27,0.52)]">
-              <div className="mb-4 flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product preview</p>
-                <MonitorSmartphone className="h-5 w-5 text-cyan-200" />
-              </div>
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#08162b] shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
-                  <div className="grid min-h-[320px] grid-cols-[84px_minmax(0,1fr)]">
-                    <div className="border-r border-white/[0.06] bg-[#09172c] p-3">
-                      <div className="mb-4 flex items-center gap-2">
-                        <div className="rounded-[18px] bg-[linear-gradient(145deg,rgba(192,132,252,0.32),rgba(99,102,241,0.18))] p-2.5 shadow-[0_12px_28px_rgba(44,20,82,0.25)]">
-                          <ActiveModuleIcon className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <div className="h-2.5 w-14 rounded-full bg-white/[0.85]" />
-                          <div className="mt-1 h-2 w-10 rounded-full bg-white/30" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        {productPreviewModules.map((module) => {
-                          const isActive = module.id === activeModule.id
-
-                          return (
-                            <button
-                              key={module.id}
-                              type="button"
-                              aria-pressed={isActive}
-                              aria-label={`Show ${module.label} preview`}
-                              onClick={() => setActiveModuleId(module.id)}
-                              className={`product-preview-nav group flex w-full items-center gap-2 rounded-xl border px-2 py-2 text-left transition ${
-                                isActive
-                                  ? 'border-cyan-300/35 bg-white/[0.09] shadow-[0_12px_28px_rgba(10,132,255,0.14)]'
-                                  : 'border-white/[0.06] bg-white/[0.04] hover:border-white/[0.14] hover:bg-white/[0.07]'
-                              }`}
-                            >
-                              <div
-                                className={`h-2.5 w-2.5 rounded-full ${isActive ? '' : 'bg-white/25'}`}
-                                style={isActive ? { backgroundColor: module.accentColor } : undefined}
-                              />
-                              <div className="flex-1">
-                                <div className={`h-2 rounded-full ${isActive ? 'bg-white/70' : 'bg-white/25'}`} />
-                                <span className="sr-only">{module.label}</span>
-                              </div>
-                            </button>
-                          )
-                        })}
-                      </div>
-                      <div className="mt-5 rounded-2xl p-3" style={{ backgroundImage: activeModule.accentSurface }}>
-                        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80">{activeModule.shortLabel}</p>
-                        <div className="mt-3 h-10 rounded-xl bg-white/[0.12] px-3 py-2">
-                          <div className="h-2 w-14 rounded-full bg-white/40" />
-                          <div className="mt-2 h-2.5 w-10 rounded-full" style={{ backgroundColor: activeModule.accentColor }} />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-[#10213c] p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-10 flex-1 items-center rounded-xl border border-white/[0.08] bg-[#0c1a31] px-4">
-                          <div className="h-2 w-28 rounded-full bg-white/20" />
-                        </div>
-                        <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview notifications" />
-                        <button type="button" className="product-preview-chip h-10 w-10 rounded-xl bg-[#0c1a31]" aria-label="Preview tasks" />
-                      </div>
-                      <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0b1930] p-4">
-                        <div className="grid gap-3 sm:grid-cols-[150px_minmax(0,1fr)]">
-                          <div className="grid grid-cols-2 gap-3 sm:grid-cols-1">
-                            <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
-                              <div className="h-2 w-16 rounded-full bg-white/[0.45]" />
-                              <p className="mt-3 text-lg font-semibold text-white">{activeModule.queueValue}</p>
-                              <p className="mt-1 text-[11px] leading-4 text-blue-100/75">{activeModule.queueLabel}</p>
-                            </div>
-                            <div className="rounded-xl border border-white/[0.08] p-3" style={{ backgroundImage: activeModule.accentSurface }}>
-                              <div className="h-2 w-16 rounded-full bg-white/[0.55]" />
-                              <p className="mt-3 text-lg font-semibold text-white">{activeModule.highlightValue}</p>
-                              <p className="mt-1 text-[11px] leading-4 text-white/80">{activeModule.highlightLabel}</p>
-                            </div>
-                          </div>
-                          <div className="rounded-xl border border-white/[0.08] bg-[#0d1f38] p-3">
-                            <div className="mb-3 flex items-center justify-between gap-2">
-                              <div>
-                                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue-100/75">{activeModule.kpiLabel}</p>
-                                <p className="mt-1 text-lg font-semibold text-white">{activeModule.kpiValue}</p>
-                              </div>
-                              <div className="flex gap-2">
-                                <div className="product-preview-toggle h-7 w-14 rounded-lg" style={{ backgroundColor: activeModule.accentColor }} />
-                                <div className="product-preview-toggle h-7 w-14 rounded-lg border border-white/20 bg-white/5" />
-                              </div>
-                            </div>
-                            <svg viewBox="0 0 260 110" className="product-preview-chart h-28 w-full" aria-hidden="true">
-                              <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
-                              <path d={activeModule.chartPrimary} fill="none" stroke="#fb7185" strokeWidth="4" strokeLinecap="round" />
-                              <path d={activeModule.chartSecondary} fill="none" stroke="#818cf8" strokeWidth="4" strokeLinecap="round" />
-                            </svg>
-                          </div>
-                        </div>
-                        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                          {activeModule.activity.map((item) => (
-                            <div key={item.label} className="product-preview-card rounded-xl border border-white/[0.08] bg-white/[0.04] p-3">
-                              <div className={`h-12 rounded-lg bg-gradient-to-br ${item.toneClass}`} />
-                              <span className="mt-3 block h-2.5 w-16 rounded-full" style={{ backgroundColor: activeModule.accentColor }} />
-                              <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-100/70">{item.label}</p>
-                              <p className="mt-1 text-sm font-medium text-white">{item.value}</p>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="mt-4 rounded-2xl border border-white/[0.08] bg-[#0c1b31] p-4">
-                          <div className="flex items-center justify-between gap-3">
-                            <div>
-                              <p className="text-sm font-semibold text-white">{activeModule.panelTitle}</p>
-                              <p className="mt-1 text-xs leading-5 text-blue-100/70">{activeModule.panelSubtitle}</p>
-                            </div>
-                            <span className="product-preview-status inline-flex rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-100/80">
-                              Live
-                            </span>
-                          </div>
-                          <div
-                            className="mt-4 rounded-2xl p-4 text-white shadow-[0_18px_40px_rgba(10,100,80,0.22)]"
-                            style={{ backgroundImage: activeModule.accentSurface }}
-                          >
-                            <div className="h-2.5 w-20 rounded-full bg-white/55" />
-                            <p className="mt-3 text-2xl font-semibold">{activeModule.kpiValue}</p>
-                            <p className="mt-1 text-xs text-white/85">{activeModule.statusLabel}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+            <div className="mx-auto w-full max-w-2xl rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(8,24,44,0.96),rgba(3,12,24,0.96))] p-5 shadow-[0_24px_56px_rgba(2,12,27,0.52)]">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product previews</p>
+                  <p className="mt-1 text-sm text-blue-100/75">The same EMR shown through analytics, maps, architecture, and research workflows.</p>
                 </div>
+                <MonitorSmartphone className="h-5 w-5 shrink-0 text-cyan-200" />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {emrPreviewCards.map((preview) => {
+                  const PreviewIcon = preview.icon
+
+                  return (
+                    <div key={preview.id} className="product-preview-card rounded-[24px] border border-white/[0.08] bg-white/[0.04] p-4">
+                      <div className="mb-4 flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-100/70">{preview.eyebrow}</p>
+                          <h3 className="mt-2 text-base font-semibold text-white">{preview.title}</h3>
+                        </div>
+                        <div className="rounded-[18px] p-2.5 shadow-[0_12px_28px_rgba(44,20,82,0.25)]" style={{ backgroundImage: preview.accentSurface }}>
+                          <PreviewIcon className="h-4 w-4 text-white" />
+                        </div>
+                      </div>
+                      <div className="mb-4 flex items-end justify-between gap-3">
+                        <div>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/60">{preview.metricLabel}</p>
+                          <p className="mt-1 text-2xl font-semibold text-white">{preview.metricValue}</p>
+                        </div>
+                        <span className="product-preview-status inline-flex rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-100/80">
+                          EMR
+                        </span>
+                      </div>
+                      {renderEmrPreviewVisual(preview)}
+                      <p className="mt-4 text-sm leading-6 text-blue-100/75">{preview.detail}</p>
+                    </div>
+                  )
+                })}
               </div>
             </div>
+          </div>
         </div>
       </section>
       <section className="section-code-bg section-bg-services section-code-bg--shine bg-[#f3f9ff] px-6 py-16">
