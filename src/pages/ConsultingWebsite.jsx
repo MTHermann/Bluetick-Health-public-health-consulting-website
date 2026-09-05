@@ -219,7 +219,7 @@ function SiteHeader({ pathname }) {
   }
 
   const handleDropdownLabelKeyDown = (event, label) => {
-    if (event.key === 'ArrowDown' || event.key === ' ') {
+    if (event.key === 'ArrowDown' || event.key === ' ' || event.key === 'Space' || event.code === 'Space') {
       event.preventDefault()
       setOpenDropdownLabel(label)
     }
