@@ -527,7 +527,7 @@ function HomePage({
         <div className="mx-auto max-w-6xl">
           <div className="about-signature-shell grid gap-10 overflow-hidden rounded-[32px] border border-blue-200/80 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:gap-12 md:p-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
             <div className="max-w-3xl reveal-on-scroll">
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Who we are</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Who we are</p>
               <h2 id="about-section-heading" className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
                 Bluetick Health is an independent public health consultancy
               </h2>
