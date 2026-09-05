@@ -571,7 +571,11 @@ function HomePage({
                 </div>
               </div>
 
-              <div className="about-network relative mt-6 min-h-[320px]">
+              <div
+                className="about-network relative mt-6 min-h-[320px]"
+                role="img"
+                aria-label="Bluetick Health sits at the intersection of public health evidence, analytics, digital health, and programme interventions."
+              >
                 <svg
                   aria-hidden="true"
                   className="about-network-svg"

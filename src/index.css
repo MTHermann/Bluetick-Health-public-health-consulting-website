@@ -252,24 +252,29 @@
 }
 
 @media (max-width: 640px) {
+  .about-network {
+    min-height: 22rem;
+  }
+
   .about-network-node {
     padding: 0.75rem 0.8rem;
   }
 
   .about-network-node--northwest,
   .about-network-node--southwest {
-    max-width: 8.25rem;
+    max-width: 8.75rem;
   }
 
   .about-network-node--northeast,
   .about-network-node--southeast,
   .about-network-node--core {
-    min-width: 7.5rem;
+    min-width: 8rem;
   }
 
   .about-network-node-label {
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: 0.05em;
   }
 }
 
