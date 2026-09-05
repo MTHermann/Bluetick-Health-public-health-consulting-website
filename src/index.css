@@ -303,10 +303,9 @@
 }
 
 @media (max-width: 640px) {
-  .about-value-chip,
-  .about-discipline-chip {
-    width: 100%;
-    justify-content: center;
+  .about-values-list,
+  .about-discipline-list {
+    justify-content: flex-start;
   }
 
   .about-credibility-card,
