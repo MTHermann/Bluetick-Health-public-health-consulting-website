@@ -218,6 +218,13 @@ function SiteHeader({ pathname }) {
     }, 120)
   }
 
+  const handleDropdownLabelKeyDown = (event, label) => {
+    if (event.key === 'ArrowDown' || event.key === ' ' || event.key === 'Space' || event.code === 'Space') {
+      event.preventDefault()
+      setOpenDropdownLabel(label)
+    }
+  }
+
   return (
     <header
       className="sticky top-0 z-[60] overflow-visible border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
@@ -255,25 +262,26 @@ function SiteHeader({ pathname }) {
                 className="header-nav-item relative"
                 onMouseEnter={() => handleDesktopDropdownEnter(label, Boolean(dropdownItems))}
                 onMouseLeave={handleDesktopDropdownLeave}
-                onFocusCapture={() => dropdownItems && setOpenDropdownLabel(label)}
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
                 {dropdownItems ? (
-                  <button
-                    type="button"
-                    aria-expanded={openDropdownLabel === label}
+                  <a
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
                     aria-haspopup="menu"
+                    aria-expanded={openDropdownLabel === label}
                     className={`rounded-full px-3 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
                       isActive
                         ? 'bg-white/16 font-semibold text-white'
                         : 'text-blue-50 hover:bg-white/10 hover:text-white'
                     }`}
-                    onClick={() => toggleDropdown(label)}
-                    onFocus={() => setOpenDropdownLabel(label)}
+                    onClick={closeMenus}
+                    onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
+                    onKeyDown={(event) => handleDropdownLabelKeyDown(event, label)}
                   >
                     {label}
-                  </button>
+                  </a>
                 ) : (
                   <a
                     href={href}
