@@ -260,20 +260,19 @@ function SiteHeader({ pathname }) {
               >
                 <div className="flex items-center gap-1">
                 {dropdownItems ? (
-                  <button
-                    type="button"
-                    aria-expanded={openDropdownLabel === label}
-                    aria-haspopup="menu"
+                  <a
+                    href={href}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`rounded-full px-3 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
                       isActive
                         ? 'bg-white/16 font-semibold text-white'
                         : 'text-blue-50 hover:bg-white/10 hover:text-white'
                     }`}
-                    onClick={() => toggleDropdown(label)}
+                    onClick={closeMenus}
                     onFocus={() => setOpenDropdownLabel(label)}
                   >
                     {label}
-                  </button>
+                  </a>
                 ) : (
                   <a
                     href={href}

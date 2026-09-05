@@ -40,6 +40,9 @@
 
 .premium-page > * {
   position: relative;
+}
+
+.premium-page > :not(header) {
   z-index: 1;
 }
 
