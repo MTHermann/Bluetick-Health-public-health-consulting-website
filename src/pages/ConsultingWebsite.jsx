@@ -143,6 +143,7 @@ function SiteHeader({ pathname }) {
   const closeDropdownTimeoutRef = useRef(null)
   const navDropdownItems = {
     Services: [
+      { label: 'All Services', href: '/#services' },
       { label: 'Statistical Analysis', href: '/#services' },
       { label: 'Data Management', href: '/#services' },
       { label: 'Research Support', href: '/#services' },
@@ -151,13 +152,15 @@ function SiteHeader({ pathname }) {
       { label: 'Clinical Trials Support', href: '/#services' },
       { label: 'Health Economics & Economic Evaluation', href: '/#services' },
     ],
-    Blogs: [{ label: 'All blog post pages', href: '/blog/' }],
+    Blogs: [{ label: 'All Blog Posts', href: '/blog/' }],
     News: [
+      { label: 'All News', href: '/news/' },
       { label: 'Bluetick Updates', href: '/news/#bluetick-updates' },
       { label: 'African Health News', href: '/news/#african-health-news' },
       { label: 'Global Public Health News', href: '/news/#global-public-health-news' },
     ],
     Products: [
+      { label: 'All Products', href: '/products/' },
       { label: 'Bluetick Health EMR', href: '/products/#bluetick-health-emr' },
       { label: 'Upcoming Digital Solutions', href: '/products/#upcoming-digital-solutions' },
     ],
@@ -253,6 +256,22 @@ function SiteHeader({ pathname }) {
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
+                {dropdownItems ? (
+                  <button
+                    type="button"
+                    aria-expanded={openDropdownLabel === label}
+                    aria-haspopup="menu"
+                    className={`rounded-full px-3 py-2 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200 ${
+                      isActive
+                        ? 'bg-white/16 font-semibold text-white'
+                        : 'text-blue-50 hover:bg-white/10 hover:text-white'
+                    }`}
+                    onClick={() => toggleDropdown(label)}
+                    onFocus={() => setOpenDropdownLabel(label)}
+                  >
+                    {label}
+                  </button>
+                ) : (
                   <a
                     href={href}
                     aria-current={isActive ? 'page' : undefined}
@@ -267,6 +286,7 @@ function SiteHeader({ pathname }) {
                   >
                     {label}
                   </a>
+                )}
                 {dropdownItems ? (
                   <button
                     type="button"
@@ -319,17 +339,29 @@ function SiteHeader({ pathname }) {
                 className="border-b border-white/10 last:mb-0 last:border-b-0 last:pb-0"
               >
                 <div className="flex items-center gap-2 py-1">
-                  <a
-                    href={href}
-                    onClick={closeMenus}
-                    className={`flex-1 rounded-2xl px-3 py-3 text-sm font-medium transition-colors ${
-                      isContactUs
-                        ? 'bg-cyan-400 text-slate-950'
-                        : 'text-blue-50 hover:bg-white/10'
-                    }`}
-                  >
-                    {label}
-                  </a>
+                  {dropdownItems ? (
+                    <button
+                      type="button"
+                      className="flex-1 rounded-2xl px-3 py-3 text-left text-sm font-medium text-blue-50 transition-colors hover:bg-white/10"
+                      onClick={() => toggleDropdown(label)}
+                      aria-haspopup="menu"
+                      aria-expanded={openDropdownLabel === label}
+                    >
+                      {label}
+                    </button>
+                  ) : (
+                    <a
+                      href={href}
+                      onClick={closeMenus}
+                      className={`flex-1 rounded-2xl px-3 py-3 text-sm font-medium transition-colors ${
+                        isContactUs
+                          ? 'bg-cyan-400 text-slate-950'
+                          : 'text-blue-50 hover:bg-white/10'
+                      }`}
+                    >
+                      {label}
+                    </a>
+                  )}
                   {dropdownItems ? (
                     <button
                       type="button"
