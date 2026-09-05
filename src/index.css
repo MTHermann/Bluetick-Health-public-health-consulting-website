@@ -253,22 +253,27 @@
 
 @media (max-width: 640px) {
   .about-network {
-    min-height: 22rem;
+    display: grid;
+    min-height: 0;
+    gap: 0.75rem;
   }
 
   .about-network-node {
-    padding: 0.75rem 0.8rem;
+    position: static;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    padding: 0.8rem 0.9rem;
+    border-radius: 1rem;
   }
 
-  .about-network-node--northwest,
-  .about-network-node--southwest {
-    max-width: 8.75rem;
-  }
-
-  .about-network-node--northeast,
-  .about-network-node--southeast,
   .about-network-node--core {
-    min-width: 8rem;
+    order: -1;
+    transform: none;
+  }
+
+  .about-network-svg {
+    display: none;
   }
 
   .about-network-node-label {
