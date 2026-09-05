@@ -523,12 +523,12 @@ function HomePage({
         </div>
       </section>
 
-      <section className="section-code-bg section-bg-about about-signature-section px-6 py-24">
+      <section aria-labelledby="about-section-heading" className="section-code-bg section-bg-about about-signature-section px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <div className="about-signature-shell grid gap-10 overflow-hidden rounded-[32px] border border-blue-200/80 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:p-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">About</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
+              <h2 id="about-section-heading" className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
                 Independent consultancy for complex health data and research delivery
               </h2>
               <p className="mt-6 text-lg leading-8 text-slate-600">
