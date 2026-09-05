@@ -523,21 +523,107 @@ function HomePage({
         </div>
       </section>
 
-      <section className="section-code-bg section-bg-about px-6 py-24">
+      <section aria-labelledby="about-section-heading" className="section-code-bg section-bg-about about-signature-section px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="max-w-4xl rounded-[28px] border border-blue-200 bg-[#e7f0ff] p-8 shadow-[0_18px_40px_rgba(15,23,42,0.08)] md:p-12">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">About</p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
-              Independent consultancy for complex health data and research delivery
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              Independent Consultancy specializing in public health research, healthcare analytics, and statistical
-              modelling. We support evidence-based decision-making through analysis of large-scale health datasets,
-              epidemiological studies, and advanced statistical methods. Our multidisciplinary team brings together
-              clinicians, epidemiologists, biostatisticians, health economists, and programme specialists to deliver
-              solutions that are both scientifically sound and practically relevant, combining global best practice with
-              deep local knowledge.
-            </p>
+          <div className="about-signature-shell grid gap-10 overflow-hidden rounded-[32px] border border-blue-200/80 p-8 shadow-[0_24px_60px_rgba(15,23,42,0.12)] md:p-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:items-center">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">About</p>
+              <h2 id="about-section-heading" className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-slate-950 md:text-4xl">
+                Independent consultancy for complex health data and research delivery
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-slate-600">
+                Independent Consultancy specializing in public health research, healthcare analytics, and statistical
+                modelling. We support evidence-based decision-making through analysis of large-scale health datasets,
+                epidemiological studies, and advanced statistical methods. Our multidisciplinary team brings together
+                clinicians, epidemiologists, biostatisticians, health economists, and programme specialists to deliver
+                solutions that are both scientifically sound and practically relevant, combining global best practice with
+                deep local knowledge.
+              </p>
+              <div className="mt-8 grid gap-4 md:grid-cols-2">
+                <div className="about-signature-panel rounded-[24px] p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Mission</p>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    Turn complex public health evidence, analytics, and digital delivery into clear decisions and
+                    practical programme action.
+                  </p>
+                </div>
+                <div className="about-signature-panel rounded-[24px] p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-blue-700">Values</p>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                    <li>Scientific rigour</li>
+                    <li>Implementation focus</li>
+                    <li>Context-aware partnership</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div className="about-signal-board rounded-[28px] p-6 sm:p-7">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/90">
+                    Who we are
+                  </p>
+                  <p className="mt-2 text-xl font-semibold text-white">Evidence connected to delivery</p>
+                </div>
+                <div className="rounded-full border border-cyan-300/20 bg-cyan-300/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan-100">
+                  Global health
+                </div>
+              </div>
+
+              <div className="about-network relative mt-6 min-h-[320px]">
+                <svg
+                  aria-hidden="true"
+                  className="about-network-svg"
+                  viewBox="0 0 420 320"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M210 160L102 78" stroke="rgba(103,232,249,0.45)" strokeWidth="1.5" strokeDasharray="6 8" />
+                  <path d="M210 160L318 92" stroke="rgba(96,165,250,0.42)" strokeWidth="1.5" strokeDasharray="6 8" />
+                  <path d="M210 160L314 244" stroke="rgba(96,165,250,0.38)" strokeWidth="1.5" strokeDasharray="6 8" />
+                  <path d="M210 160L108 242" stroke="rgba(103,232,249,0.4)" strokeWidth="1.5" strokeDasharray="6 8" />
+                  <path d="M102 78C166 42 262 42 318 92" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
+                  <path d="M108 242C164 278 260 280 314 244" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
+                  {[{ cx: 102, cy: 78 }, { cx: 318, cy: 92 }, { cx: 314, cy: 244 }, { cx: 108, cy: 242 }, { cx: 210, cy: 160 }].map(
+                    ({ cx, cy }) => (
+                      <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="4.5" fill="rgba(125,211,252,0.88)" />
+                    ),
+                  )}
+                </svg>
+
+                <div className="about-network-node about-network-node--northwest">
+                  <span className="about-network-node-label">Public health evidence</span>
+                </div>
+                <div className="about-network-node about-network-node--northeast">
+                  <span className="about-network-node-label">Analytics</span>
+                </div>
+                <div className="about-network-node about-network-node--southeast">
+                  <span className="about-network-node-label">Digital health</span>
+                </div>
+                <div className="about-network-node about-network-node--southwest">
+                  <span className="about-network-node-label">Programme interventions</span>
+                </div>
+                <div className="about-network-node about-network-node--core">
+                  <span className="about-network-node-label about-network-node-label--core">Bluetick Health</span>
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-3 text-left text-xs tracking-[0.2em] text-slate-300 sm:grid-cols-3">
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                  <span className="block text-[10px] uppercase text-slate-400">Coverage</span>
+                  <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Data to field</span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                  <span className="block text-[10px] uppercase text-slate-400">Signal</span>
+                  <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Decision-ready</span>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                  <span className="block text-[10px] uppercase text-slate-400">Focus</span>
+                  <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Local context</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
