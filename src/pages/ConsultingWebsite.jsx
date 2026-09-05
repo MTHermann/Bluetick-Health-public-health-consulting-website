@@ -15,7 +15,6 @@ import {
   Linkedin,
   Mail,
   Menu,
-  MonitorSmartphone,
   Phone,
   TrendingUp,
   X,
@@ -120,224 +119,6 @@ function formatDate(date) {
     month: 'long',
     day: 'numeric',
   })
-}
-
-const emrPreviewCards = [
-  {
-    id: 'dashboard',
-    eyebrow: 'Analytical dashboard',
-    title: 'Facility performance snapshot',
-    accentColor: '#67e8f9',
-    accentSurface: 'linear-gradient(145deg, rgba(34, 211, 238, 0.26), rgba(59, 130, 246, 0.16))',
-    icon: BarChart3,
-    metricLabel: 'Monthly completeness',
-    metricValue: '98.2%',
-    detail: 'Routine service utilisation, data quality, and reporting indicators in one EMR workspace.',
-    chartPrimary: 'M0 84C18 84 30 70 50 70C72 70 84 42 108 42C128 42 138 54 160 54C184 54 194 22 214 22C236 22 246 30 260 30',
-    chartSecondary: 'M0 96C18 96 28 88 50 88C72 88 84 72 104 72C128 72 136 78 160 78C182 78 194 60 216 60C238 60 248 50 260 50',
-    statTiles: [
-      { label: 'Reporting units', value: '24' },
-      { label: 'Late submissions', value: '2' },
-      { label: 'Flagged trends', value: '5' },
-    ],
-  },
-  {
-    id: 'map',
-    eyebrow: 'Epidemiological map',
-    title: 'District burden overview',
-    accentColor: '#86efac',
-    accentSurface: 'linear-gradient(145deg, rgba(52, 211, 153, 0.3), rgba(20, 184, 166, 0.16))',
-    icon: TrendingUp,
-    metricLabel: 'Hotspot districts',
-    metricValue: '6',
-    detail: 'Geographic case patterns, stock pressure, and programme coverage rendered from anonymised routine data.',
-    regions: [
-      { name: 'North zone', rate: '18.4 / 1k', width: '48%', toneClass: 'bg-emerald-300/70' },
-      { name: 'Central zone', rate: '22.1 / 1k', width: '61%', toneClass: 'bg-cyan-300/70' },
-      { name: 'Metro zone', rate: '31.8 / 1k', width: '86%', toneClass: 'bg-amber-300/75' },
-      { name: 'Lake zone', rate: '27.6 / 1k', width: '74%', toneClass: 'bg-violet-300/70' },
-    ],
-  },
-  {
-    id: 'registry',
-    eyebrow: 'Registry architecture',
-    title: 'Data pipeline and governance',
-    accentColor: '#f0abfc',
-    accentSurface: 'linear-gradient(145deg, rgba(232, 121, 249, 0.26), rgba(244, 63, 94, 0.14))',
-    icon: Database,
-    metricLabel: 'Validated data layers',
-    metricValue: '12',
-    detail: 'Registry structures, interoperability checkpoints, and role-based review paths visible without showing real records.',
-    nodes: [
-      { label: 'Facility EMR', shortLabel: 'EMR' },
-      { label: 'Laboratory', shortLabel: 'LAB' },
-      { label: 'Warehouse', shortLabel: 'LMIS' },
-      { label: 'District reporting', shortLabel: 'DHIS' },
-    ],
-  },
-  {
-    id: 'workflow',
-    eyebrow: 'Research workflow',
-    title: 'Evidence production pathway',
-    accentColor: '#fcd34d',
-    accentSurface: 'linear-gradient(145deg, rgba(251, 191, 36, 0.28), rgba(249, 115, 22, 0.16))',
-    icon: ClipboardList,
-    metricLabel: 'Analysis cycles this quarter',
-    metricValue: '9',
-    detail: 'A single EMR can support protocol review, cleaning, statistical analysis, and manuscript-ready outputs.',
-    steps: ['Protocol alignment', 'Data cleaning', 'R analysis', 'Decision brief'],
-  },
-]
-
-function renderEmrPreviewVisual(preview) {
-  if (preview.id === 'dashboard') {
-    return (
-      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
-        <div className="grid gap-3 sm:grid-cols-[118px_minmax(0,1fr)]">
-          <div className="space-y-3">
-            {preview.statTiles.map((tile) => (
-              <div key={tile.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/65">{tile.label}</p>
-                <p className="mt-2 text-lg font-semibold text-white">{tile.value}</p>
-              </div>
-            ))}
-          </div>
-          <div className="rounded-2xl border border-white/[0.08] bg-[#10213c] p-3">
-            <div className="mb-3 flex items-center justify-between">
-              <div className="h-2.5 w-24 rounded-full bg-white/20" />
-              <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/75">
-                Live
-              </span>
-            </div>
-            <svg viewBox="0 0 260 110" className="product-preview-chart h-28 w-full" aria-hidden="true">
-              <path d="M0 22H260M0 50H260M0 78H260M0 106H260" stroke="rgba(148,163,184,0.18)" strokeWidth="1" />
-              <path d={preview.chartPrimary} fill="none" stroke="#67e8f9" strokeWidth="4" strokeLinecap="round" />
-              <path d={preview.chartSecondary} fill="none" stroke="#a78bfa" strokeWidth="4" strokeLinecap="round" />
-            </svg>
-            <div className="mt-3 grid grid-cols-4 gap-2">
-              {[52, 68, 48, 84].map((height, index) => (
-                <div key={height} className="flex items-end gap-2 rounded-2xl border border-white/[0.06] bg-white/[0.04] px-3 py-2">
-                  <div className="w-2 rounded-full bg-cyan-300/85" style={{ height }} />
-                  <div className="w-2 rounded-full bg-violet-300/65" style={{ height: height - 14 }} />
-                  <span className="ml-auto text-[10px] font-semibold text-blue-100/55">Q{index + 1}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (preview.id === 'map') {
-    return (
-      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
-        <div className="grid gap-3 sm:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-          <div className="rounded-2xl border border-white/[0.08] bg-[radial-gradient(circle_at_28%_24%,rgba(134,239,172,0.28),transparent_34%),radial-gradient(circle_at_65%_58%,rgba(125,211,252,0.24),transparent_30%),linear-gradient(180deg,rgba(12,28,50,0.98),rgba(11,23,43,0.98))] p-3">
-            <div className="relative h-[180px] rounded-[20px] border border-dashed border-white/10 bg-white/[0.03]">
-              {[
-                { left: '22%', top: '22%', size: 'h-4 w-4', toneClass: 'bg-emerald-300' },
-                { left: '58%', top: '26%', size: 'h-6 w-6', toneClass: 'bg-cyan-300' },
-                { left: '66%', top: '58%', size: 'h-7 w-7', toneClass: 'bg-amber-300' },
-                { left: '36%', top: '68%', size: 'h-5 w-5', toneClass: 'bg-violet-300' },
-              ].map((marker, index) => (
-                <span
-                  key={index}
-                  className={`absolute rounded-full ${marker.size} ${marker.toneClass} shadow-[0_0_0_8px_rgba(255,255,255,0.04)]`}
-                  style={{ left: marker.left, top: marker.top }}
-                />
-              ))}
-              <svg viewBox="0 0 260 180" className="absolute inset-0 h-full w-full opacity-35" aria-hidden="true">
-                <path d="M38 18L92 28L122 18L164 34L212 22L222 68L198 102L214 142L176 160L124 148L82 160L42 134L28 94L40 58Z" fill="none" stroke="rgba(255,255,255,0.42)" strokeWidth="2" strokeLinejoin="round" />
-                <path d="M88 32L94 76L76 126" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
-                <path d="M126 20L132 62L158 102L124 146" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
-                <path d="M164 34L170 78L200 104" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="2" />
-              </svg>
-            </div>
-          </div>
-          <div className="space-y-3">
-            {preview.regions.map((region) => (
-              <div key={region.name} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] px-4 py-3">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className={`h-3 w-3 rounded-full ${region.toneClass}`} />
-                    <p className="text-sm font-medium text-white">{region.name}</p>
-                  </div>
-                  <span className="text-xs font-semibold text-blue-100/70">{region.rate}</span>
-                </div>
-                <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10">
-                  <div className={`h-full rounded-full ${region.toneClass}`} style={{ width: region.width }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  if (preview.id === 'registry') {
-    return (
-      <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
-        <div className="rounded-2xl border border-white/[0.08] bg-[#10213c] p-4">
-          <div className="grid gap-3 sm:grid-cols-2">
-            {preview.nodes.map((node, index) => (
-              <div key={node.label} className="rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
-                <div className="flex items-center justify-between gap-3">
-                  <span className="rounded-full border border-white/10 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/70">
-                    {node.shortLabel}
-                  </span>
-                  <span className="h-2 w-2 rounded-full" style={{ backgroundColor: preview.accentColor }} />
-                </div>
-                <p className="mt-4 text-sm font-medium text-white">{node.label}</p>
-                {index < preview.nodes.length - 1 ? (
-                  <div className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/45">
-                    <span className="h-px flex-1 bg-white/10" />
-                    Sync
-                    <span className="h-px flex-1 bg-white/10" />
-                  </div>
-                ) : (
-                  <div className="mt-4 rounded-xl border border-dashed border-white/10 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/45">
-                    Governance review
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="rounded-[22px] border border-white/[0.08] bg-[#0b1930] p-4">
-      <div className="grid gap-3">
-        {preview.steps.map((step, index) => (
-          <div key={step} className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.05] p-3">
-            <div
-              className="flex h-10 w-10 items-center justify-center rounded-2xl text-sm font-semibold text-slate-950"
-              style={{ backgroundImage: preview.accentSurface }}
-            >
-              {index + 1}
-            </div>
-            <div className="flex-1">
-              <p className="text-sm font-medium text-white">{step}</p>
-              <p className="mt-1 text-xs leading-5 text-blue-100/65">
-                {index === 0
-                  ? 'Define indicators and align data capture.'
-                  : index === 1
-                    ? 'Validate, reconcile, and anonymise records.'
-                    : index === 2
-                      ? 'Generate reproducible plots and models.'
-                      : 'Translate outputs into reports and decisions.'}
-              </p>
-            </div>
-            {index < preview.steps.length - 1 ? <ArrowRight aria-hidden="true" className="h-4 w-4 text-white/40" /> : null}
-          </div>
-        ))}
-      </div>
-    </div>
-  )
 }
 
 function setMetaTag(selector, attributes) {
@@ -1247,7 +1028,7 @@ function ProductsPage() {
       <PageIntro title={productsInfo.heading} intro={productsInfo.intro} eyebrow="Digital health solutions" />
       <section id="bluetick-health-emr" className="relative overflow-hidden bg-[#051427] px-6 py-20 text-white">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,0.22),_transparent_45%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.14),_transparent_40%)]" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)]">
+        <div className="relative mx-auto max-w-4xl">
           <div className="reveal-on-scroll">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-200">{featuredProduct.category}</p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.03em] text-white md:text-4xl">{featuredProduct.name}</h2>
@@ -1255,47 +1036,6 @@ function ProductsPage() {
             <span className="mt-7 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-100">
               {featuredProduct.status}
             </span>
-          </div>
-          <div className="reveal-on-scroll reveal-slide relative" style={{ '--reveal-delay': '90ms' }}>
-            <div className="mx-auto w-full max-w-2xl rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(8,24,44,0.96),rgba(3,12,24,0.96))] p-5 shadow-[0_24px_56px_rgba(2,12,27,0.52)]">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Product previews</p>
-                  <p className="mt-1 text-sm text-blue-100/75">The same EMR shown through analytics, maps, architecture, and research workflows.</p>
-                </div>
-                <MonitorSmartphone className="h-5 w-5 shrink-0 text-cyan-200" />
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {emrPreviewCards.map((preview) => {
-                  const PreviewIcon = preview.icon
-
-                  return (
-                    <div key={preview.id} className="product-preview-card rounded-[24px] border border-white/[0.08] bg-white/[0.04] p-4">
-                      <div className="mb-4 flex items-start justify-between gap-3">
-                        <div>
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-blue-100/70">{preview.eyebrow}</p>
-                          <h3 className="mt-2 text-base font-semibold text-white">{preview.title}</h3>
-                        </div>
-                        <div className="rounded-[18px] p-2.5 shadow-[0_12px_28px_rgba(44,20,82,0.25)]" style={{ backgroundImage: preview.accentSurface }}>
-                          <PreviewIcon className="h-4 w-4 text-white" />
-                        </div>
-                      </div>
-                      <div className="mb-4 flex items-end justify-between gap-3">
-                        <div>
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-blue-100/60">{preview.metricLabel}</p>
-                          <p className="mt-1 text-2xl font-semibold text-white">{preview.metricValue}</p>
-                        </div>
-                        <span className="product-preview-status inline-flex rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-blue-100/80">
-                          EMR
-                        </span>
-                      </div>
-                      {renderEmrPreviewVisual(preview)}
-                      <p className="mt-4 text-sm leading-6 text-blue-100/75">{preview.detail}</p>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </section>
