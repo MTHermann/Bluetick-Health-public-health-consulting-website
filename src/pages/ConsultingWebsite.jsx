@@ -255,7 +255,6 @@ function SiteHeader({ pathname }) {
                 className="header-nav-item relative"
                 onMouseEnter={() => handleDesktopDropdownEnter(label, Boolean(dropdownItems))}
                 onMouseLeave={handleDesktopDropdownLeave}
-                onFocusCapture={() => dropdownItems && setOpenDropdownLabel(label)}
                 onBlurCapture={(event) => dropdownItems && handleDesktopDropdownBlur(event, label)}
               >
                 <div className="flex items-center gap-1">
@@ -270,7 +269,6 @@ function SiteHeader({ pathname }) {
                     }`}
                     onClick={closeMenus}
                     onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
-                    onFocus={() => setOpenDropdownLabel(label)}
                   >
                     {label}
                   </a>
