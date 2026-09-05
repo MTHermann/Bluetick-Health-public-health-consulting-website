@@ -218,6 +218,13 @@ function SiteHeader({ pathname }) {
     }, 120)
   }
 
+  const handleDropdownLabelKeyDown = (event, label) => {
+    if (event.key === 'ArrowDown' || event.key === ' ') {
+      event.preventDefault()
+      setOpenDropdownLabel(label)
+    }
+  }
+
   return (
     <header
       className="sticky top-0 z-[60] overflow-visible border-b border-cyan-400/15 bg-[#0a3d91]/95 text-blue-50 backdrop-blur"
@@ -271,6 +278,7 @@ function SiteHeader({ pathname }) {
                     }`}
                     onClick={closeMenus}
                     onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
+                    onKeyDown={(event) => handleDropdownLabelKeyDown(event, label)}
                   >
                     {label}
                   </a>
