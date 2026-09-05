@@ -269,6 +269,7 @@ function SiteHeader({ pathname }) {
                         : 'text-blue-50 hover:bg-white/10 hover:text-white'
                     }`}
                     onClick={closeMenus}
+                    onMouseEnter={() => handleDesktopDropdownEnter(label, true)}
                     onFocus={() => setOpenDropdownLabel(label)}
                   >
                     {label}
