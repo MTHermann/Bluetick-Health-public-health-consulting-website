@@ -609,17 +609,17 @@ function HomePage({
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 text-left text-xs uppercase tracking-[0.2em] text-slate-300 sm:grid-cols-3">
+              <div className="mt-4 grid gap-3 text-left text-xs tracking-[0.2em] text-slate-300 sm:grid-cols-3">
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                  <span className="block text-[10px] text-slate-400">Coverage</span>
+                  <span className="block text-[10px] uppercase text-slate-400">Coverage</span>
                   <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Data to field</span>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                  <span className="block text-[10px] text-slate-400">Signal</span>
+                  <span className="block text-[10px] uppercase text-slate-400">Signal</span>
                   <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Decision-ready</span>
                 </div>
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                  <span className="block text-[10px] text-slate-400">Focus</span>
+                  <span className="block text-[10px] uppercase text-slate-400">Focus</span>
                   <span className="mt-2 block text-sm font-semibold tracking-[0.08em] text-white">Local context</span>
                 </div>
               </div>
