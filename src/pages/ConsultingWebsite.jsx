@@ -201,7 +201,10 @@ function SiteHeader({ pathname }) {
 
     if (hasDropdown) {
       setOpenDropdownLabel(label)
+      return
     }
+
+    setOpenDropdownLabel(null)
   }
 
   const handleDesktopDropdownLeave = () => {
