@@ -558,7 +558,7 @@ function HomePage({
               </div>
             </div>
 
-            <div aria-hidden="true" className="about-signal-board rounded-[28px] p-6 sm:p-7">
+            <div className="about-signal-board rounded-[28px] p-6 sm:p-7">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200/90">
@@ -572,7 +572,13 @@ function HomePage({
               </div>
 
               <div className="about-network relative mt-6 min-h-[320px]">
-                <svg className="about-network-svg" viewBox="0 0 420 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  aria-hidden="true"
+                  className="about-network-svg"
+                  viewBox="0 0 420 320"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path d="M210 160L102 78" stroke="rgba(103,232,249,0.45)" strokeWidth="1.5" strokeDasharray="6 8" />
                   <path d="M210 160L318 92" stroke="rgba(96,165,250,0.42)" strokeWidth="1.5" strokeDasharray="6 8" />
                   <path d="M210 160L314 244" stroke="rgba(96,165,250,0.38)" strokeWidth="1.5" strokeDasharray="6 8" />
