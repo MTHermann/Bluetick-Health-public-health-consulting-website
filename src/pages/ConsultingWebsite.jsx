@@ -460,7 +460,7 @@ function HomePage({
               </Button>
               <a
                 href="/#services"
-                className="button-shift inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                className="button-shift inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
               >
                 Explore services <ArrowRight className="h-4 w-4" />
               </a>
@@ -469,7 +469,7 @@ function HomePage({
               href={linkedinLink}
               target="_blank"
               rel="noreferrer"
-              className="reveal-on-scroll is-visible mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+              className="reveal-on-scroll is-visible mt-8 inline-flex items-center gap-2 text-sm font-medium text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
               style={{ '--reveal-delay': '210ms' }}
             >
               <Linkedin className="h-4 w-4" /> LinkedIn
@@ -479,7 +479,7 @@ function HomePage({
           <div aria-hidden="true" className="relative mx-auto w-full max-w-[31rem]">
             <div className="absolute -left-10 top-8 h-28 w-28 rounded-full bg-cyan-400/15 blur-3xl" />
             <div className="absolute -right-4 bottom-10 h-40 w-40 rounded-full bg-blue-500/20 blur-3xl" />
-            <div className="reveal-on-scroll reveal-slide is-visible relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.96))] p-7 shadow-[0_28px_70px_rgba(2,12,27,0.45)]">
+            <div className="reveal-on-scroll reveal-slide is-visible relative overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(10,29,55,0.96),rgba(6,18,35,0.92))] p-8 shadow-[0_28px_80px_rgba(2,8,23,0.45)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-200">Analytics snapshot</p>
@@ -557,7 +557,7 @@ function HomePage({
                   <p className="mt-5 text-base leading-7 text-blue-100/85">{body}</p>
                   <a
                     href="/#contact"
-                    className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-cyan-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                    className="mt-auto inline-flex items-center gap-2 pt-8 text-sm font-medium text-cyan-200 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
                   >
                     Discuss service <ArrowRight className="h-4 w-4" />
                   </a>
@@ -610,20 +610,20 @@ function HomePage({
                 <div className="mt-8 flex flex-col gap-4 text-blue-100">
                   <a
                     href="mailto:mitikuhermanng@gmail.com"
-                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
                   >
                     <Mail className="h-5 w-5 text-cyan-200" /> mitikuhermanng@gmail.com
                   </a>
                   <a
                     href="tel:+27611170478"
-                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-300"
+                    className="inline-flex items-center gap-2 rounded-full py-1 text-blue-100 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-200"
                   >
                     <Phone className="h-5 w-5 text-cyan-200" /> +27 611170478
                   </a>
                 </div>
               </div>
 
-              <div className="reveal-on-scroll rounded-[24px] border border-slate-200 bg-[#f8fafc] p-8 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,0.12)] md:p-10" style={{ '--reveal-delay': '90ms' }}>
+              <div className="reveal-on-scroll rounded-[24px] border border-slate-200 bg-[#f8fafc] p-8 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,0.12)] md:p-10" style={{ '--reveal-delay': '100ms' }}>
                 <p className="text-center text-sm font-semibold uppercase tracking-[0.22em] text-blue-700">Start your project discussion</p>
                 <div className="mb-8 mt-6 flex flex-col items-center justify-center gap-4 text-slate-700 sm:flex-row sm:gap-8">
                 <a
