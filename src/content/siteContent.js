@@ -661,7 +661,7 @@ export function getPageMeta(pathname) {
                 'Statistical Analysis',
                 'Data Management',
                 'Research Support',
-                'Project Management',
+                'Public health project management',
                 'Monitoring & Evaluating Public Health Programs',
                 'Clinical Trials Support',
                 'Health Economics & Economic Evaluation',

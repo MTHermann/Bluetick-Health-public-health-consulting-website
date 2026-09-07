@@ -53,7 +53,7 @@ const services = [
   },
   {
     icon: Briefcase,
-    title: 'Project Management',
+    title: 'Public health project management',
     body: 'Operational planning, SOPs, stakeholder coordination, and delivery oversight for complex public health and research programmes.',
   },
   {
@@ -147,7 +147,7 @@ function SiteHeader({ pathname }) {
       { label: 'Statistical Analysis', href: '/#services' },
       { label: 'Data Management', href: '/#services' },
       { label: 'Research Support', href: '/#services' },
-      { label: 'Project Management', href: '/#services' },
+      { label: 'Public health project management', href: '/#services' },
       { label: 'Monitoring & Evaluation', href: '/#services' },
       { label: 'Clinical Trials Support', href: '/#services' },
       { label: 'Health Economics & Economic Evaluation', href: '/#services' },
