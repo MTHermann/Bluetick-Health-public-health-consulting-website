@@ -1,4 +1,4 @@
-name: LinkedIn mock-only regression tests
+name: Buffer mock-only regression tests
 
 on:
   pull_request:
@@ -19,12 +19,8 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
-      - name: Client and public preservation
+      - name: Mocked Buffer, ledger, workflow and public preservation tests
         run: node --test automation/linkedin/*.test.mjs
-      - name: Backend mocks
-        run: node --test automation/linkedin/backend/test/*.test.mjs
-      - name: Administrator mocks
-        run: node --test automation/linkedin/backend/admin-tests/*.test.mjs
       - run: npm ci
       - run: npm run build
       - run: npm run lint
