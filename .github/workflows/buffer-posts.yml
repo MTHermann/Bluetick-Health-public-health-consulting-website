@@ -1,0 +1,79 @@
+name: Buffer blog queue
+
+on:
+  workflow_run:
+    workflows: ["Deploy website to GitHub Pages"]
+    types: [completed]
+    branches: [main]
+  schedule:
+    - cron: "17 7 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Preview, initialize baseline, queue live, or reconcile an uncertain outcome"
+        type: choice
+        options: [dry-run, initialize, live, reconcile]
+        default: dry-run
+      slug:
+        description: "Reconcile only: exact blog slug"
+        type: string
+      resolution:
+        description: "Reconcile only: skip, confirmed queued, or retry after checking Buffer"
+        type: choice
+        options: [skip, queued, retry]
+        default: skip
+      post_id:
+        description: "Reconcile queued only: verified Buffer post ID"
+        type: string
+      confirmed:
+        description: "I checked the Buffer queue, drafts and sent posts for this slug"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: buffer-blog-ledger
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: >-
+      github.repository_id == '1244513897' &&
+      vars.BUFFER_ENABLED == 'true' &&
+      (
+        (github.event_name == 'workflow_run' &&
+         github.event.workflow_run.conclusion == 'success' &&
+         github.event.workflow_run.event == 'push' &&
+         github.event.workflow_run.head_branch == 'main' &&
+         github.event.workflow_run.head_repository.id == 1244513897) ||
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'schedule' && vars.BUFFER_RECONCILIATION_ENABLED == 'true')
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Reconcile authoritative blog catalog
+        run: node automation/linkedin/run.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_ORGANIZATION_ID: ${{ vars.BUFFER_ORGANIZATION_ID }}
+          BUFFER_CHANNEL_ID: ${{ vars.BUFFER_CHANNEL_ID }}
+          BUFFER_LINKEDIN_PAGE_CONFIRMED: ${{ vars.BUFFER_LINKEDIN_PAGE_CONFIRMED }}
+          BUFFER_ENABLED: ${{ vars.BUFFER_ENABLED }}
+          BUFFER_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (vars.BUFFER_LIVE_ENABLED == 'true' && 'live' || 'dry-run') }}
+          BUFFER_RECONCILE_SLUG: ${{ inputs.slug }}
+          BUFFER_RECONCILE_ACTION: ${{ inputs.resolution }}
+          BUFFER_RECONCILE_POST_ID: ${{ inputs.post_id }}
+          BUFFER_RECONCILE_CONFIRMED: ${{ inputs.confirmed }}

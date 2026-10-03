@@ -3,9 +3,11 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 
-// Installation baseline: deliberate future website edits must update this fixture.
+// Buffer replacement baseline: deliberate future website edits must update this fixture.
 const hashes = {
+  '.eslintrc.cjs': '0a36f45e09dd66d3d00585285674e0b2b95df06c3848a1ad58f71461172d8387',
   '.github/workflows/deploy-pages.yml': 'd9340575974e09df8cc94b4acac85b71d2077d504a318543f9c02daf2ff2a20c',
+  'CNAME': '53f70bac120f4061a75f61029362e55784ccfb297bfc7a3b53135f43248c3f61',
   'blog/clinical-trial-design-and-statistics/index.html': '22226108606b0291706fd55a6ec04e772069e9c4537e8356f1a86e440a4e6466',
   'blog/data-management-best-practices/index.html': '9006a097620ffab52d8308737bf89f3be709b2b80a09225ba0b472a18290987a',
   'blog/epidemiological-study-design/index.html': 'eac79041911f8a0bc0cabd1fe7e47f7bd9e892cbe5e3db57dc635e8e646f0b72',
@@ -16,10 +18,12 @@ const hashes = {
   'blog/survival-analysis-clinical-research/index.html': '07d0e0a8d6e780b0f06df72844c914e4b3661a8c81615e477bea893a6c990621',
   'blog/time-series-analysis-public-health-monitoring/index.html': 'c594ce2301b6d70dad60072cb4f74e225a82eb52d4b734e4f31fb0199143a664',
   'faq/index.html': '5835e25340255af5651a34dbe5da36bacf83d8c0d6f912b78eb2d60ae192d962',
+  'f35606ab-c7b4-407a-8a25-ec48135e9498.png': 'c18510f34345ecf8bb711b94e68b71a4e848ca2f265055bf42e47b01395c31db',
   'index.html': '0d1377e557e60a6cce6525f8adaa2685db7dd29260be3708f705a663c7f4867b',
   'news/index.html': 'f6a1a3914fe9d8984f900a2033d930e462a0acc018774292637a1de3c414683b',
   'package-lock.json': '19663372e0b08e82e851d4f3a0ff5b8321368fb346b541912830d3c18ccfada1',
   'package.json': '5964abdd182468ebd07b3bc8ef50c782e0fd467259cf6bd22b7565734f7ad562',
+  'postcss.config.js': '010e8774c76996e28b1f2290d690b3b64f56f2fbe26c747b4419ee0110d0a002',
   'products/index.html': 'aa51bf648882c1ff055b4c427086ffe488c9367bdbebe2c15590cba73a7131d0',
   'public/apple-touch-icon.png': 'a83a3208e3fdddc7fa80e6c6770343bf7acf0e4e6c5e52eb957a383d82a1098c',
   'public/assets/bluetick-globe.png': 'c18510f34345ecf8bb711b94e68b71a4e848ca2f265055bf42e47b01395c31db',
@@ -45,6 +49,7 @@ const hashes = {
   'src/index.css': '44dd41167304032732ce64a9fe7f83a8546686091c902d978ff34e8b89507944',
   'src/main.jsx': 'dfe7f7d0a5d86fe1ab508f0eb8608eb46efeba6819f9bd8ade68d9af6873a739',
   'src/pages/ConsultingWebsite.jsx': 'fbfc8191d5eb045e9d4a542647bc2514e4684f51da66899b87d7fa2bb6633b7b',
+  'tailwind.config.js': '3dd3712212acbc67849a13a9f1401527495e09a1a12e1c417fac6b4ecf1fe6d4',
   'vacancies/index.html': '7c79f6ab498415458cba424c5a789d327a53b08353d6f31e71b96390285b9eb5',
   'vite.config.js': '52adfa4716d9f55284827015d982abb6b062de86c45c292f52d7c910c2e0e10b',
 }
