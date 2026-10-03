@@ -43,7 +43,7 @@ function mockBuffer(remote = []) {
   }
 }
 function options(state, buffer, overrides = {}) {
-  return { state, buffer, target, posts: [old, fresh], mode: 'live', verifyUrl: async () => true, now, ...overrides }
+  return { state, buffer, target, pageConfirmed: true, posts: [old, fresh], mode: 'live', verifyUrl: async () => true, now, ...overrides }
 }
 function uncertain(status = 'ambiguous') {
   const text = caption(catalog([fresh])[0])
@@ -127,6 +127,21 @@ test('dry-run previews baseline or pending articles without any durable mutation
     assert.equal(result.previews.length, baseline ? 1 : 2)
     assert.equal(state.writes.length, 0)
     assert.deepEqual(buffer.calls, [])
+  }
+})
+
+test('valid prototype-like slugs are discovered, previewed and deduplicated using own entries', async () => {
+  for (const slug of ['constructor', 'to-string']) {
+    const state = memoryState()
+    const buffer = mockBuffer()
+    const posts = [old, { ...fresh, slug }]
+    const preview = await reconcileCatalog(options(state, buffer, { posts, mode: 'dry-run' }))
+    assert.equal(preview.previews.length, 1)
+    assert.equal(preview.previews[0].slug, slug)
+    assert.equal((await reconcileCatalog(options(state, buffer, { posts }))).queued, 1)
+    assert.equal((await reconcileCatalog(options(state, buffer, { posts, mode: 'dry-run' }))).previews.length, 0)
+    assert.equal((await reconcileCatalog(options(state, buffer, { posts }))).queued, 0)
+    assert.equal(buffer.calls.filter(call => typeof call === 'object').length, 1)
   }
 })
 
@@ -454,6 +469,7 @@ test('reconciliation requires explicit confirmation, uncertain status and fixed 
     { slug: old.slug, action: 'retry', confirmed: true },
     { slug: fresh.slug, action: 'unknown', confirmed: true },
     { slug: '../new-blog', action: 'skip', confirmed: true },
+    { slug: 'constructor', action: 'skip', confirmed: true },
   ]) {
     const state = memoryState(uncertain())
     await assert.rejects(reconcileCatalog(options(state, mockBuffer(), { mode: 'reconcile', reconciliation })),
@@ -515,6 +531,21 @@ test('run wires explicit reconcile environment safely', async () => {
   assert.equal((await state.load()).ledger.entries[fresh.slug].status, 'seen')
 })
 
+test('live processing and queued reconciliation require explicit Page confirmation', async () => {
+  for (const pageConfirmed of [false, undefined, 'true']) {
+    const state = memoryState()
+    const buffer = mockBuffer()
+    await assert.rejects(reconcileCatalog(options(state, buffer, { pageConfirmed })), { code: 'target' })
+    assert.equal(buffer.calls.length, 0)
+    assert.equal((await state.load()).ledger.entries[fresh.slug].status, 'pending')
+    await assert.rejects(reconcileCatalog(options(memoryState(uncertain()), buffer, {
+      pageConfirmed, mode: 'reconcile',
+      reconciliation: { slug: fresh.slug, action: 'queued', postId: 'id', confirmed: true },
+    })), { code: 'target' })
+    assert.equal(buffer.calls.length, 0)
+  }
+})
+
 test('summaries expose safe counts and sanitized fenced previews, never upstream error fields', () => {
   const summary = summarize({ mode: 'dry-run', baseline: true, discovered: 2, queued: 0, ambiguous: 1,
     upstreamBody: 'private unsafe upstream',
@@ -523,6 +554,8 @@ test('summaries expose safe counts and sanitized fenced previews, never upstream
   assert.match(summary, /baseline only/)
   assert.match(summary, /```text\nTitle\n\nReadable/)
   assert.doesNotMatch(summary, /private|unsafe|upstream|<script>|#|\*\*/)
+  assert.doesNotMatch(summarize({ mode: 'dry-run', discovered: 1,
+    previews: [{ slug: fresh.slug, text: 'preview-caption' }] }, { previews: false }), /preview-caption/)
   assert.doesNotMatch(summarize({ mode: 'private', stopped: 'upstream', discovered: '**unsafe**',
     cooldownUntil: 'not a date' }), /private|unsafe|upstream|not a date/)
 })

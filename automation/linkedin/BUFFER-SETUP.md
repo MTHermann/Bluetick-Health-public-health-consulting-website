@@ -9,11 +9,12 @@ unchanged; Buffer's dashboard is the scheduling interface.
 1. In Buffer, connect the **LinkedIn company Page**, not your personal profile.
    Confirm the Page name/avatar and your permission to manage it.
 2. Open Buffer **Settings → Organization** for the selected organization and
-   **Settings → Channels** for the connected Page. Copy the organization and
-   channel IDs if shown. A Page's dashboard URL may expose its channel/profile
-   ID; use the actual ID, not the Page name or a LinkedIn organization URN.
-3. If the dashboard hides the IDs, use Buffer's browser-based developer API
-   explorer, linked from [Buffer's developer docs](https://buffer.com/developers).
+   **Settings → Channels** for the connected Page. Confirm their names; copy
+   the IDs if shown. Do not assume a dashboard URL's profile ID is an API channel
+   ID, and do not use the Page name or a LinkedIn organization URN.
+3. If the dashboard hides the IDs, use Buffer's browser-based
+   [API Explorer](https://developers.buffer.com/explorer.html), linked from
+   [Buffer's developer docs](https://developers.buffer.com).
    Run the read-only `account { organizations { id name } }` query, then
    `channels(input: { organizationId: "YOUR_ORGANIZATION_ID" }) { id name service }`.
    Match the organization and LinkedIn Page by name. Do not run `createPost`.

@@ -147,7 +147,7 @@ function validateChannel(channels, target) {
 
 export async function reconcileCatalog({
   state, buffer, posts = blogPosts, verifyUrl = verifyCanonicalUrl, mode = 'dry-run',
-  target, reconciliation = {}, now = () => new Date(), snapshot: suppliedSnapshot,
+  target, pageConfirmed = false, reconciliation = {}, now = () => new Date(), snapshot: suppliedSnapshot,
 }) {
   if (!MODES.has(mode)) throw new RunnerError('configuration')
   const entries = catalog(posts).map(post => ({ ...post, text: caption(post) }))
@@ -155,7 +155,7 @@ export async function reconcileCatalog({
   if (snapshot) checkLedger(snapshot.ledger)
   const result = { mode, baseline: !snapshot, discovered: 0, queued: 0, ambiguous: 0, previews: [] }
   if (mode === 'dry-run') {
-    result.previews = entries.filter(post => !snapshot || !snapshot.ledger.entries[post.slug] ||
+    result.previews = entries.filter(post => !snapshot || !Object.hasOwn(snapshot.ledger.entries, post.slug) ||
       snapshot.ledger.entries[post.slug].status === 'pending').map(({ slug, text }) => ({ slug, text }))
     result.discovered = result.previews.length
     return result
@@ -197,7 +197,7 @@ export async function reconcileCatalog({
 
   if (mode === 'reconcile') {
     const { slug, action, confirmed, postId } = reconciliation
-    const entry = ledger.entries[slug]
+    const entry = Object.hasOwn(ledger.entries, slug) ? ledger.entries[slug] : undefined
     if (confirmed !== true || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug ?? '') ||
         !entry || (action === 'retry' && !['intent', 'ambiguous'].includes(entry.status)) ||
         !['skip', 'retry', 'queued'].includes(action)) throw new RunnerError('reconciliation')
@@ -205,6 +205,7 @@ export async function reconcileCatalog({
       throw new RunnerError('target')
     }
     if (action === 'queued') {
+      if (pageConfirmed !== true) throw new RunnerError('target')
       if (typeof postId !== 'string' || !postId || !buffer) throw new RunnerError('reconciliation')
       validateChannel(await buffer.channels(), target)
       const remote = (await buffer.posts()).find(post => post.id === postId && inChannel(post, target))
@@ -237,6 +238,7 @@ export async function reconcileCatalog({
     result.cooldownUntil = ledger.cooldownUntil
     return result
   }
+  if (pageConfirmed !== true) throw new RunnerError('target')
   if (!buffer) throw new RunnerError('configuration')
   let channels, remote
   try {
@@ -298,7 +300,7 @@ export async function reconcileCatalog({
   return result
 }
 
-export function summarize(result) {
+export function summarize(result, { previews: includePreviews = true } = {}) {
   if (result.disabled) return 'LinkedIn automation disabled.\n'
   const count = value => Number.isSafeInteger(value) && value >= 0 ? value : 0
   const stopped = ['auth', 'rate-limit', 'queue-full', 'rejected', 'ambiguous'].includes(result.stopped) ? result.stopped : ''
@@ -307,7 +309,7 @@ export function summarize(result) {
     `new: ${count(result.discovered)}; queued: ${count(result.queued)}; unresolved: ${count(result.ambiguous)}` +
     `${stopped ? `; stopped: ${stopped}` : ''}` +
     `${until ? `; cooldown until ${until}` : ''}.\n`
-  if (result.mode !== 'dry-run' || !Array.isArray(result.previews)) return summary
+  if (!includePreviews || result.mode !== 'dry-run' || !Array.isArray(result.previews)) return summary
   const previews = result.previews.slice(0, 100).filter(preview =>
     /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(preview?.slug ?? '') && typeof preview.text === 'string')
     .map(preview => {
@@ -336,18 +338,19 @@ export async function run(env = process.env, fetcher = fetch, dependencies = {})
     !Object.hasOwn(snapshot.ledger.entries, post.slug) || snapshot.ledger.entries[post.slug].status === 'pending')) ||
     (mode === 'reconcile' && env.BUFFER_RECONCILE_ACTION === 'queued'))
   if (!buffer && needsBuffer) {
-    const token = env.BUFFER_API_KEY || env.BUFFER_TOKEN
+    const token = env.BUFFER_API_KEY
     if (!token || !target.organizationId || !target.channelId) throw new RunnerError('configuration')
     const { BufferClient } = await import('./buffer.mjs')
     buffer = new BufferClient({ token, ...target, fetcher })
   }
   const result = await reconcileCatalog({ state, buffer, snapshot, mode, target,
+    pageConfirmed: env.BUFFER_LINKEDIN_PAGE_CONFIRMED === 'true',
     posts,
     verifyUrl: dependencies.verifyUrl ?? (url => verifyCanonicalUrl(url, fetcher)),
     reconciliation: { slug: env.BUFFER_RECONCILE_SLUG, action: env.BUFFER_RECONCILE_ACTION,
       postId: env.BUFFER_RECONCILE_POST_ID, confirmed: env.BUFFER_RECONCILE_CONFIRMED === 'true' } })
   const summary = summarize(result)
-  console.log(summary.trim())
+  console.log(summarize(result, { previews: false }).trim())
   if (env.GITHUB_STEP_SUMMARY) await appendFile(env.GITHUB_STEP_SUMMARY, summary)
   return result
 }
