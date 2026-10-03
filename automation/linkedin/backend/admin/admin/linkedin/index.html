@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LinkedIn scheduling admin</title>
+  <link rel="stylesheet" href="./admin.css">
+  <script type="module" src="./admin.js"></script>
+</head>
+<body>
+  <main>
+    <h1>LinkedIn scheduling</h1>
+    <p>Protected administrator workspace. Blog content is read-only. No credentials are entered or stored here.</p>
+    <div id="notice" role="status" aria-live="polite">Loading…</div>
+    <button id="refresh" type="button">Refresh state</button>
+    <section aria-labelledby="configuration-heading">
+      <h2 id="configuration-heading">Publishing configuration</h2>
+      <ul id="configuration"></ul>
+    </section>
+    <section aria-labelledby="blogs-heading">
+      <h2 id="blogs-heading">Available blogs</h2>
+      <ul id="blogs"></ul>
+    </section>
+    <section aria-labelledby="editor-heading">
+      <h2 id="editor-heading">Schedule or edit a post</h2>
+      <form id="editor">
+        <fieldset id="editor-fields" disabled>
+          <legend>Post details</legend>
+          <label for="blog">Blog</label>
+          <select id="blog" required></select>
+          <p id="duplicate-warning" class="warning"></p>
+          <label for="caption">Caption (editable template)</label>
+          <textarea id="caption" rows="8" required maxlength="3000"></textarea>
+          <label for="zone">Date/time zone</label>
+          <select id="zone">
+            <option value="UTC">UTC</option>
+          </select>
+          <label for="due">Publish date and time in the selected zone</label>
+          <input id="due" type="datetime-local" step="60" required aria-describedby="time-help time-preview">
+          <p id="time-help">Choose a future time. Nonexistent daylight-saving times are rejected; for repeated times, use UTC for precision.</p>
+          <p id="time-preview" aria-live="polite"></p>
+          <h3>Text preview</h3>
+          <pre id="preview"></pre>
+          <p id="preview-link"></p>
+          <button id="save" type="submit">Schedule post</button>
+          <button id="cancel" type="button" hidden>Cancel post</button>
+        </fieldset>
+      </form>
+    </section>
+    <section aria-labelledby="posts-heading">
+      <h2 id="posts-heading">Persistent schedule and history</h2>
+      <p>Each blog slug may have only one post. Existing active or posted records cannot be scheduled again.</p>
+      <p class="warning">An ambiguous result may already be live on LinkedIn. Verify the organization’s LinkedIn feed before resolving it. Retrying may create a duplicate.</p>
+      <div id="posts"></div>
+    </section>
+  </main>
+</body>
+</html>

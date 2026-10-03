@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "bluetick-linkedin-reference",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-01-01",
+  "workers_dev": false,
+  "assets": {
+    "directory": "./admin",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "bluetick-linkedin-reference",
+      // Replace with a provisioned D1 ID before deployment; intentionally not deployable.
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "migrations_dir": "./migrations"
+    }
+  ],
+  "vars": {
+    "AUTO_SCHEDULE": "false",
+    "PUBLISH_ENABLED": "false"
+  }
+}

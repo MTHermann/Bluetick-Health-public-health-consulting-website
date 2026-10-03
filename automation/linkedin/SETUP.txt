@@ -1,0 +1,260 @@
+LINKEDIN COMPANY PAGE AUTOMATION — OWNER SETUP REQUIRED
+=====================================================
+
+Nothing in this change deploys a Worker, creates storage, authorizes LinkedIn,
+or publishes posts. Existing website content, metadata, navigation, share links,
+Vite inputs and Pages deployment remain unchanged. The protected equivalent of
+/admin/linkedin/ runs on a SEPARATE Worker hostname; there is no public-site
+navigation link. This posts a caption and a link preview to the original blog,
+not a full LinkedIn-native article. Image uploads are not implemented.
+
+Architecture and prerequisites
+------------------------------
+GitHub Pages cannot authenticate administrators or run a durable scheduler.
+This optional reference uses Cloudflare Workers static assets, D1 persistent
+SQLite storage, and Cloudflare Access with an identity provider. You must own
+and configure those accounts/services (and, for a custom hostname, a domain).
+Free tiers may suffice but limits, Access seat eligibility and possible costs
+depend on your plan; review current provider pricing before provisioning.
+No paid subscription is installed or required by the website itself.
+
+Use Node 22+ for mock-only tests and the Actions client. Install an appropriate
+current Cloudflare Wrangler CLI yourself according to Cloudflare's official
+instructions; it is not a website dependency. Commands below are OWNER actions,
+not commands executed by this implementation. Run them from:
+  <repository>/automation/linkedin/backend/
+
+LinkedIn approval and credentials
+--------------------------------
+Read the official documentation before enabling publication:
+  https://learn.microsoft.com/en-us/linkedin/marketing/community-management/shares/posts-api
+  https://learn.microsoft.com/en-us/linkedin/marketing/increasing-access
+  https://learn.microsoft.com/en-us/linkedin/shared/authentication/authorization-code-flow
+
+Implementation-time verification limitation: direct Microsoft Learn retrieval
+was blocked by DNS in the development environment. Search-mediated official
+excerpts supported permissions and version headers, but the exact article
+schema could not be independently fetched. Recheck the current Posts API
+schema/version in the official pages before configuring live publication.
+
+Create a LinkedIn developer application associated with your company Page.
+Request approved Community Management API access, initially Development tier
+where applicable; request Standard tier for production as required by LinkedIn.
+Approval and ongoing restrictions are LinkedIn's decision, not guaranteed.
+Authorize an appropriate company Page administrator/content administrator for
+the w_organization_social OAuth scope. Share on LinkedIn / w_member_social alone
+does NOT grant company Page posting rights. Confirm the authorized member has
+the necessary role for the configured Page and your app's approved access.
+
+Complete LinkedIn's authorization-code flow manually using a trusted
+server-side OAuth tool/callback of your own, with a registered redirect URI and
+state validation. This reference intentionally provides no unaudited OAuth
+callback or browser credential entry. Keep the app client secret and token
+exchange server-side; never put them in frontend env, localStorage, URLs,
+repository files or screenshots. No scraping or browser posting automation.
+
+Record the numeric organization ID as urn:li:organization:<digits>. Confirm
+the organization before enabling. Configure LINKEDIN_VERSION to an actually
+supported YYYYMM version from the current official Posts API docs; no permanent
+default is assumed. APIs sunset versions regularly. The Worker uses
+POST https://api.linkedin.com/rest/posts with Authorization, Linkedin-Version,
+X-Restli-Protocol-Version: 2.0.0 and JSON article content. It sends PUBLIC,
+PUBLISHED company Page posts to MAIN_FEED; there is no LinkedIn sandbox mode.
+Dry-run is implemented by NOT calling LinkedIn.
+
+Obtain the real token expiry from your OAuth response and set it explicitly.
+Before expiry, repeat approved authorization or use LinkedIn refresh tokens
+only if your app is eligible. This reference does NOT renew tokens automatically.
+Rotate the backend token/expiry together. Never assume a token lasts forever.
+
+Backend storage and deployment
+------------------------------
+1. Log in to Cloudflare with Wrangler on your own trusted workstation.
+2. Create a database:
+     wrangler d1 create bluetick-linkedin-reference
+   Copy its returned database_id into wrangler.jsonc, preserving binding DB.
+   The checked-in placeholder cannot be deployed as a working database.
+3. Apply the schema:
+     wrangler d1 migrations apply bluetick-linkedin-reference --remote
+   Keep this D1 database across Worker deploys. Back it up with:
+     wrangler d1 export bluetick-linkedin-reference --remote --output /secure/path/queue.sql
+   Treat exports as confidential administrator data, never commit them.
+4. Configure vars in wrangler.jsonc:
+     ACCESS_TEAM_DOMAIN       <team>.cloudflareaccess.com (hostname only)
+     ACCESS_AUD               Access application audience identifier
+     ADMIN_EMAILS             comma-separated exact authorized admin emails
+     AUTO_SCHEDULE            "false" initially; "true" for future new slugs
+     PUBLISH_ENABLED          "false" initially; "true" ONLY after review
+     LINKEDIN_ORGANIZATION_URN urn:li:organization:<numeric ID>
+     LINKEDIN_VERSION         currently supported YYYYMM
+     LINKEDIN_TOKEN_EXPIRES_AT UTC ISO timestamp from actual authorization
+   Do not change the fixed blog-origin validation to arbitrary URLs.
+5. Generate a dedicated random automation secret (at least 32 random bytes)
+   using a password manager or cryptographic tool. Install it interactively:
+     wrangler secret put AUTOMATION_SECRET
+     wrangler secret put LINKEDIN_ACCESS_TOKEN
+   Use AUTOMATION_SECRET ONLY for catalog sync/dispatch; it is NOT an admin
+   identity or Cloudflare Access credential. Keep LinkedIn tokens ONLY here.
+6. Deploy after you have configured Access protection described below:
+   Set a custom domain route in wrangler.jsonc, for example:
+     "routes": [{ "pattern": "linkedin-admin.your-domain.example", "custom_domain": true }]
+   Use a domain in your Cloudflare account. workers_dev=false deliberately
+   disables an alternate public workers.dev hostname; the custom route is
+   required to access this reference. Do not route it over the existing website.
+     wrangler deploy
+   No Pages workflow changes or Vite builds are needed for these assets.
+   Verify the Worker hostname's /admin/linkedin/ and /api/admin/state reject
+   signed-out/non-allowlisted clients. Never accept a hidden URL as security.
+
+Identity, cookies and end-to-end admin access
+--------------------------------------------
+Create a Cloudflare Access self-hosted application on your Worker hostname,
+covering /admin/linkedin/* AND /api/admin/*, including their base paths.
+Use an identity-provider Allow policy limited to your administrators; require
+MFA as appropriate. Put the Access team domain and application AUD into the
+Worker vars and also set ADMIN_EMAILS (an independent application allowlist).
+If multiple path applications are used, they must share the configured AUD;
+prefer one application covering the whole hostname with the automation
+exception below. Disable any alternate public asset routes/hostnames unless
+the same Access application covers them. Worker run_worker_first prevents
+static assets from bypassing Worker authentication.
+
+The browser opens https://<worker-hostname>/admin/linkedin/, is redirected by
+Access to your identity provider, and receives Cloudflare's Secure CF_Authorization
+session cookie. Access injects Cf-Access-Jwt-Assertion on proxied requests; the
+Worker also accepts the Access cookie and verifies its RS256 signature against
+the configured team's fixed JWKS, issuer, audience, expiry and admin email.
+Keep the Access session on the Worker hostname. No token copying into the UI
+is needed. UI fetches relative /api/admin URLs with same-origin cookies.
+Serving the UI on GitHub Pages while calling a different API origin is NOT the
+supported deployment; that would break this cookie/CSRF model.
+
+For /api/automation/* ONLY, configure an Access path-level Bypass application
+or equivalent exception so GitHub can reach those paths without a user session.
+This bypass does NOT authorize anything: the Worker still requires the
+dedicated AUTOMATION_SECRET bearer credential and exposes only sync/dispatch.
+Never bypass /api/admin/* or /admin/linkedin/*, and never use an Access admin
+token as an automation secret. If your Access setup gates the entire hostname
+and has no automation exception, Actions will fail with an Access redirect.
+
+Admin mutations require exact same Origin, X-Admin-Request: 1 and JSON,
+including cancellation DELETE with {}. There is no permissive CORS. All asset
+and API responses are non-cacheable; do not put a caching proxy in front of
+authenticated content. Do not relax the Worker's restrictive CSP.
+
+GitHub Actions and safe initial baseline
+---------------------------------------
+In repository Settings > Secrets and variables > Actions, set:
+  VARIABLE LINKEDIN_BACKEND_URL         https://<worker-hostname> (origin only)
+  SECRET   LINKEDIN_AUTOMATION_SECRET   same value as Worker AUTOMATION_SECRET
+  VARIABLE LINKEDIN_AUTOMATION_ENABLED  "true" to allow sync/dispatch
+
+Before enabling automatic scheduling or live publishing:
+  - Leave Worker AUTO_SCHEDULE=false and PUBLISH_ENABLED=false.
+  - Enable the GitHub variable above and manually run "LinkedIn blog queue"
+    from main (Actions > workflow > Run workflow).
+  - First successful sync durably initializes ALL then-current slugs as the
+    baseline WITHOUT creating posts. Verify the available blogs in the admin.
+    Initialize immediately after installation, before adding any new blogs.
+    Posts added before this first sync are intentionally treated as existing.
+  - Run again and verify no old blogs are automatically queued.
+
+The authoritative catalog comes from a module import of blogPosts in trusted
+main source, not regex parsing or GitHub changed-file filters. After baseline,
+seen slugs are durable: editing an existing blog never creates a new post.
+With AUTO_SCHEDULE=true, each newly observed slug creates one pending record.
+With AUTO_SCHEDULE=false, new slugs are cataloged/marked seen, NOT deferred for
+future automatic scheduling; schedule those manually if wanted.
+New slugs added and removed between all successful reconciliations cannot be
+discovered. Keep an article in the catalog until at least one successful sync.
+
+The workflow is disabled unless LINKEDIN_AUTOMATION_ENABLED=true. It has only
+contents:read, checks repository/default branch, checks out main with no stored
+Git credentials, and has NO PR trigger. workflow_run only proceeds for a
+successful trusted main Pages deployment. A 15-minute schedule/manual run also
+reconciles the entire current catalog before dispatch, recovering missed runs.
+The Worker verifies each exact target canonical blog URL is live on the fixed
+website before any publish. A catalog entry without deployed canonical HTML
+cannot be published; ensure future blogs have normal website entrypoints.
+No workflow_run changed-file filter or event artifact is trusted.
+
+Enable and use the administrator
+--------------------------------
+Visit https://<worker-hostname>/admin/linkedin/ after Access login. This is the
+isolated protected equivalent of the requested /admin/linkedin/ path.
+Select a read-only blog title/link, edit the caption template, preview it and
+choose a future time in UTC or your browser's displayed IANA timezone.
+The queue stores UTC ISO instants. DST nonexistent/repeated local times are
+rejected; select UTC for an unambiguous instant. No browser timer publishes.
+Schedules persist even when the browser closes. Pending/retry posts can be
+edited, rescheduled or cancelled; publishing/posted records cannot be changed.
+Definitively rejected blocked records can be explicitly edited/rescheduled or
+cancelled after the owner fixes token, version, permissions or catalog issues.
+State/history, duplicate warnings and token/configuration warnings appear in
+the UI. Refresh after an uncertain operation rather than blindly repeating it.
+
+With PUBLISH_ENABLED=false dispatch is dry-run and leaves queued posts pending.
+Review the queue and caption/link previews; cancel any unwanted pending posts.
+Enable AUTO_SCHEDULE=true if automatic new-blog queueing is desired.
+Only after token, Page, API version and Access checks, set PUBLISH_ENABLED=true
+and redeploy. All due pending records are then eligible for actual publication,
+including those manually queued during dry-run. There is no per-post live
+confirmation at dispatch, so review/cancel the queue BEFORE enabling.
+
+GitHub cron is approximate: delayed/missed runs and UTC scheduling mean this
+is NOT exact-time delivery. Posts are eligible at or after the stored instant.
+The workflow and backend atomically claim work to coordinate automatic and
+manual scheduling. D1's unique slug record prevents simultaneous double posts.
+
+Retries, reconciliation and operational limitations
+---------------------------------------------------
+Inspect the administrator queue for redacted status/error codes, not tokens.
+Rate limits honor Retry-After with a shared durable cooldown; further queued
+work is deferred. Renewal/version/permissions issues require owner action,
+followed by explicit rescheduling of blocked records. Remote response bodies
+and authorization headers are never logged.
+Ambiguous outcomes (timeouts, 5xx, connection loss, missing post ID, abandoned
+publishing claims) may ALREADY be published. They are never blindly retried.
+Check the company Page and LinkedIn activity yourself, then use explicit
+reconciliation: mark already posted with its LinkedIn URN, or authorize retry
+only after confirming nothing was published. Retrying can create a duplicate.
+There is no exactly-once guarantee across LinkedIn and D1; LinkedIn supplies
+no transaction with this database. Database updates failing after successful
+publication must also be reconciled. Repeated dispatch cannot solve ambiguity.
+
+One queue record per slug is intentional. Cancellation does not erase durable
+deduplication; the reference does not support recurring campaigns/reposts.
+History is current record state, not a comprehensive append-only audit log.
+No OAuth renewal, LinkedIn feed reconciliation, uploaded images, arbitrary
+external URLs or organization override is supported. Automatic caption
+templates use the catalog title/excerpt only. Saved captions are retained;
+link-preview titles use the latest trusted catalog at dispatch, not a frozen
+metadata snapshot. Operators must monitor failures,
+Access configuration, D1 availability, version sunsets and token expiry.
+
+Rollback
+--------
+First set Worker PUBLISH_ENABLED=false and redeploy to stop future dispatch.
+Then set GitHub LINKEDIN_AUTOMATION_ENABLED=false (or remove its credentials).
+An in-flight HTTP request cannot be recalled; inspect/reconcile any publishing
+records. Cancel unwanted pending posts and retain/back up D1 to preserve seen
+slugs and posted/ambiguous records. Do not delete/reset storage and re-enable:
+that discards deduplication history. Revoke/rotate tokens if retiring service,
+then remove the optional Worker/Access resources yourself. Public website and
+Pages deployment do not depend on any of these additions.
+
+Local verification (never publishes)
+-----------------------------------
+From the repository root:
+  node --test automation/linkedin/*.test.mjs
+  node --test automation/linkedin/backend/test/*.test.mjs
+  node --test automation/linkedin/backend/admin-tests/*.test.mjs
+  npm ci
+  npm run build
+  npm run lint
+
+Tests use mocked HTTP and local storage only; do not provide real credentials.
+The public-files test records the installation's existing production files.
+Future intentional website edits must deliberately update that fixture; this
+installation must preserve it. The root lint command checks existing src only,
+not the additive Worker/admin modules; their behavior is covered by tests.
