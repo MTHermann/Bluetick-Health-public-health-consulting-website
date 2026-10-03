@@ -1,6 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
+import { readFile } from 'node:fs/promises'
 import { catalog, caption, verifyCanonicalUrl, reconcileCatalog, run, summarize } from './run.mjs'
 
 const old = { slug: 'old-blog', title: 'Old title', excerpt: 'Old summary' }
@@ -74,6 +75,28 @@ test('caption is plain, bounded, strips markup, markdown, entities and controls'
   assert.throws(() => caption({ ...post, url: 'https://evil.example/blog/new-blog/' }), { code: 'canonical' })
 })
 
+test('caption raw-text filtering handles malformed end tags without reconstructing markup', () => {
+  for (const name of ['script', 'style']) {
+    for (const ending of [`</${name}\t\n bar>`, `</${name}/unexpected>`, `</${name}\f extra>`]) {
+      const text = caption(catalog([{ ...fresh, title: `Before<${name}>hidden${ending}After` }])[0])
+      assert.match(text, /^Before After\n/)
+      assert.doesNotMatch(text, /hidden|unexpected|extra|<|>/)
+    }
+    const text = caption(catalog([{ ...fresh,
+      title: `Visible <${name}>hidden</${name}:foo>still hidden` }])[0])
+    assert.match(text, /^Visible\n/)
+    assert.doesNotMatch(text, /hidden|foo/)
+  }
+  const text = caption(catalog([{ ...fresh,
+    title: '<scr<script>hidden</script>ipt>Readable</scr<script>hidden</script>ipt>' }])[0])
+  assert.match(text, /^Readable\n/)
+  assert.doesNotMatch(text, /hidden|script|<|>/)
+  const comment = caption(catalog([{ ...fresh,
+    title: 'Before<!-- hidden -->After' }])[0])
+  assert.match(comment, /^Before After\n/)
+  assert.doesNotMatch(comment, /hidden/)
+})
+
 test('canonical verification uses fixed URL, forbids redirects and requires exact canonical', async () => {
   const url = catalog([fresh])[0].url
   let requested
@@ -93,7 +116,7 @@ test('canonical verification uses fixed URL, forbids redirects and requires exac
     `<script>const fake = '<link rel="canonical" href="${url}" />'</script>`,
     '<html>no canonical</html>',
   ]) {
-    await assert.rejects(verifyCanonicalUrl(url, async () => new Response(html,
+    await assert.rejects(verifyCanonicalUrl(url, async () => new Response(`<html><head>${html}</head></html>`,
       { headers: { 'content-type': 'text/html' } })), { code: 'canonical' })
   }
   await assert.rejects(verifyCanonicalUrl(url, async () => new Response('', { status: 302 })), { code: 'canonical' })
@@ -102,6 +125,71 @@ test('canonical verification uses fixed URL, forbids redirects and requires exac
     'https://user@bluetick-health.co.za/blog/new-blog/', 'https://bluetick-health.co.za/blog/../new-blog/',
     'https://bluetick-health.co.za/blog/new-blog/?x=1']) {
     await assert.rejects(verifyCanonicalUrl(bad, () => assert.fail('no request')), { code: 'canonical' })
+  }
+})
+
+test('canonical extraction cannot see links inside malformed or unclosed raw-text elements', async () => {
+  const url = catalog([fresh])[0].url
+  const link = `<link rel="canonical" href="${url}" />`
+  const response = html => new Response(`<html><head>${html}</head></html>`, { headers: { 'content-type': 'text/html' } })
+  for (const name of ['script', 'style', 'title']) {
+    for (const ending of [`</${name}\t\n bar>`, `</${name}/unexpected>`, `</${name}\f extra>`]) {
+      assert.equal(await verifyCanonicalUrl(url, async () =>
+        response(`<${name}><link rel="canonical" href="https://evil.example/" />${ending}${link}`)), true)
+    }
+    for (const html of [`<${name}>${link}`, `<${name}></${name}:foo>${link}`,
+      `<${name}></${name}\u00a0foo>${link}`]) {
+      await assert.rejects(verifyCanonicalUrl(url, async () => response(html)), { code: 'canonical' })
+    }
+    assert.equal(await verifyCanonicalUrl(url, async () =>
+      response(`<${name}></${name}:foo>${link}</${name}>${link}`)), true)
+  }
+  for (const html of [
+    `<li<script>hidden</script>nk rel="canonical" href="${url}" />`,
+    `<li<style>hidden</style>nk rel="canonical" href="${url}" />`,
+    `<li<!--hidden-->nk rel="canonical" href="${url}" />`,
+    `<link:foo rel="canonical" href="${url}" />`,
+    `<link evil:rel="canonical" href="${url}" />`,
+    `<link rel="canonical" evil:href="${url}" />`,
+    `<!-- unclosed comment ${link}`,
+  ]) {
+    await assert.rejects(verifyCanonicalUrl(url, async () => response(html)), { code: 'canonical' })
+  }
+  assert.equal(await verifyCanonicalUrl(url, async () => response(`<!-- ${link} -->${link}`)), true)
+})
+
+test('canonical tokens respect quoted attributes and require a real closed head', async () => {
+  const url = catalog([fresh])[0].url
+  const link = `<link rel="canonical" href="${url}" />`
+  const response = html => new Response(html, { headers: { 'content-type': 'text/html' } })
+  for (const html of [
+    `<html><head><meta content='${link}' /></head></html>`,
+    `<html><head data='${link}'></head></html>`,
+    `<html><head><link title="${link.replaceAll('"', "'")}" /></head></html>`,
+    `<html><head><link "${link.replaceAll('"', "'")}" /></head></html>`,
+    `<html><body>${link}</body></html>`,
+    `<html data='<head>${link}</head>'></html>`,
+    `<html><head>${link}`,
+    `<html><head><meta content="unterminated ${link}</head></html>`,
+    `<html><head><script></script:foo>${link}</head></html>`,
+    `<html><head><script><!--<script></script>${link}</head></html>`,
+    `<html><head><textarea>${link}</head></html>`,
+    `<html><head><textarea>${link}</textarea>${link}</head></html>`,
+    `<html><head><title>${link}</head></html>`,
+  ]) {
+    await assert.rejects(verifyCanonicalUrl(url, async () => response(html)), { code: 'canonical' })
+  }
+  assert.equal(await verifyCanonicalUrl(url, async () =>
+    response(`<html><head><meta content='${link}' />${link}</head><body>${link}</body></html>`)), true)
+  assert.equal(await verifyCanonicalUrl(url, async () =>
+    response(`<html><head><script>hidden</script data='${link}'>${link}</head></html>`)), true)
+})
+
+test('canonical verifier accepts every current authoritative blog HTML fixture', async () => {
+  for (const post of catalog()) {
+    const html = await readFile(new URL(`../../blog/${post.slug}/index.html`, import.meta.url), 'utf8')
+    assert.equal(await verifyCanonicalUrl(post.url, async () =>
+      new Response(html, { headers: { 'content-type': 'text/html' } })), true)
   }
 })
 
@@ -392,16 +480,19 @@ test('queue capacity counts existing queued posts and newly created posts', asyn
     assert.equal(result.stopped, 'queue-full')
     assert.equal((await state.load()).ledger.entries['second-new'].status, 'pending')
   }
-  for (const status of ['SCHEDULED', 'notSent', 'future-waiting-status']) {
+  for (const status of ['SCHEDULED', 'notSent', 'future-waiting-status', 'error', 'draft']) {
     const remote = Array.from({ length: 10 }, (_, index) =>
       ({ id: String(index), channelId: target.channelId, status, text: 'other article' }))
     const buffer = mockBuffer(remote)
     assert.equal((await reconcileCatalog(options(memoryState(), buffer))).stopped, 'queue-full')
     assert.equal(buffer.calls.filter(call => typeof call === 'object').length, 0)
   }
+  const sent = Array.from({ length: 10 }, (_, index) =>
+    ({ id: String(index), channelId: target.channelId, status: 'sent', text: 'other article' }))
+  assert.equal((await reconcileCatalog(options(memoryState(), mockBuffer(sent)))).queued, 1)
 })
 
-test('existing exact canonical URL line avoids duplicate, while embedded URL does not', async () => {
+test('existing complete canonical URL tokens avoid duplicates in lines or prose', async () => {
   const url = catalog([fresh])[0].url
   for (const status of ['queued', 'published', 'sent', 'draft', 'failed']) {
     const state = memoryState()
@@ -410,9 +501,41 @@ test('existing exact canonical URL line avoids duplicate, while embedded URL doe
     assert.equal((await state.load()).ledger.entries[fresh.slug].status, status === 'queued' ? 'queued' : 'seen')
     assert.equal(buffer.calls.filter(call => typeof call === 'object').length, 0)
   }
-  const state = memoryState()
-  const buffer = mockBuffer([{ id: 'unrelated', channelId: target.channelId, status: 'queued', text: `read ${url} today` }])
-  assert.equal((await reconcileCatalog(options(state, buffer))).queued, 1)
+  for (const text of [`Read ${url} today`, `Read (${url}) today`, `Read ${url}.`,
+    `Read ${url}), today`, `[Read](${url})`, `"${url}"`, `“${url}”`, `<${url}>`]) {
+    const state = memoryState()
+    const buffer = mockBuffer([{ id: 'inline-existing', channelId: target.channelId, status: 'queued', text }])
+    assert.equal((await reconcileCatalog(options(state, buffer))).queued, 0)
+    assert.equal((await state.load()).ledger.entries[fresh.slug].postId, 'inline-existing')
+    assert.equal(buffer.calls.filter(call => typeof call === 'object').length, 0)
+  }
+})
+
+test('URL token matching rejects embedded foreign URLs and longer paths, queries, fragments or encoded suffixes', async () => {
+  const url = catalog([fresh])[0].url
+  for (const text of [
+    `Read https://evil.example/?u=${url} today`,
+    `Read https://evil.example/?u=(${url}) today`,
+    `Read prefix${url} today`,
+    `Read prefix/${url} today`,
+    `Read u=${url} today`,
+    `Read ${url}extra/ today`,
+    `Read ${url.slice(0, -1)}-other/ today`,
+    `Read ${url}?other=1 today`,
+    `Read ${url}? today`,
+    `Read ${url}#fragment today`,
+    `Read ${url}# today`,
+    `Read ${url}%2fextra today`,
+    `Read ${url}%3fother=1 today`,
+    `Read ${url}../ today`,
+    `Read ${url}.. today`,
+    `Read ${url}.extra today`,
+  ]) {
+    const state = memoryState()
+    const buffer = mockBuffer([{ id: 'unrelated', channelId: target.channelId, status: 'queued', text }])
+    assert.equal((await reconcileCatalog(options(state, buffer))).queued, 1, text)
+    assert.equal(buffer.calls.filter(call => typeof call === 'object').length, 1, text)
+  }
 })
 
 test('wrong org, wrong service, missing channel, mixed-channel posts and target changes fail closed', async () => {
@@ -544,6 +667,34 @@ test('live processing and queued reconciliation require explicit Page confirmati
     })), { code: 'target' })
     assert.equal(buffer.calls.length, 0)
   }
+})
+
+test('run rejects missing or false Page confirmation before any client calls or ledger writes', async () => {
+  for (const confirmation of [undefined, 'false', 'TRUE']) {
+    for (const mode of ['live', 'reconcile']) {
+      const state = memoryState(mode === 'live' ? initial() : uncertain())
+      const buffer = mockBuffer()
+      await assert.rejects(run({ BUFFER_ENABLED: 'true', BUFFER_MODE: mode,
+        BUFFER_ORGANIZATION_ID: target.organizationId, BUFFER_CHANNEL_ID: target.channelId,
+        BUFFER_LINKEDIN_PAGE_CONFIRMED: confirmation, BUFFER_RECONCILE_SLUG: fresh.slug,
+        BUFFER_RECONCILE_ACTION: 'queued', BUFFER_RECONCILE_POST_ID: 'id',
+        BUFFER_RECONCILE_CONFIRMED: 'true' },
+      () => assert.fail('no network'), { state, buffer, posts: [old, fresh] }), { code: 'target' })
+      assert.equal(state.writes.length, 0)
+      assert.deepEqual(buffer.calls, [])
+    }
+  }
+  const state = memoryState(uncertain())
+  const buffer = mockBuffer([{ id: 'confirmed-id', channelId: target.channelId, status: 'queued',
+    text: caption(catalog([fresh])[0]) }])
+  await run({ BUFFER_ENABLED: 'true', BUFFER_MODE: 'reconcile',
+    BUFFER_ORGANIZATION_ID: target.organizationId, BUFFER_CHANNEL_ID: target.channelId,
+    BUFFER_LINKEDIN_PAGE_CONFIRMED: 'true', BUFFER_RECONCILE_SLUG: fresh.slug,
+    BUFFER_RECONCILE_ACTION: 'queued', BUFFER_RECONCILE_POST_ID: 'confirmed-id',
+    BUFFER_RECONCILE_CONFIRMED: 'true' },
+  () => assert.fail('no network'), { state, buffer, posts: [old, fresh] })
+  assert.deepEqual(buffer.calls, ['channels', 'posts'])
+  assert.equal((await state.load()).ledger.entries[fresh.slug].status, 'queued')
 })
 
 test('summaries expose safe counts and sanitized fenced previews, never upstream error fields', () => {

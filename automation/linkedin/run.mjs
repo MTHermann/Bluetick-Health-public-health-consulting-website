@@ -7,7 +7,7 @@ const ORIGIN = 'https://bluetick-health.co.za'
 const MODES = new Set(['dry-run', 'initialize', 'live', 'reconcile'])
 const STATUSES = new Set(['seen', 'pending', 'intent', 'queued', 'ambiguous'])
 const QUEUED = new Set(['queued', 'scheduled', 'pending', 'notsent', 'not_sent'])
-const NOT_QUEUED = new Set(['draft', 'sent', 'published', 'failed', 'error', 'deleted'])
+const NOT_QUEUED = new Set(['sent'])
 
 export class RunnerError extends Error {
   constructor(code = 'configuration') {
@@ -45,9 +45,15 @@ export function catalog(posts = blogPosts) {
   })
 }
 
+function stripRawText(value) {
+  // HTML raw-text end tags allow ASCII whitespace/slashes, but not name prefixes.
+  // An unclosed raw-text element consumes the remainder of the document.
+  return value.replace(/<!--[\s\S]*?(?:-->|$)/g, ' ')
+    .replace(/<(script|style)(?=[ \t\r\n\f/>])[^>]*>[\s\S]*?(?:<\/\1(?:[ \t\r\n\f/][^>]*)?>|$)/gi, ' ')
+}
+
 function plainText(value) {
-  return value
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>|<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '')
+  return stripRawText(value)
     .replace(/<[^>]*>/g, ' ')
     .replace(/!\[([^\]]*)\]\([^)]*\)|\[([^\]]*)\]\([^)]*\)/g, '$1$2')
     .replace(/&(?:nbsp|amp|lt|gt|quot|apos);|&#(?:x[0-9a-f]+|\d+);/gi, entity => {
@@ -81,6 +87,86 @@ export function caption(post) {
   return `${titlePart}\n\n${excerptPart}\n\n${url}`
 }
 
+function tagAttributes(tag, nameEnd) {
+  const attributes = Object.create(null)
+  let rest = tag.slice(nameEnd, -1)
+  while (rest) {
+    const whitespace = /^[ \t\r\n\f]+/.exec(rest)
+    if (!whitespace) {
+      if (rest === '/') break
+      throw new RunnerError('canonical')
+    }
+    rest = rest.slice(whitespace[0].length)
+    if (!rest || rest === '/') break
+    const attribute = /^([^ \t\r\n\f/"'=<>`]+)(?:[ \t\r\n\f]*=[ \t\r\n\f]*(?:"([^"]*)"|'([^']*)'|([^ \t\r\n\f"'=<>`]+)))?/.exec(rest)
+    if (!attribute) throw new RunnerError('canonical')
+    const name = attribute[1].toLowerCase()
+    if (Object.hasOwn(attributes, name)) throw new RunnerError('canonical')
+    attributes[name] = attribute[2] ?? attribute[3] ?? attribute[4] ?? ''
+    rest = rest.slice(attribute[0].length)
+  }
+  return attributes
+}
+
+function headCanonicalLinks(html) {
+  const links = []
+  const tagToken = /<(?:[^"'<>]|"[^"]*"|'[^']*')*>/y
+  const rawText = new Map(['script', 'style', 'title'].map(name => [
+    name, new RegExp(`</${name}(?=[ \\t\\r\\n\\f/>])(?:[^"'<>]|"[^"]*"|'[^']*')*>`, 'gi'),
+  ]))
+  let position = 0
+  let inHead = false
+  while (position < html.length) {
+    const next = html.indexOf('<', position)
+    if (next < 0) break
+    if (!/^[ \t\r\n\f]*$/.test(html.slice(position, next))) throw new RunnerError('canonical')
+    if (html.startsWith('<!--', next)) {
+      const end = /--!?>/g
+      end.lastIndex = next + 4
+      const closing = end.exec(html)
+      if (!closing) throw new RunnerError('canonical')
+      position = closing.index + closing[0].length
+      continue
+    }
+    tagToken.lastIndex = next
+    const token = tagToken.exec(html)
+    if (!token) throw new RunnerError('canonical')
+    const tag = token[0]
+    position = tagToken.lastIndex
+    if (!inHead && /^<!doctype(?=[ \t\r\n\f>])/i.test(tag)) continue
+    const element = /^<(\/?)([a-z][a-z0-9:-]*)(?=[ \t\r\n\f/>])/i.exec(tag)
+    if (!element) throw new RunnerError('canonical')
+    const name = element[2].toLowerCase()
+    const closing = element[1] === '/'
+    if (!inHead) {
+      if (name === 'html' && !closing) continue
+      if (name !== 'head' || closing) throw new RunnerError('canonical')
+      inHead = true
+      continue
+    }
+    if (name === 'head' && closing) return links
+    if (closing || (!['meta', 'link', 'base'].includes(name) && !rawText.has(name))) throw new RunnerError('canonical')
+    if (rawText.has(name)) {
+      // Scan past raw text without interpreting tags or quoted attributes within it.
+      const end = rawText.get(name)
+      end.lastIndex = position
+      const endTag = end.exec(html)
+      if (!endTag) throw new RunnerError('canonical')
+      // Script escape-state recovery is browser-specific; reject it rather than expose hidden tags.
+      if (name === 'script' && html.slice(position, endTag.index).includes('<!--')) throw new RunnerError('canonical')
+      position = endTag.index + endTag[0].length
+      continue
+    }
+    if (name === 'link') {
+      const attributes = tagAttributes(tag, element[0].length)
+      if ((attributes.rel ?? '').toLowerCase().split(/[ \t\r\n\f]+/).includes('canonical')) {
+        links.push(attributes.href)
+      }
+    }
+  }
+  throw new RunnerError('canonical')
+}
+
 export async function verifyCanonicalUrl(url, fetcher = fetch) {
   trustedUrl(url)
   let response
@@ -93,17 +179,7 @@ export async function verifyCanonicalUrl(url, fetcher = fetch) {
   }
   let html
   try { html = await response.text() } catch { throw new RunnerError('canonical') }
-  const canonical = []
-  const markup = html.replace(/<!--[\s\S]*?-->|<script\b[^>]*>[\s\S]*?<\/script\s*>|<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, '')
-  for (const tag of markup.match(/<link\b[^>]*>/gi) ?? []) {
-    const attributes = {}
-    for (const match of tag.matchAll(/([a-z][a-z0-9-]*)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi)) {
-      const name = match[1].toLowerCase()
-      if (Object.hasOwn(attributes, name)) throw new RunnerError('canonical')
-      attributes[name] = match[2] ?? match[3] ?? match[4]
-    }
-    if ((attributes.rel ?? '').toLowerCase().split(/\s+/).includes('canonical')) canonical.push(attributes.href)
-  }
+  const canonical = headCanonicalLinks(html)
   if (canonical.length !== 1 || canonical[0] !== url) throw new RunnerError('canonical')
   return true
 }
@@ -115,7 +191,17 @@ function cooldown(error, currentTime) {
   return new Date(Math.min(currentTime.getTime() + wait * 1000, 8.64e15)).toISOString()
 }
 function matchesUrl(post, url) {
-  return typeof post.text === 'string' && post.text.split(/\r?\n/).includes(url)
+  if (typeof post.text !== 'string') return false
+  // Consume whole URL tokens, so an embedded URL in another URL's query cannot match.
+  for (const token of post.text.matchAll(/https?:\/\/[^\s<>"'`\u2018\u2019\u201c\u201d]+/gi)) {
+    const preceding = token.index ? post.text[token.index - 1] : ''
+    if (preceding && !/[\s([{"'<`\u2018\u201c]/u.test(preceding)) continue
+    let candidate = token[0].replace(/[)\]},;!]+$/, '')
+    if (candidate.endsWith('.') && !candidate.endsWith('..')) candidate = candidate.slice(0, -1)
+    candidate = candidate.replace(/[)\]}]+$/, '')
+    if (candidate === url) return true
+  }
+  return false
 }
 function postStatus(post) { return String(post.status).toLowerCase() }
 function checkLedger(ledger) {
@@ -254,7 +340,7 @@ export async function reconcileCatalog({
     ledger.target = { ...target }
     ledger = structuredClone(await save(ledger))
   }
-  // Unknown future statuses must not cause an unsafe queue-capacity undercount.
+  // Only the documented sent status is positively known not to occupy queue space.
   let queued = remote.filter(post => !NOT_QUEUED.has(postStatus(post))).length
   for (const post of pending) {
     const existing = remote.find(item => matchesUrl(item, post.url))
@@ -337,6 +423,7 @@ export async function run(env = process.env, fetcher = fetch, dependencies = {})
   const needsBuffer = snapshot && ((mode === 'live' && catalog(posts).some(post =>
     !Object.hasOwn(snapshot.ledger.entries, post.slug) || snapshot.ledger.entries[post.slug].status === 'pending')) ||
     (mode === 'reconcile' && env.BUFFER_RECONCILE_ACTION === 'queued'))
+  if (needsBuffer && env.BUFFER_LINKEDIN_PAGE_CONFIRMED !== 'true') throw new RunnerError('target')
   if (!buffer && needsBuffer) {
     const token = env.BUFFER_API_KEY
     if (!token || !target.organizationId || !target.channelId) throw new RunnerError('configuration')
