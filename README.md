@@ -47,6 +47,35 @@ npm run build
 npm run preview
 ```
 
+### Unlinked blog RSS feed (maintainer notes)
+
+Every `npm run build` regenerates `dist/feed.xml` from the existing `blogPosts`
+in `src/content/siteContent.js`, without editing articles or adding website links,
+subscription UI, head discovery tags, or sitemap entries.
+
+Expected production address: **https://bluetickhealth.co.za/feed.xml**. This new
+endpoint becomes available only after this PR is merged and the normal GitHub
+Pages deployment succeeds; this change does not merge or deploy the PR. An
+unlinked feed is still public, not private. Buffer is not configured by this PR.
+
+Feed URLs use HTTPS and the domain in root `CNAME`, which the deployment workflow
+preserves. Existing `siteUrl` and HTML canonical URLs instead use the hyphenated
+`https://bluetick-health.co.za`; that mismatch is deliberately left unchanged.
+Feed article URLs retain the existing `/blog/<slug>/` paths.
+
+All entries are included, even future-dated entries, because the website already
+displays every `blogPosts` entry without a publication-date filter. Items are
+newest first; valid `YYYY-MM-DD` dates become midnight UTC publication dates.
+Article URLs are stable GUIDs and no build-time timestamps are emitted. Future
+content changes appear in the feed upon rebuild and subsequent deployment;
+avoid changing an existing slug or publication date to preserve its identity.
+
+Run the dependency-free feed tests (including a production build):
+
+```bash
+node --test scripts/feed.test.mjs
+```
+
 ## Project Structure
 
 ```
