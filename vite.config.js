@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
+import { rssFeedPlugin } from './scripts/feed.mjs'
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), rssFeedPlugin()],
   build: {
     rollupOptions: {
       input: {
