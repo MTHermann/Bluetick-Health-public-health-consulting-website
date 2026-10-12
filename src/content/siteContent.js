@@ -306,6 +306,105 @@ Stacked completion-status chart (Incomplete / Unverified / Complete) by site`,
       'For clinical and public health programmes, REDCap works best when it is treated as a governed data system rather than a standalone form builder. Strong implementation reduces cleaning time, improves audit readiness, and makes reporting cycles more reliable. It also creates a better experience for site staff who need systems that are intuitive and resilient under operational pressure. That is why careful REDCap design remains one of the highest-leverage services a data management team can provide.'
     ],
   },
+  {
+    slug: 'missing-data-handling-health-research',
+    title: 'Missing Data Handling in Health Research: Practical Strategies and Pitfalls',
+    datePublished: '2026-09-02',
+    author: defaultAuthor,
+    keywords: ['missing data', 'health research', 'multiple imputation', 'bias', 'statistical analysis'],
+    excerpt:
+      'A practical guide to handling missing data in health research, including common mechanisms, analysis strategies, and mistakes that can distort findings.',
+    summary:
+      'Learn how to identify missing data patterns, choose defensible handling strategies, and avoid common pitfalls that can bias public health and clinical research results.',
+    codeLanguage: 'R',
+    code: `library(mice)\nlibrary(dplyr)\n\n# Example missing-data workflow\nimputed <- mice(health_data, m = 5, method = "pmm", seed = 123)\ncompleted_data <- complete(imputed, action = "long")\n\nmodel <- with(imputed, lm(outcome ~ age + sex + bmi + treatment))\npooled <- pool(model)\nsummary(pooled)`,
+    codeOutput: `Illustrative multiple imputation output
+
+Pooled regression estimates
+
+term        estimate   std.error   statistic   p.value
+(Intercept)   2.41       0.88        2.74       0.006
+age           0.12       0.03        3.96       <0.001
+sex           0.31       0.14        2.21       0.027
+bmi           0.09       0.04        2.25       0.024
+treatment    -0.48       0.17       -2.82       0.005
+
+Imputation diagnostics:
+- Missingness patterns reviewed
+- Five imputations completed
+- Results pooled across datasets`,
+    codeInterpretation:
+      'The output illustrates a pooled analysis after multiple imputation, which helps reduce bias and preserve statistical power when data are missing at random. The goal is not to hide missingness, but to handle it transparently and defensibly.',
+    paragraphs: [
+      'Missing data is one of the most common and underestimated threats to valid inference in health research. It affects surveys, clinical trials, routine programme data, and observational datasets, often in ways that are not immediately visible in summary tables.',
+      'The first step is to understand why data are missing. Analysts often describe missingness as MCAR, MAR, or MNAR, but the practical question is whether the missing values are likely related to patient characteristics, outcomes, care processes, or data collection systems.',
+      'Simple approaches such as complete-case analysis can be acceptable in narrow settings, but they often reduce sample size and introduce bias when missingness is systematic. Mean imputation is usually a poor choice because it artificially reduces variability and can distort relationships between variables.',
+      'More defensible strategies include multiple imputation, inverse probability weighting, and sensitivity analysis. The right choice depends on the research question, the amount of missingness, and whether the analysis is descriptive, explanatory, or predictive.',
+      'Good missing-data practice starts before analysis. Clear data collection procedures, validation checks, field-level review, and monitoring of drop-out patterns can reduce missingness at source and improve downstream statistical quality.',
+      'In consulting work, it is important to explain missing-data decisions in plain language. Decision-makers need to know not only what method was used, but also how it may affect estimates, confidence intervals, and interpretation.',
+      'A strong analysis does not pretend missing data are harmless. It makes the missingness visible, evaluates the risk of bias, and chooses a transparent method that is appropriate for the evidence being produced.',
+    ],
+  },
+  {
+    slug: 'data-visualization-health-decision-making',
+    title: 'Data Visualization for Health Decision-Making',
+    datePublished: '2026-09-05',
+    author: defaultAuthor,
+    keywords: ['data visualization', 'health decision-making', 'dashboards', 'public health reporting', 'communication'],
+    excerpt:
+      'How to design data visualizations that help leaders understand health trends, compare performance, and act on evidence more quickly.',
+    summary:
+      'Explore practical principles for building clear, decision-focused health visualizations that support programme monitoring, stakeholder communication, and evidence-based action.',
+    codeLanguage: 'R',
+    code: `library(ggplot2)\n\n# Example decision-focused chart\nhealth_dashboard <- ggplot(service_data, aes(x = month, y = coverage, group = facility, color = facility)) +\n  geom_line(linewidth = 1) +\n  geom_point(size = 2) +\n  geom_hline(yintercept = 80, linetype = "dashed", color = "firebrick") +\n  labs(\n    title = "Service coverage over time",\n    subtitle = "Target line shown at 80% coverage",\n    x = "Month",\n    y = "Coverage (%)",\n    color = "Facility"\n  ) +\n  theme_minimal()\n\nhealth_dashboard`,
+    codeOutput: `Visual output
+
+A line chart showing service coverage by month for multiple facilities.
+A dashed target line highlights the 80% benchmark.
+Distinct colors separate each facility for easy comparison.`,
+    codeInterpretation:
+      'This example shows a decision-oriented chart design: a clear trend line, a visible benchmark, and minimal chart clutter. The emphasis is on helping managers compare facilities and identify where action is needed.',
+    paragraphs: [
+      'Data visualization is not just about making charts look attractive. In health work, visualizations are decision tools that help programme teams, managers, and policymakers see trends, compare groups, and identify where action is needed.',
+      'The best visualizations answer a specific question. Are we comparing districts, tracking change over time, identifying outliers, or showing progress against a target? Each question calls for a different type of chart and level of detail.',
+      'Simplicity matters. Overcrowded axes, too many colors, and unnecessary 3D effects make it harder to interpret the message. Good visual design reduces cognitive load and helps the audience focus on the evidence rather than the decoration.',
+      'Context is essential. A line chart of service uptake is more useful when it includes targets, time periods, intervention points, or reference thresholds. Without context, a chart can be technically correct but operationally unhelpful.',
+      'Different audiences need different views of the same data. Executives may need a concise dashboard, technical teams may need stratified trends, and external stakeholders may need summary graphics with short annotations.',
+      'In public health consulting, the goal is often to move from analysis to action. That means visualization should support interpretation: clear labels, honest scales, accessible color choices, and minimal ambiguity about what the data show.',
+      'When done well, visualization turns complex health data into a practical management asset. It helps teams prioritize, monitor, explain, and improve decisions without needing to read a full statistical report.',
+    ],
+  },
+  {
+    slug: 'health-equity-analysis-inequality-outcomes',
+    title: 'Health Equity Analysis: Measuring and Interpreting Inequality in Health Outcomes',
+    datePublished: '2026-09-09',
+    author: defaultAuthor,
+    keywords: ['health equity', 'inequality', 'health outcomes', 'public health analysis', 'disparity measurement'],
+    excerpt:
+      'A practical introduction to measuring health inequality and interpreting results in ways that support fairer public health decision-making.',
+    summary:
+      'Understand how to measure and communicate health inequities using stratified analysis, inequality metrics, and policy-relevant interpretation.',
+    codeLanguage: 'R',
+    code: `library(dplyr)\n\n# Example equity summary table\ninequity_summary <- health_data %>%\n  group_by(group) %>%\n  summarise(\n    n = n(),\n    outcome_rate = mean(outcome, na.rm = TRUE)\n  ) %>%\n  mutate(rate_difference = outcome_rate - min(outcome_rate, na.rm = TRUE))\n\ninequity_summary`,
+    codeOutput: `Illustrative equity analysis summary
+
+group        n     outcome_rate   rate_difference
+Urban        420   0.82           0.18
+Rural        380   0.69           0.05
+Low income   360   0.64           0.00
+High income  440   0.85           0.21`,
+    codeInterpretation:
+      'This summary shows how stratification can reveal differences hidden by overall averages. Here, rate_difference is each group’s outcome rate minus the lowest observed rate (0.64), not a shortfall from a target. Whether a higher rate indicates advantage or disadvantage depends on the outcome being measured.',
+    paragraphs: [
+      'Health equity analysis asks a different question from standard average-based reporting. Instead of only asking what the overall outcome is, it asks who is being left behind and whether differences between groups are systematic and avoidable.',
+      'Many inequities are hidden when results are reported only as a total average. A national improvement in service coverage can still mask persistent disadvantage across rural areas, income groups, age bands, sex, or other vulnerable populations.',
+      'The analysis usually begins with stratification. Breaking outcomes down by geography, socioeconomic status, sex, age, disability, or other relevant variables can reveal gaps that overall summaries conceal.',
+      'Depending on the question, analysts may use rate ratios, rate differences, concentration indices, slope indices, or other inequality measures. The best metric is the one that matches the policy question and the level of interpretability required.',
+      'Interpretation should go beyond stating that a gap exists. The key question is whether the difference is persistent, widening, narrowing, or associated with structural barriers such as access, affordability, service quality, or system design.',
+      'Equity analysis is strongest when it combines numbers with context. Quantitative measures are useful, but they become more actionable when paired with knowledge of programme design, social determinants, and local implementation realities.',
+      'For public health consulting, equity analysis helps clients move from general improvement to fair improvement. It shows where interventions are succeeding broadly but failing specific groups, and it supports more targeted response strategies.',
+    ],
+  },
 ]
 
 export const resources = [

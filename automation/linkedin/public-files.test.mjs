@@ -45,13 +45,13 @@ const hashes = {
   'src/App.jsx': '7db67365907542705009c6239c170df40c32f759e6fc7dde7a883837352c2d0a',
   'src/components/ui/button.jsx': '13e3a0bc245206a2d04cd4d1d757efce809d2c93d5e423f369a8f74bd7fa788f',
   'src/components/ui/card.jsx': '7b0f72e2f30f49c7cdc14cb3424ffdac8ac0b4a252476c022f27a44d67c25860',
-  'src/content/siteContent.js': '312839b2ae13bda82ef47269924693a5bc93918fd0d7ab6d985997e62e365828',
+  'src/content/siteContent.js': 'd5a40b82c827ce87f6f0179e7bafe8b1ce6c7e50fd57ec59ab4a6662470c0044',
   'src/index.css': '44dd41167304032732ce64a9fe7f83a8546686091c902d978ff34e8b89507944',
   'src/main.jsx': 'dfe7f7d0a5d86fe1ab508f0eb8608eb46efeba6819f9bd8ade68d9af6873a739',
   'src/pages/ConsultingWebsite.jsx': 'fbfc8191d5eb045e9d4a542647bc2514e4684f51da66899b87d7fa2bb6633b7b',
   'tailwind.config.js': '3dd3712212acbc67849a13a9f1401527495e09a1a12e1c417fac6b4ecf1fe6d4',
   'vacancies/index.html': '7c79f6ab498415458cba424c5a789d327a53b08353d6f31e71b96390285b9eb5',
-  'vite.config.js': '52adfa4716d9f55284827015d982abb6b062de86c45c292f52d7c910c2e0e10b',
+  'vite.config.js': 'bb84c2091847094828011a2134c3479d75662fb6f7218f35bdb8b562460c5d63',
 }
 
 test('existing public website and deployment inputs remain byte-for-byte unchanged', async () => {
