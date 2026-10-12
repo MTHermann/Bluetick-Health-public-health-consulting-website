@@ -47,6 +47,34 @@ npm run build
 npm run preview
 ```
 
+### Blog draft approval (maintainer notes)
+
+`src/content/siteContent.js` contains the approved, public `blogPosts` only.
+`src/content/blogDrafts.js` is a repository-only review queue: each entry has
+`status: 'pending-approval'` and a `post` using the existing content fields.
+The three proposed articles are drafts, not approved publications. Their
+`datePublished` is `null` until a publication date is agreed.
+
+Review draft titles, summaries, and full paragraphs in that file before approving
+publication. Compare titles and topics against both collections to avoid
+duplicates or substantial overlap; the tests also check duplicate titles and slugs.
+Drafts in this public repository are not confidential, but are not included in
+the website bundle, blog listing, article routes, metadata, or RSS feed.
+Do not import the review queue into public pages or build generators.
+
+After explicit content approval, publish in a separate reviewed change:
+
+1. Move only the approved entry's `post` object into `blogPosts`, setting a valid
+   `YYYY-MM-DD` publication date. Do not copy the review-status wrapper.
+2. Remove that entry from `blogDrafts` so there is one source of truth.
+3. Add its `blog/<slug>/index.html` using an existing article page as the template,
+   update that page's metadata, and register its entry in `vite.config.js`.
+4. Run `node --test scripts/blog-drafts.test.mjs scripts/feed.test.mjs`,
+   `npm run lint`, and `npm run build`; review the article and metadata before merge.
+
+Changing a draft's status alone never publishes it. Existing approved posts and
+their URLs remain unchanged.
+
 ### Unlinked blog RSS feed (maintainer notes)
 
 Every `npm run build` regenerates `dist/feed.xml` from the existing `blogPosts`

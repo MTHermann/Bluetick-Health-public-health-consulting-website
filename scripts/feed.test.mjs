@@ -1,10 +1,11 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync } from 'node:child_process'
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { generateFeed } from './feed.mjs'
 import { blogPosts, getPostPath } from '../src/content/siteContent.js'
+import { blogDrafts } from '../src/content/blogDrafts.js'
 
 const origin = 'https://bluetickhealth.co.za'
 const root = fileURLToPath(new URL('../', import.meta.url))
@@ -113,5 +114,16 @@ test('normal production build regenerates root feed with all deployed article UR
     const htmlPath = new URL(`../dist${new URL(link).pathname}index.html`, import.meta.url)
     assert.ok(existsSync(htmlPath), `Missing built article for ${link}`)
     assert.doesNotMatch(readFileSync(htmlPath, 'utf8'), /feed\.xml|application\/rss\+xml/)
+  }
+  const dist = new URL('../dist/', import.meta.url)
+  for (const path of readdirSync(dist, { recursive: true })) {
+    if (!/\.(html|js|xml|json|map)$/.test(path)) continue
+    const content = readFileSync(new URL(path, dist), 'utf8')
+    for (const { post } of blogDrafts) {
+      assert.ok(!path.includes(post.slug), `Draft route emitted: ${path}`)
+      for (const value of [post.slug, post.title, post.excerpt, ...post.paragraphs]) {
+        assert.ok(!content.includes(value), `Draft content leaked into ${path}`)
+      }
+    }
   }
 })
