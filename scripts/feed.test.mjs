@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { generateFeed } from './feed.mjs'
-import { blogPosts, getPostPath } from '../src/content/siteContent.js'
+import { blogPosts, defaultAuthor, getPageMeta, getPostPath, siteUrl } from '../src/content/siteContent.js'
 
 const origin = 'https://bluetickhealth.co.za'
 const root = fileURLToPath(new URL('../', import.meta.url))
@@ -15,6 +15,67 @@ const post = {
   author: 'Editorial team',
   excerpt: 'Example excerpt',
 }
+
+const approvedPosts = [
+  ['missing-data-handling-health-research', 'Missing Data Handling in Health Research: Practical Strategies and Pitfalls'],
+  ['data-visualization-health-decision-making', 'Data Visualization for Health Decision-Making'],
+  ['health-equity-analysis-health-outcomes', 'Health Equity Analysis: Measuring and Interpreting Inequality in Health Outcomes'],
+]
+
+test('approved articles have unique identities, complete content, and existing article metadata', () => {
+  assert.equal(new Set(blogPosts.map((entry) => entry.slug)).size, blogPosts.length)
+  assert.equal(new Set(blogPosts.map((entry) => entry.title)).size, blogPosts.length)
+  for (const [slug, title] of approvedPosts) {
+    const article = blogPosts.find((entry) => entry.slug === slug)
+    assert.ok(article, `Missing approved article: ${slug}`)
+    assert.equal(article.title, title)
+    assert.deepEqual(Object.keys(article).sort(), Object.keys(blogPosts[0]).sort())
+    assert.equal(article.author, defaultAuthor)
+    for (const field of ['excerpt', 'summary', 'codeLanguage', 'code', 'codeOutput', 'codeInterpretation']) {
+      assert.ok(typeof article[field] === 'string' && article[field].trim(), `Missing ${field}: ${slug}`)
+    }
+    for (const field of ['keywords', 'paragraphs']) {
+      assert.ok(Array.isArray(article[field]) && article[field].length > 0)
+      assert.ok(article[field].every((value) => typeof value === 'string' && value.trim()))
+    }
+    const path = getPostPath(slug)
+    assert.equal(path, `/blog/${slug}/`)
+    const meta = getPageMeta(path)
+    assert.equal(meta.type, 'article')
+    assert.equal(meta.article, article)
+    assert.equal(meta.title, `${title} | Bluetick Health Blog`)
+    assert.equal(meta.description, article.summary)
+    assert.equal(meta.keywords, article.keywords.join(', '))
+    assert.equal(meta.structuredData.headline, title)
+    assert.equal(meta.structuredData.datePublished, article.datePublished)
+    assert.equal(meta.structuredData.mainEntityOfPage, `${siteUrl}${path}`)
+  }
+})
+
+test('approved articles use the existing static page shell with matching share metadata', () => {
+  const template = readFileSync(new URL('../blog/redcap-implementation-guide/index.html', import.meta.url), 'utf8')
+  const shell = (html) => html.replace(/    <title>.*<\/title>\n/g, '')
+    .replace(/    <meta (?:name|property)="(?:title|description|keywords|og:url|og:title|og:description|twitter:url|twitter:title|twitter:description)"[^\n]*\n/g, '')
+    .replace(/    <link rel="canonical"[^\n]*\n/g, '').trim()
+  for (const [slug] of approvedPosts) {
+    const article = blogPosts.find((entry) => entry.slug === slug)
+    const meta = getPageMeta(getPostPath(slug))
+    const html = readFileSync(new URL(`../blog/${slug}/index.html`, import.meta.url), 'utf8')
+    assert.equal(shell(html), shell(template))
+    assert.ok(html.includes(`<title>${meta.title}</title>`))
+    for (const attribute of ['name="title"', 'property="og:title"', 'name="twitter:title"']) {
+      assert.ok(html.includes(`<meta ${attribute} content="${meta.title}" />`))
+    }
+    for (const attribute of ['name="description"', 'property="og:description"', 'name="twitter:description"']) {
+      assert.ok(html.includes(`<meta ${attribute} content="${article.summary}" />`))
+    }
+    assert.ok(html.includes(`<meta name="keywords" content="${meta.keywords}" />`))
+    for (const attribute of ['property="og:url"', 'name="twitter:url"']) {
+      assert.ok(html.includes(`<meta ${attribute} content="${siteUrl}${getPostPath(slug)}" />`))
+    }
+    assert.ok(html.includes(`<link rel="canonical" href="${siteUrl}${getPostPath(slug)}" />`))
+  }
+})
 
 test('serializes a complete UTF-8 RSS document with escaped XML and namespaced attribution', () => {
   const special = `Health & <research> "quotes" 'apostrophes' — café 🩺`

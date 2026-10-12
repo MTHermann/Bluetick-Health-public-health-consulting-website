@@ -306,6 +306,131 @@ Stacked completion-status chart (Incomplete / Unverified / Complete) by site`,
       'For clinical and public health programmes, REDCap works best when it is treated as a governed data system rather than a standalone form builder. Strong implementation reduces cleaning time, improves audit readiness, and makes reporting cycles more reliable. It also creates a better experience for site staff who need systems that are intuitive and resilient under operational pressure. That is why careful REDCap design remains one of the highest-leverage services a data management team can provide.'
     ],
   },
+  {
+    slug: 'missing-data-handling-health-research',
+    title: 'Missing Data Handling in Health Research: Practical Strategies and Pitfalls',
+    datePublished: '2026-10-12',
+    author: defaultAuthor,
+    keywords: ['missing data', 'multiple imputation', 'sensitivity analysis', 'health research', 'biostatistics'],
+    excerpt:
+      'Choose defensible missing-data strategies by examining missingness mechanisms, understanding complete-case limitations, and planning multiple imputation and sensitivity analyses.',
+    summary:
+      'Handle missing data in health research with transparent diagnostics, justified statistical assumptions, and sensitivity analyses that support credible public health decisions.',
+    codeLanguage: 'R',
+    code: `# Synthetic records for a missingness diagnostic, not an imputation model
+health_data <- data.frame(
+  age = c(40, NA, 52, 61, 35, 48, NA, 57, 43, NA),
+  systolic_bp = c(120, 130, NA, 140, 125, NA, 135, 145, 115, 125)
+)
+
+missing_percent <- 100 * colMeans(is.na(health_data))
+for (variable in names(missing_percent)) {
+  cat(sprintf("%s missing: %.1f%%\\n", variable, missing_percent[[variable]]))
+}
+cat(sprintf("Complete records: %d of %d\\n",
+  sum(complete.cases(health_data)), nrow(health_data)))
+cat(sprintf("Observed systolic BP mean: %.1f mmHg\\n",
+  mean(health_data$systolic_bp, na.rm = TRUE)))`,
+    codeOutput: `age missing: 30.0%
+systolic_bp missing: 20.0%
+Complete records: 5 of 10
+Observed systolic BP mean: 129.4 mmHg`,
+    codeInterpretation:
+      'In these synthetic records, a complete-case analysis using both variables would retain only half the sample. The observed blood pressure mean excludes missing measurements; it is a diagnostic summary, not a corrected population estimate. Neither the missingness percentages nor this mean establish why values are missing or whether complete-case analysis is unbiased.',
+    paragraphs: [
+      'Missing data are an analytical problem as well as a data collection problem. In health research, missed visits, unavailable laboratory results, and unanswered survey questions can change who contributes to an estimate. Start by defining the target population and outcome, distinguishing genuinely missing values from measurements that are not applicable, and describing missingness by variable, visit, and relevant subgroup. Record reasons for missingness where possible. Unlike routine database cleaning, the statistical task is to assess how incomplete observations affect inference and the decisions based on it.',
+      'Method choice depends on assumptions about the missingness mechanism. Missing completely at random means missingness is unrelated to observed or unobserved values; missing at random means it can depend on observed information but not the missing values after conditioning on that information. Missing not at random allows dependence on unobserved values even after conditioning. Observed data alone cannot verify a missing-at-random assumption. Complete-case analysis loses precision and can introduce selection bias, although it is valid under some conditions. Replacing missing values with a single mean usually understates uncertainty and distorts relationships between variables.',
+      'Multiple imputation can be useful when a plausible missing-at-random model can be specified. Include variables from the analysis model and informative predictors of missingness or missing values, while respecting variable types, interactions, clustering, and longitudinal structure. Generate enough imputations for stable estimates, inspect convergence and the plausibility of imputed distributions, fit the planned analysis in each completed dataset, and pool estimates and uncertainty using Rubin rules. Imputation is not a substitute for resolving recoverable source-data problems, and it should not invent values for structurally inapplicable fields.',
+      'A defensible report makes assumptions visible and tests whether conclusions depend on them. Compare an appropriately justified primary analysis with complete-case results and sensitivity analyses that explore plausible departures from missing at random, such as specified shifts in unobserved outcomes. For programme teams, explain whether the findings still support the same action under these scenarios. Report the extent and reasons for missingness, variables and methods used for imputation, diagnostics, and any remaining limitations. This turns missing-data handling into a transparent part of the evidence rather than a hidden preprocessing step.'
+    ],
+  },
+  {
+    slug: 'data-visualization-health-decision-making',
+    title: 'Data Visualization for Health Decision-Making',
+    datePublished: '2026-10-12',
+    author: defaultAuthor,
+    keywords: ['data visualization', 'health decision-making', 'uncertainty communication', 'public health reporting', 'evidence translation'],
+    excerpt:
+      'Design clear health charts that communicate denominators, uncertainty, and actionable comparisons without misleading policymakers or programme teams.',
+    summary:
+      'Translate health evidence into decision-ready visualizations through purposeful chart selection, accessible labelling, and honest communication of uncertainty.',
+    codeLanguage: 'R',
+    code: `# Synthetic vaccination counts; simple independent binomial illustration
+coverage <- data.frame(
+  district = c("District A", "District B", "District C"),
+  vaccinated = c(160, 140, 180),
+  eligible = c(200, 200, 200)
+)
+coverage$percent <- 100 * coverage$vaccinated / coverage$eligible
+intervals <- t(mapply(function(x, n) {
+  100 * binom.test(x, n)$conf.int
+}, coverage$vaccinated, coverage$eligible))
+
+positions <- seq_len(nrow(coverage))
+plot(coverage$percent, positions, xlim = c(0, 100),
+  yaxt = "n", pch = 19, col = "navy",
+  xlab = "Vaccination coverage (%)", ylab = "",
+  main = "Synthetic district coverage with 95% confidence intervals")
+axis(2, at = positions, labels = coverage$district, las = 1)
+segments(intervals[, 1], positions, intervals[, 2], positions,
+  col = "navy")
+print(coverage[c("district", "vaccinated", "eligible", "percent")],
+  row.names = FALSE)`,
+    codeOutput: `  district vaccinated eligible percent
+District A        160      200      80
+District B        140      200      70
+District C        180      200      90
+
+Graph:
+Horizontal dot plot on a 0-100% axis.
+Each district has a coverage estimate and an exact binomial 95% confidence interval.`,
+    codeInterpretation:
+      'The synthetic example shows the highest observed coverage in District C and the lowest in District B, with equal denominators made explicit. Interval widths communicate sampling uncertainty under an independent binomial model; clustered surveys require design-aware intervals instead. The chart can prompt investigation of access barriers, but it does not explain the differences or prove that one programme performs better.',
+    paragraphs: [
+      'A useful health visualization begins with a decision, not a preferred chart type. A district manager may need to identify gaps in vaccination coverage, while a funder may need to understand whether a programme is on track. State the audience, comparison, reporting period, and action the figure should support before selecting a display. The purpose is to communicate existing evidence accurately, rather than to introduce another analytical model. A focused chart with a clear message is often more useful than a dashboard containing every available indicator.',
+      'Match the visual form to the question. Use line charts for change over time, dot plots for comparisons with uncertainty, and bars for clearly defined category totals. Show denominators alongside percentages and distinguish counts, rates, and proportions. Maps can reveal geographic patterns, but large areas may dominate attention despite small populations, so pair them with a population-aware comparison. Avoid three-dimensional effects, unnecessary dual axes, and truncated bar-chart baselines that exaggerate differences. Where a restricted axis is justified for another chart type, label it plainly and explain the scale.',
+      'Uncertainty and data limitations belong in the display rather than in a forgotten appendix. Label interval types, flag provisional reporting periods, and do not present missing observations as zero. In the synthetic R example, exact binomial intervals illustrate sampling uncertainty for independent observations; they do not capture reporting errors or selection bias. Routine counts covering an entire target population may need a different account of uncertainty. For weighted or clustered survey data, obtain estimates and intervals from a design-aware analysis before plotting them.',
+      'Accessible communication makes findings easier to use responsibly. Choose readable labels, adequate contrast, and colour palettes that remain distinguishable for readers with colour-vision differences; do not rely on colour alone to convey meaning. Accompany figures with a plain-language description, source, date range, and definitions. Before sharing, check small-cell disclosure risks and aggregate or suppress sensitive details according to the data governance plan. Public health consulting teams should test the chart with intended users and connect the main finding to a feasible next step without overstating what the data can establish.'
+    ],
+  },
+  {
+    slug: 'health-equity-analysis-health-outcomes',
+    title: 'Health Equity Analysis: Measuring and Interpreting Inequality in Health Outcomes',
+    datePublished: '2026-10-12',
+    author: defaultAuthor,
+    keywords: ['health equity', 'health inequalities', 'absolute and relative gaps', 'social determinants of health', 'public health evaluation'],
+    excerpt:
+      'Measure absolute and relative health outcome gaps, account for population differences, and interpret inequalities in their social and programme context.',
+    summary:
+      'Use health equity analysis to describe outcome inequalities, assess uncertainty and comparability, and guide fairer public health programme decisions.',
+    codeLanguage: 'R',
+    code: `# Synthetic counts for an adverse outcome over the same follow-up period
+outcomes <- data.frame(
+  group = c("Lower-resource communities", "Higher-resource communities"),
+  events = c(120, 60),
+  population = c(400, 400)
+)
+risk <- outcomes$events / outcomes$population
+absolute_gap <- 100 * (risk[1] - risk[2])
+risk_ratio <- risk[1] / risk[2]
+
+cat(sprintf("Lower-resource outcome risk: %.1f%%\\n", 100 * risk[1]))
+cat(sprintf("Higher-resource outcome risk: %.1f%%\\n", 100 * risk[2]))
+cat(sprintf("Absolute gap: %.1f percentage points\\n", absolute_gap))
+cat(sprintf("Risk ratio: %.2f\\n", risk_ratio))`,
+    codeOutput: `Lower-resource outcome risk: 30.0%
+Higher-resource outcome risk: 15.0%
+Absolute gap: 15.0 percentage points
+Risk ratio: 2.00`,
+    codeInterpretation:
+      'In this synthetic example, the adverse outcome risk is 15 percentage points higher in lower-resource communities and twice the risk in higher-resource communities. Absolute and relative measures describe different aspects of the same inequality. These unadjusted estimates have no uncertainty intervals and do not establish causation or whether the difference is avoidable; those questions require further analysis and contextual evidence.',
+    paragraphs: [
+      'Health equity analysis asks who benefits from health services and who continues to experience worse outcomes. Inequality describes measurable differences, whereas inequity concerns differences judged to be unfair and avoidable in their social context. An analysis should therefore begin with an explicit outcome, population, period, and rationale for the groups being compared. Income, geography, disability, gender, and other dimensions may be relevant, but categories should be selected with affected communities and programme stakeholders rather than treated as interchangeable labels.',
+      'Report both absolute and relative inequalities because they can tell different stories. A risk difference expresses an excess in percentage points, while a risk ratio expresses how many times higher one risk is than another. As overall outcomes improve, an absolute gap can narrow while a relative gap widens. For ordered socioeconomic groups, slope and relative indices of inequality can summarise the gradient across the full distribution, while concentration measures address how outcomes are distributed by socioeconomic rank. Define the reference group, direction of the outcome, and denominator so that readers can interpret each measure correctly.',
+      'Meaningful comparisons require comparable measurement and appropriate uncertainty estimates. Check missingness, outcome ascertainment, follow-up periods, and coverage within each group; apply survey weights and account for clustering when the design requires them. Age standardisation or model-based adjustment may help answer a specified comparison, but adjusting for social pathways can obscure part of the inequality of interest. Explain the estimand and present relevant unadjusted results alongside adjusted estimates. Small subgroup samples and intersectional comparisons need particular care because unstable estimates can exaggerate differences or hide important gaps.',
+      'Interpret findings in terms of structural conditions and feasible responses, not presumed deficiencies in a community. A descriptive gap does not identify its cause, and a non-significant comparison does not prove equality. Combine quantitative results with evidence on transport, affordability, service quality, and lived experience to prioritise further investigation and action. Protect confidentiality when publishing small-area or subgroup results and agree disclosure rules before analysis. For public health consulting teams, equity monitoring is most useful when it tracks both overall progress and the distribution of that progress, with communities involved in deciding what improvement should look like.'
+    ],
+  },
 ]
 
 export const resources = [
