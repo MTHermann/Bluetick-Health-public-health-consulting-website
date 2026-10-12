@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process'
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { generateFeed } from './feed.mjs'
-import { blogPosts, getPostPath } from '../src/content/siteContent.js'
+import { blogPosts, defaultAuthor, getPageMeta, getPostPath, siteUrl } from '../src/content/siteContent.js'
 
 const origin = 'https://bluetickhealth.co.za'
 const root = fileURLToPath(new URL('../', import.meta.url))
@@ -88,6 +88,53 @@ test('includes already-visible future-dated content with deterministic dates and
   assert.ok(edited.includes(`<guid isPermaLink="true">${guid}</guid>`))
   assert.equal(edited.match(/<pubDate>(.*?)<\/pubDate>/)[1], first.match(/<pubDate>(.*?)<\/pubDate>/)[1])
   assert.notEqual(edited, first)
+})
+
+test('approved articles have unique slugs, complete content, page metadata, and feed entries', () => {
+  const approved = [
+    ['missing-data-handling-health-research', 'Missing Data Handling in Health Research: Practical Strategies and Pitfalls', '2026-09-02'],
+    ['data-visualization-health-decision-making', 'Data Visualization for Health Decision-Making', '2026-09-05'],
+    ['health-equity-analysis-inequality-outcomes', 'Health Equity Analysis: Measuring and Interpreting Inequality in Health Outcomes', '2026-09-09'],
+  ]
+  assert.equal(new Set(blogPosts.map((entry) => entry.slug)).size, blogPosts.length)
+  const xml = generateFeed(blogPosts, origin)
+  for (const [slug, title, datePublished] of approved) {
+    const article = blogPosts.find((entry) => entry.slug === slug)
+    assert.ok(article, `Missing approved article: ${slug}`)
+    assert.equal(article.title, title)
+    assert.equal(article.datePublished, datePublished)
+    assert.equal(article.author, defaultAuthor)
+    assert.equal(article.codeLanguage, 'R')
+    for (const field of ['excerpt', 'summary', 'code', 'codeOutput', 'codeInterpretation']) {
+      assert.ok(article[field].trim(), `Missing ${field} for ${slug}`)
+    }
+    assert.equal(article.paragraphs.length, 7)
+    assert.ok(article.paragraphs.every((paragraph) => paragraph.trim()))
+    assert.ok(article.keywords.length > 0)
+    const meta = getPageMeta(getPostPath(slug))
+    assert.equal(meta.article, article)
+    assert.equal(meta.title, `${title} | Bluetick Health Blog`)
+    assert.equal(meta.description, article.summary)
+    assert.equal(meta.structuredData.datePublished, datePublished)
+    assert.equal(meta.structuredData.mainEntityOfPage, `${siteUrl}${getPostPath(slug)}`)
+    const html = readFileSync(new URL(`../blog/${slug}/index.html`, import.meta.url), 'utf8')
+    assert.ok(html.includes(`<title>${meta.title}</title>`))
+    assert.ok(html.includes(`name="description" content="${article.summary}"`))
+    assert.ok(html.includes(`name="keywords" content="${article.keywords.join(', ')}"`))
+    assert.ok(html.includes(`rel="canonical" href="${siteUrl}${getPostPath(slug)}"`))
+    assert.ok(xml.includes(`<title>${title}</title>`))
+    assert.ok(xml.includes(`<link>${origin}${getPostPath(slug)}</link>`))
+  }
+})
+
+test('equity example rate differences match the displayed outcome rates', () => {
+  const article = blogPosts.find((entry) => entry.slug === 'health-equity-analysis-inequality-outcomes')
+  const rows = [...article.codeOutput.matchAll(/^(.+?)\s+\d+\s+(0\.\d+)\s+(0\.\d+)$/gm)]
+  assert.equal(rows.length, 4)
+  const lowestRate = Math.min(...rows.map((row) => Number(row[2])))
+  for (const [, group, rate, difference] of rows) {
+    assert.equal((Number(rate) - lowestRate).toFixed(2), difference, group)
+  }
 })
 
 test('normal production build regenerates root feed with all deployed article URLs', () => {
